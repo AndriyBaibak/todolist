@@ -25,8 +25,7 @@ public class AddServlet extends HttpServlet {
     }
 
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.setCharacterEncoding("UTF-8");
-        response.setCharacterEncoding("UTF-8");
+        
         String task_description = request.getParameter("new_task");
         String task_deadline = request.getParameter("deadline");
         SimpleDateFormat sp = new SimpleDateFormat("yyyy.MM.dd");

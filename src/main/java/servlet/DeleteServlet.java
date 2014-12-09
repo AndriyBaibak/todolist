@@ -24,8 +24,7 @@ public class DeleteServlet extends HttpServlet {
     }
 
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.setCharacterEncoding("UTF-8");
-        response.setCharacterEncoding("UTF-8");
+
         Integer id_task = Integer.parseInt(request.getParameter("id for delete"));
         try {
             task_for_delete = tasksDAO.getTasksById(id_task);

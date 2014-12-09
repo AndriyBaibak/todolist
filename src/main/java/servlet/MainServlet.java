@@ -23,7 +23,7 @@ public class MainServlet extends HttpServlet {
     }
 
     public void doGet (HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-      
+
         try {
             tasks = tasksDAO.getAllTasks();
         } catch (SQLException e) {
