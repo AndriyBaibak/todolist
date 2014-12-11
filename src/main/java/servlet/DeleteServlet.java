@@ -16,7 +16,7 @@ import java.sql.SQLException;
  */
 public class DeleteServlet extends HttpServlet {
     private TasksDAOImpl tasksDAO;
-    Tasks task_for_delete = null;
+    Tasks taskForDelete = null;
 
 
     public void init() throws ServletException {
@@ -25,15 +25,15 @@ public class DeleteServlet extends HttpServlet {
 
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        Integer id_task = Integer.parseInt(request.getParameter("id for delete"));
+        Integer idTask = Integer.parseInt(request.getParameter("id for delete"));
         try {
-            task_for_delete = tasksDAO.getTasksById(id_task);
+            taskForDelete = tasksDAO.getTasksById(idTask);
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
         try {
-            tasksDAO.deleteTasks(task_for_delete);
+            tasksDAO.deleteTasks(taskForDelete);
         } catch (SQLException e) {
             e.printStackTrace();
         }

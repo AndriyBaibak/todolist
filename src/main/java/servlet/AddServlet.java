@@ -18,7 +18,7 @@ import java.util.Date;
  */
 public class AddServlet extends HttpServlet {
     private TasksDAOImpl tasksDAO;
-    Date date_deadline = null;
+    Date dateDeadline = null;
 
     public void init() throws ServletException {
         tasksDAO = new TasksDAOImpl();
@@ -26,19 +26,19 @@ public class AddServlet extends HttpServlet {
 
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
-        String task_description = request.getParameter("new_task");
-        String task_deadline = request.getParameter("deadline");
+        String taskDescription = request.getParameter("new_task");
+        String taskDeadline = request.getParameter("deadline");
         SimpleDateFormat sp = new SimpleDateFormat("yyyy.MM.dd");
 
 
         try {
-            date_deadline = sp.parse(task_deadline);
+            dateDeadline = sp.parse(taskDeadline);
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        Tasks task = new Tasks(task_description, date_deadline);
-        System.out.println(task.toString());
-        tasksDAO.save(task);
+        Tasks newTask = new Tasks(taskDescription, dateDeadline);
+        System.out.println(newTask.toString());
+        tasksDAO.save(newTask);
         RequestDispatcher rd = getServletContext().getRequestDispatcher("/added.jsp");
         rd.forward(request, response);
     }

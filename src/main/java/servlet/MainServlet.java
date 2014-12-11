@@ -29,12 +29,9 @@ public class MainServlet extends HttpServlet {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
         request.setAttribute("tasks", tasks);
         RequestDispatcher rd = getServletContext().getRequestDispatcher("/index.jsp");
         rd.forward(request, response);
-
-
     }
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
@@ -42,11 +39,8 @@ public class MainServlet extends HttpServlet {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
         request.setAttribute("tasks", tasks);
         RequestDispatcher rd = getServletContext().getRequestDispatcher("/index.jsp");
         rd.forward(request, response);
-
-
     }
 }

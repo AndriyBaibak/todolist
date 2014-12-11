@@ -3,7 +3,6 @@ package dao;
 import entity.Tasks;
 import org.hibernate.Session;
 
-import javax.swing.*;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -63,7 +62,6 @@ public class TasksDAOImpl implements TasksDAO {
             tasks = session.createCriteria(entity.Tasks.class).addOrder(org.hibernate.criterion.Order.asc("deadline")).list();
         } catch (Exception e) {
 
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Ошибка 'getAll'", JOptionPane.OK_OPTION);
         } finally {
             if (session != null && session.isOpen()) {
                 session.close();

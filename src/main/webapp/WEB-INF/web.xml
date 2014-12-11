@@ -3,7 +3,6 @@
          xmlns="http://java.sun.com/xml/ns/javaee"
          xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
          version="3.0">
-
     <servlet>
         <servlet-name>MainServlet</servlet-name>
         <servlet-class>servlet.MainServlet</servlet-class>
@@ -24,9 +23,8 @@
         <servlet-name>DelServlet</servlet-name>
         <url-pattern>/del</url-pattern>
     </servlet-mapping>
-
     <servlet-mapping>
         <servlet-name>MainServlet</servlet-name>
-        <url-pattern>/todolist-1.0</url-pattern>
+        <url-pattern>/TodoList-1.0</url-pattern>
     </servlet-mapping>
 </web-app>

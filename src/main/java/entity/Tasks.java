@@ -22,19 +22,13 @@ public class Tasks {
 
     @Column(name = "deadline")
     private Date deadline;
-
-
-
     public Tasks(String task, Date deadline){
         this.description = task;
         this.createdDate = new java.util.Date();
         this.deadline = deadline;
     }
-
     public Tasks() {
     }
-
-
     public String getDescription() {
         return description;
     }
