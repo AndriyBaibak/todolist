@@ -16,11 +16,6 @@
         <servlet-name>DelServlet</servlet-name>
         <servlet-class>servlet.DeleteServlet</servlet-class>
     </servlet>
-
-    <servlet-mapping>
-        <servlet-name>MainServlet</servlet-name>
-        <url-pattern>/taskslist</url-pattern>
-    </servlet-mapping>
     <servlet-mapping>
         <servlet-name>AddServlet</servlet-name>
         <url-pattern>/add</url-pattern>
@@ -30,8 +25,8 @@
         <url-pattern>/del</url-pattern>
     </servlet-mapping>
 
-    <welcome-file-list>
-        <welcome-file>/taskslist</welcome-file>
-    </welcome-file-list>
-
+    <servlet-mapping>
+        <servlet-name>MainServlet</servlet-name>
+        <url-pattern>/todolist-1.0</url-pattern>
+    </servlet-mapping>
 </web-app>

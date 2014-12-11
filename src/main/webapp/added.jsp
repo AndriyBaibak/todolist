@@ -21,7 +21,7 @@
 
    <p> <img src="picture/super.jpg" /> </p>
 
-   <p> <form id="back" action="taskslist" method="post">
+   <p> <form id="back" action="todolist-1.0" method="post">
         <input type="submit" value="Повернутись на головну">
     </form>
     </p>

@@ -13,7 +13,7 @@
 <body>
 Завдання видалено!
 
-<form id="back" action="taskslist" method="post">
+<form id="back" action="todolist-1.0" method="post">
     <input type="submit" value="Повернутись на головну">
 
 </form>
