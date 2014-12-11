@@ -23,7 +23,8 @@ public class MainServlet extends HttpServlet {
     }
 
     public void doGet (HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+        response.setContentType("text/html;charset=UTF-8");
+       System.out.println( "Encoding: " + response.getCharacterEncoding() );
         try {
             tasks = tasksDAO.getAllTasks();
         } catch (SQLException e) {

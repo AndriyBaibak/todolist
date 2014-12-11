@@ -25,7 +25,7 @@ public class AddServlet extends HttpServlet {
     }
 
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        
+        request.setCharacterEncoding("UTF-8");
         String task_description = request.getParameter("new_task");
         String task_deadline = request.getParameter("deadline");
         SimpleDateFormat sp = new SimpleDateFormat("yyyy.MM.dd");
@@ -37,7 +37,7 @@ public class AddServlet extends HttpServlet {
             e.printStackTrace();
         }
         Tasks task = new Tasks(task_description, date_deadline);
-
+        System.out.println(task.toString());
         tasksDAO.save(task);
         RequestDispatcher rd = getServletContext().getRequestDispatcher("/added.jsp");
         rd.forward(request, response);
