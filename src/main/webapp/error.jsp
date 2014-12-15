@@ -25,5 +25,8 @@
         <td>${Exception}</td>
     </tr>
 </table>
+<form id="back" action="TodoList-1.0" method="post">
+    <input type="submit" value="Повернутись на головну">
+</form>
 </body>
 </html>

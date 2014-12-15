@@ -31,12 +31,12 @@
 <body>
 <div class="center_b">
 
-Завдання видалено!
+    Завдання видалено!
+    <p><img src="picture/delete.jpg"/></p>
 
-<form id="back" action="TodoList-1.0" method="post">
-    <input type="submit" value="Повернутись на головну">
-
-</form>
+    <form id="back" action="TodoList-1.0" method="post">
+        <input type="submit" value="Повернутись на головну">
+    </form>
 </div>
 
 </body>

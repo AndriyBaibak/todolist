@@ -10,38 +10,34 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-/**
- * Created by Андрей on 28.11.2014.
- */
 public class DeleteServlet extends HttpServlet {
     private TasksDAOImpl tasksDAO;
     public Tasks taskForDelete = null;
-    private RequestDispatcher dispatcherForException  = getServletContext().getRequestDispatcher("/error.jsp");
-
-
+    public RequestDispatcher dispatcherForException  = null;
+    public RequestDispatcher dispatcherForDeleteTasks = null;
     public void init() throws ServletException {
         tasksDAO = new TasksDAOImpl();
+        dispatcherForException = getServletContext().getRequestDispatcher("/error.jsp");
+        dispatcherForDeleteTasks = getServletContext().getRequestDispatcher("/delete.jsp");
     }
 
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Integer idTask = Integer.parseInt(request.getParameter("id for delete"));
         try {
             taskForDelete = tasksDAO.getTasksById(idTask);
-        } catch (Throwable e) {
+        } catch (Exception e) {
             String exception = "Помилка при отриманні об'єкта за його id: " + e.toString();
             request.setAttribute("Exception", exception);
             dispatcherForException.forward(request, response);
         }
         System.out.println(idTask);
-           //  System.out.println(taskForDelete.toString());
         try {
             tasksDAO.deleteTasks(taskForDelete);
-        } catch (Throwable e) {
+        } catch (Exception e) {
             String exception = "Помилка при видаленні об'єкта за його id: " + e.toString();
             request.setAttribute("Exception", exception);
             dispatcherForException.forward(request, response);
         }
-        RequestDispatcher rd = getServletContext().getRequestDispatcher("/delete.jsp");
-        rd.forward(request, response);
+        dispatcherForDeleteTasks.forward(request, response);
     }
 }

@@ -14,31 +14,32 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-/**
- * Created by Андрей on 24.11.2014.
- */
 public class AddServlet extends HttpServlet {
     private TasksDAOImpl tasksDAO;
-    public  Date dateDeadline = null;
     private RequestDispatcher dispatcherForException = null;
-    public  SimpleDateFormat sp = new SimpleDateFormat("yyyy.MM.dd");
+    private RequestDispatcher dispatcherForAddTasks = null;
+    public  SimpleDateFormat sp = new SimpleDateFormat("yyyy-MM-dd");
 
     public void init() throws ServletException {
         tasksDAO = new TasksDAOImpl();
         dispatcherForException = getServletContext().getRequestDispatcher("/error.jsp");
+        dispatcherForAddTasks = getServletContext().getRequestDispatcher("/added.jsp");
     }
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.setCharacterEncoding("UTF-8");
-        String taskDescription = request.getParameter("new_task");
-        String taskDeadline = request.getParameter("deadline");
+        Tasks newTask = null;
+        request.setCharacterEncoding("UTF-8");//чомусь без цієї стрічки не читає киррилицю
+        System.out.print(request.getParameter("date"));
+        String taskDescription = request.getParameter("newTask");
+        String taskDeadline = request.getParameter("date");
         try {
-            dateDeadline = sp.parse(taskDeadline);
+            Date dateDeadline = sp.parse(taskDeadline);
+            newTask = new Tasks(taskDescription, dateDeadline);
         }catch (ParseException e) {
            String exception = "Помилка при заддані дати виконання: " + e.toString();
            request.setAttribute("Exception", exception);
            dispatcherForException.forward(request, response);
         }
-        Tasks newTask = new Tasks(taskDescription, dateDeadline);
+
         try {
             tasksDAO.save(newTask);
         } catch (Exception e) {
@@ -46,7 +47,6 @@ public class AddServlet extends HttpServlet {
             request.setAttribute("Exception", exception);
             dispatcherForException.forward(request, response);
         }
-        RequestDispatcher rd = getServletContext().getRequestDispatcher("/added.jsp");
-        rd.forward(request, response);
+        dispatcherForAddTasks.forward(request, response);
     }
 }

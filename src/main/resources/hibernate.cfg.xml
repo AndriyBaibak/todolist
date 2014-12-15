@@ -14,7 +14,6 @@
       <property name="show_sql">true</property>
       <property name="hibernate.connection.characterEncoding"> UTF-8 </property>
       <property name="hibernate.hbm2ddl.auto">create</property>
-
       <property name="cache.provider_class">org.hibernate.cache.internal.NoCachingRegionFactory</property>
 
       <mapping class="entity.Tasks"/>
