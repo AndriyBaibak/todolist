@@ -9,14 +9,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.sql.SQLException;
 
 /**
  * Created by Андрей on 28.11.2014.
  */
 public class DeleteServlet extends HttpServlet {
     private TasksDAOImpl tasksDAO;
-    Tasks taskForDelete = null;
+    public Tasks taskForDelete = null;
+    private RequestDispatcher dispatcherForException  = getServletContext().getRequestDispatcher("/error.jsp");
 
 
     public void init() throws ServletException {
@@ -24,18 +24,22 @@ public class DeleteServlet extends HttpServlet {
     }
 
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
         Integer idTask = Integer.parseInt(request.getParameter("id for delete"));
         try {
             taskForDelete = tasksDAO.getTasksById(idTask);
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (Throwable e) {
+            String exception = "Помилка при отриманні об'єкта за його id: " + e.toString();
+            request.setAttribute("Exception", exception);
+            dispatcherForException.forward(request, response);
         }
-
+        System.out.println(idTask);
+           //  System.out.println(taskForDelete.toString());
         try {
             tasksDAO.deleteTasks(taskForDelete);
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (Throwable e) {
+            String exception = "Помилка при видаленні об'єкта за його id: " + e.toString();
+            request.setAttribute("Exception", exception);
+            dispatcherForException.forward(request, response);
         }
         RequestDispatcher rd = getServletContext().getRequestDispatcher("/delete.jsp");
         rd.forward(request, response);

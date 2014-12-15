@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -16,18 +15,23 @@ import java.util.List;
  */
 public class MainServlet extends HttpServlet {
     private TasksDAOImpl tasksDAO;
-    List tasks = null;
+    protected List tasks = null;
+    private RequestDispatcher dispatcherForException = null;
 
     public void init() throws ServletException {
+
         tasksDAO = new TasksDAOImpl();
+        dispatcherForException = getServletContext().getRequestDispatcher("/error.jsp");
     }
 
     public void doGet (HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.setCharacterEncoding("UTF-8");
+
         try {
             tasks = tasksDAO.getAllTasks();
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            String exception = "Помилка при отриманні усіх наявних завдань: " + e.toString();
+            request.setAttribute("Exception", exception);
+            dispatcherForException.forward(request, response);
         }
         request.setAttribute("tasks", tasks);
         RequestDispatcher rd = getServletContext().getRequestDispatcher("/index.jsp");
@@ -36,8 +40,10 @@ public class MainServlet extends HttpServlet {
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
             tasks = tasksDAO.getAllTasks();
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            String exception = "Помилка при отриманні усіх наявних завдань: " + e.toString();
+            request.setAttribute("Exception", exception);
+            dispatcherForException.forward(request, response);
         }
         request.setAttribute("tasks", tasks);
         RequestDispatcher rd = getServletContext().getRequestDispatcher("/index.jsp");
