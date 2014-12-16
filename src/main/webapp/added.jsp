@@ -15,10 +15,7 @@
     <p><img src="picture/super.jpg"/></p>
 
     <p>
-
-    <form id="back" action="TodoList-1.0" method="post">
-        <input type="submit" value="Повернутись на головну">
-    </form>
+     <a href="/TodoList-1.0">Повернутися на головну</a>
     </p>
 </div>
 

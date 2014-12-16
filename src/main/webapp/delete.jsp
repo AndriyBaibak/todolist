@@ -34,9 +34,9 @@
     Завдання видалено!
     <p><img src="picture/delete.jpg"/></p>
 
-    <form id="back" action="TodoList-1.0" method="post">
-        <input type="submit" value="Повернутись на головну">
-    </form>
+    <p>
+        <a href="/TodoList-1.0">Повернутися на головну</a>
+    </p>
 </div>
 
 </body>

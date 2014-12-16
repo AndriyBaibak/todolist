@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * Created by Андрей on 23.11.2014.
  */
-public class TasksDAOImpl implements TasksDAO {
+public class HibernateTasksDAO implements TasksDAO {
     private Session session;
 
     @Override
