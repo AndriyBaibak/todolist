@@ -18,8 +18,11 @@ public class Service {
     public static List tasks = new ArrayList<Tasks>();
 
     public static void createAndSaveNewTask(String deadline, String description) throws Exception {
-        Date dateDeadline = sp.parse(deadline);
-        Tasks newTasks = new Tasks(description,dateDeadline);
+        System.out.println(deadline);
+        java.sql.Date dateDeadline = java.sql.Date.valueOf(deadline);
+        Tasks newTasks = new Tasks(description, dateDeadline);
+        System.out.println(dateDeadline.toString());
+        System.out.println(newTasks.toString());
         hibernateTasksDAO.save(newTasks);
     }
     public static void deleteTask(String idForDelete)throws Exception{

@@ -18,13 +18,14 @@ public class Tasks {
     private String description;
 
     @Column(name = "createdDate")
-    private Date createdDate;
+    private java.sql.Date createdDate;
 
     @Column(name = "deadline")
-    private Date deadline;
-    public Tasks(String task, Date deadline){
+    private java.sql.Date deadline;
+
+    public Tasks(String task, java.sql.Date deadline){
         this.description = task;
-        this.createdDate = new java.util.Date();
+        this.createdDate =new java.sql.Date(new java.util.Date().getTime());
         this.deadline = deadline;
     }
     public Tasks() {
@@ -41,22 +42,22 @@ public class Tasks {
         this.idTasks = idTasks;
     }
 
-    public Date getCreatedDate() {
+    public java.sql.Date getCreatedDate() {
         return createdDate;
     }
 
-    public void setCreatedDate(Date createdDate) {
+    public void setCreatedDate(java.sql.Date createdDate) {
         this.createdDate = createdDate;
     }
 
     public void setDescription(String description) {
         this.description = description;
     }
-    public Date getDeadline() {
+    public java.sql.Date getDeadline() {
         return deadline;
     }
 
-    public void setDeadline(Date deadline) {
+    public void setDeadline(java.sql.Date deadline) {
         this.deadline = deadline;
     }
 
@@ -66,6 +67,7 @@ public class Tasks {
         sb.append(idTasks);
         sb.append(" ").append(description);
         sb.append(" ").append(createdDate);
+        sb.append(" ").append(deadline);
         return sb.toString();
     }
 }
