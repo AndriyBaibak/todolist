@@ -8,6 +8,9 @@
     <artifactId>TodoList</artifactId>
     <version>1.0</version>
     <packaging>war</packaging>
+    <build>
+        <finalName>todolist</finalName>
+    </build>
     <dependencies>
         <dependency>
             <groupId>javax.servlet.jsp</groupId>
