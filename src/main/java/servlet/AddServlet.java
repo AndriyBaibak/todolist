@@ -2,6 +2,8 @@ package servlet;
 
 
 import dao.Service;
+import org.apache.log4j.Logger;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -9,7 +11,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-public class AddServlet extends HttpServlet {
+public class AddServlet extends javax.servlet.http.HttpServlet implements javax.servlet.Servlet {
+    private static final long serialVersionUID = 1L;
+    static Logger log = Logger.getLogger(AddServlet.class);
+
+
     private RequestDispatcher dispatcherForException = null;
     private RequestDispatcher dispatcherForAddTasks = null;
 
@@ -26,6 +32,7 @@ public class AddServlet extends HttpServlet {
         } catch (Exception e) {
             String exception = "Помилка при збереженні завдання: " + e.toString();
             request.setAttribute("Exception", exception);
+            log.debug("Exception", e);
             dispatcherForException.forward(request, response);
         }
 
