@@ -28,15 +28,15 @@
 
     <servlet-mapping>
         <servlet-name>Log4JInitServlet</servlet-name>
-        <url-pattern>/todolist/init</url-pattern>
+        <url-pattern>/init</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>AddServlet</servlet-name>
-        <url-pattern>/todolist/add</url-pattern>
+        <url-pattern>/add</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>DelServlet</servlet-name>
-        <url-pattern>/todolist/del</url-pattern>
+        <url-pattern>/del</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>MainServlet</servlet-name>

@@ -21,7 +21,7 @@
 </head>
 <body>
 <div id="addtask">
-    <form id="add" action="todolist/add" method="post">
+    <form id="add" action="add" method="post">
 
         <p>Додати нове завдання:<input type="submit" value="Додати"></p>
 
@@ -56,7 +56,7 @@
                 <c:out value="${task.deadline}"></c:out>
             </td>
             <td valign="middle" align="center">
-                <form id="del" action="todolist/del" method="post">
+                <form id="del" action="del" method="post">
                     <input type="hidden" name="id for delete" value="${task.idTasks}">
                     <p><input type="submit" value="Видалити"></p>
                 </form>

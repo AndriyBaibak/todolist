@@ -35,7 +35,7 @@
     <p><img src="/picture/delete.jpg"/></p>
 
     <p>
-        <a href="/todolist">Повернутися на головну</a>
+        <a href="todolist">Повернутися на головну</a>
     </p>
 </div>
 
