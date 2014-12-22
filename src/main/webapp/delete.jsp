@@ -32,7 +32,7 @@
 <div class="center_b">
 
     Завдання видалено!
-    <p><img src="/picture/delete.jpg"/></p>
+    <img src="delete.jpg"/>
 
     <p>
         <a href="todolist">Повернутися на головну</a>

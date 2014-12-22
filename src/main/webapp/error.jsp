@@ -26,7 +26,7 @@
     </tr>
 </table>
 <p>
-    <a href="/todolist">Повернутися на головну</a>
+    <a href="todolist">Повернутися на головну</a>
 </p>
 </body>
 </html>

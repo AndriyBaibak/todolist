@@ -2,10 +2,8 @@ package dao;
 
 import entity.Tasks;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -18,7 +16,9 @@ public class Service {
     public static List tasks = new ArrayList<Tasks>();
 
     public static void createAndSaveNewTask(String deadline, String description) throws Exception {
-
+        if(description==""){
+            throw new Exception("Опис завдання відсутній.");
+        }
         java.sql.Date dateDeadline = java.sql.Date.valueOf(deadline);
         Tasks newTasks = new Tasks(description, dateDeadline);
 

@@ -12,7 +12,7 @@
 <div style="text-align: center;">
     Завдання додано!
 
-    <p><img src="/picture/super.jpg"/></p>
+    <p><img src="super.jpg"/></p>
 
     <p>
      <a href="todolist">Повернутися на головну</a>

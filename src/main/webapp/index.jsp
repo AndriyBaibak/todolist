@@ -12,38 +12,43 @@
     <title>TodoList</title>
     <style type="text/css">
         #addtask {
-            margin-left: 15%; /* Отступ слева */
-            width: 70%; /* Ширина слоя */
-
-            padding: 10px; /* Поля вокруг текста */
+            margin-left: 25%; /* Отступ слева */
+            width: 50%; /* Ширина слоя */
         }
     </style>
 </head>
+<body style="background-color:rgba(48, 48, 48, 0.16)">
 <body>
+<div id="back">
 <div id="addtask">
     <form id="add" action="add" method="post">
 
-        <p>Додати нове завдання:<input type="submit" value="Додати"></p>
+        <div align="center">
+        <p><big>Додати нове завдання </big></p>
+        </div>
 
         <p>Описання завдання:<input id="ntask" name="newTask" type="text"></p>
 
         <p>Введіть кінцеву дату виконання:<input name="date" type="date" name="calendar"></p>
+        <div align="center">
+        <input type="submit" value="Додати">
+        </div>
 
 
     </form>
 </div>
 
-<table width="700" bgcolor="#faebd7" border="1"
+<table width="700" border="1"
        align="center">
 
-    <caption>Усі завдання</caption>
+    <caption><big>Усі завдання</big></caption>
     <tr>
         <th>Описання</th>
         <th>Дата створення</th>
         <th>Кінцева дата виконання</th>
     </tr>
 
-    <div text-align="center"
+    <div text-align="right"
     <c:forEach var="task" items="${tasks}">
         <tr>
             <td valign="middle" align="center">
@@ -64,7 +69,10 @@
         </tr>
     </c:forEach>
     </div>
-</table>
 
+</table>
+<embed align="left" src="http://www.clocktag.com/cs/m51.swf"  width="150" height="150" wmode="transparent" type="application/x-shockwave-flash"></embed><embed align="right" src="http://www.clocktag.com/cs/t51.swf"  width="200" height="110"  wmode="transparent" type="application/x-shockwave-flash"></embed>
+</div>
+</body>
 </body>
 </html>
