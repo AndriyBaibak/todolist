@@ -9,13 +9,13 @@ import java.util.List;
 /**
  * Created by Андрей on 16.12.2014.
  */
-public class Service {
+public class TasksService {
 
-    public static HibernateTasksDAO hibernateTasksDAO = new HibernateTasksDAO();
-    public static SimpleDateFormat sp = new SimpleDateFormat("yyyy-MM-dd");
-    public static List tasks = new ArrayList<Tasks>();
+    public  HibernateTasksDAO hibernateTasksDAO = new HibernateTasksDAO();
+    public  SimpleDateFormat sp = new SimpleDateFormat("yyyy-MM-dd");
+    public  List tasks = new ArrayList<Tasks>();
 
-    public static void createAndSaveNewTask(String deadline, String description) throws Exception {
+    public  void createAndSaveNewTask(String deadline, String description) throws Exception {
         if(description == ""){
             throw new Exception("Опис завдання відсутній.");
         }
@@ -24,13 +24,14 @@ public class Service {
 
         hibernateTasksDAO.save(newTasks);
     }
-    public static void deleteTask(String idForDelete)throws Exception{
+    public  void deleteTask(String idForDelete)throws Exception{
         int idTask = Integer.parseInt(idForDelete);
         hibernateTasksDAO.deleteTasks(hibernateTasksDAO.getTasksById(idTask));
     }
-    public static List getAllTasks() throws Exception {
+    public  List getAllTasks() throws Exception {
         tasks = hibernateTasksDAO.getAllTasks();
         return tasks;
     }
+
 
 }

@@ -17,15 +17,16 @@ public class Tasks {
     @Column(name = "description")
     private String description;
 
+    //@Temporal(TemporalType.DATE)
     @Column(name = "createdDate")
-    private java.sql.Date createdDate;
+    private java.util.Date createdDate;
 
     @Column(name = "deadline")
     private java.sql.Date deadline;
 
     public Tasks(String task, java.sql.Date deadline){
         this.description = task;
-        this.createdDate =new java.sql.Date(new java.util.Date().getTime());
+        this.createdDate = new java.util.Date();
         this.deadline = deadline;
     }
     public Tasks() {
@@ -42,11 +43,11 @@ public class Tasks {
         this.idTasks = idTasks;
     }
 
-    public java.sql.Date getCreatedDate() {
+    public java.util.Date getCreatedDate() {
         return createdDate;
     }
 
-    public void setCreatedDate(java.sql.Date createdDate) {
+    public void setCreatedDate(java.util.Date createdDate) {
         this.createdDate = createdDate;
     }
 
@@ -69,5 +70,27 @@ public class Tasks {
         sb.append(" ").append(createdDate);
         sb.append(" ").append(deadline);
         return sb.toString();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Tasks)) return false;
+
+        Tasks tasks = (Tasks) o;
+
+        if (createdDate != null ? !createdDate.equals(tasks.createdDate) : tasks.createdDate != null) return false;
+        if (deadline != null ? !deadline.equals(tasks.deadline) : tasks.deadline != null) return false;
+        if (description != null ? !description.equals(tasks.description) : tasks.description != null) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = description != null ? description.hashCode() : 0;
+        result = 31 * result + (createdDate != null ? createdDate.hashCode() : 0);
+        result = 31 * result + (deadline != null ? deadline.hashCode() : 0);
+        return result;
     }
 }

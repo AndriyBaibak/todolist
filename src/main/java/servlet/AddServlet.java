@@ -1,7 +1,7 @@
 package servlet;
 
 
-import dao.Service;
+import dao.TasksService;
 import org.apache.log4j.Logger;
 
 import javax.servlet.RequestDispatcher;
@@ -13,8 +13,7 @@ import java.io.IOException;
 public class AddServlet extends javax.servlet.http.HttpServlet implements javax.servlet.Servlet {
     private static final long serialVersionUID = 1L;
     static Logger log = Logger.getLogger(AddServlet.class);
-
-
+    protected TasksService someworks = new TasksService();
     private RequestDispatcher dispatcherForException = null;
     private RequestDispatcher dispatcherForAddTasks = null;
 
@@ -27,7 +26,7 @@ public class AddServlet extends javax.servlet.http.HttpServlet implements javax.
         String taskDescription = request.getParameter("newTask");
         String taskDeadline = request.getParameter("date");
         try {
-            Service.createAndSaveNewTask(taskDeadline, taskDescription);
+            someworks.createAndSaveNewTask(taskDeadline, taskDescription);
         } catch (Exception e) {
             String exception = "Помилка при збереженні завдання: " + e.toString();
             request.setAttribute("Exception", exception);

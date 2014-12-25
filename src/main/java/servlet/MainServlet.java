@@ -1,5 +1,5 @@
 package servlet;
-import dao.Service;
+import dao.TasksService;
 import org.apache.log4j.Logger;
 
 import javax.servlet.RequestDispatcher;
@@ -14,6 +14,7 @@ public class MainServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
     static Logger log = Logger.getLogger(MainServlet.class);
     protected List tasks = null;
+    protected TasksService someworks = new TasksService();
     private RequestDispatcher dispatcherForException = null;
     private RequestDispatcher dispatcherForShowTasks = null;
 
@@ -23,7 +24,7 @@ public class MainServlet extends HttpServlet {
     }
     public void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
-           tasks = Service.getAllTasks();
+           tasks = someworks.getAllTasks();
         } catch (Exception e) {
             String exception = "Помилка при отриманні усіх наявних завдань: " + e.toString();
             request.setAttribute("Exception", exception);
@@ -32,6 +33,8 @@ public class MainServlet extends HttpServlet {
         }
         request.setAttribute("tasks", tasks);
         dispatcherForShowTasks.forward(request, response);
+
     }
+
 
 }
