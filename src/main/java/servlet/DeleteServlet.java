@@ -19,7 +19,7 @@ public class DeleteServlet extends HttpServlet {
 
     public void init() throws ServletException {
         dispatcherForException = getServletContext().getRequestDispatcher("/error.jsp");
-        dispatcherForDeleteTasks = getServletContext().getRequestDispatcher("/delete.jsp");
+        dispatcherForDeleteTasks = getServletContext().getRequestDispatcher("/todolist");
     }
 
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -32,6 +32,7 @@ public class DeleteServlet extends HttpServlet {
             log.debug("Exception", e);
             dispatcherForException.forward(request, response);
         }
+
         dispatcherForDeleteTasks.forward(request, response);
     }
 }

@@ -16,7 +16,7 @@ public class Service {
     public static List tasks = new ArrayList<Tasks>();
 
     public static void createAndSaveNewTask(String deadline, String description) throws Exception {
-        if(description==""){
+        if(description == ""){
             throw new Exception("Опис завдання відсутній.");
         }
         java.sql.Date dateDeadline = java.sql.Date.valueOf(deadline);
