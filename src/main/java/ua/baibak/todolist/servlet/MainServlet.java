@@ -1,39 +1,40 @@
-package servlet;
-
-
-import dao.TasksService;
+package ua.baibak.todolist.servlet;
+import ua.baibak.todolist.Service.TasksService;
 import org.apache.log4j.Logger;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
 
-public class AddServlet extends javax.servlet.http.HttpServlet implements javax.servlet.Servlet {
+public class MainServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
-    static Logger log = Logger.getLogger(AddServlet.class);
+    static Logger log = Logger.getLogger(MainServlet.class);
+    protected List tasks = null;
     protected TasksService someworks = new TasksService();
     private RequestDispatcher dispatcherForException = null;
-    private RequestDispatcher dispatcherForAddTasks = null;
+    private RequestDispatcher dispatcherForShowTasks = null;
 
     public void init() throws ServletException {
         dispatcherForException = getServletContext().getRequestDispatcher("/error.jsp");
-        dispatcherForAddTasks = getServletContext().getRequestDispatcher("/todolist");
+        dispatcherForShowTasks = getServletContext().getRequestDispatcher("/index.jsp");
     }
     public void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.setCharacterEncoding("UTF-8");
-        String taskDescription = request.getParameter("newTask");
-        String taskDeadline = request.getParameter("date");
         try {
-            someworks.createAndSaveNewTask(taskDeadline, taskDescription);
+           tasks = someworks.getAllTasks();
         } catch (Exception e) {
-            String exception = "Помилка при збереженні завдання: " + e.toString();
+            String exception = "Помилка при отриманні усіх наявних завдань: " + e.toString();
             request.setAttribute("Exception", exception);
             log.debug("Exception", e);
             dispatcherForException.forward(request, response);
         }
+        request.setAttribute("tasks", tasks);
+        dispatcherForShowTasks.forward(request, response);
 
-        dispatcherForAddTasks.forward(request, response);
     }
+
+
 }

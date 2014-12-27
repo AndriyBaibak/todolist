@@ -1,4 +1,4 @@
-package servlet;
+package ua.baibak.todolist.servlet;
 
 /**
  * Created by Андрей on 18.12.2014.

@@ -1,7 +1,6 @@
-package entity;
+package ua.baibak.todolist.entity;
 
 import javax.persistence.*;
-import java.util.Date;
 
 /**
  * Created by Андрей on 23.11.2014.

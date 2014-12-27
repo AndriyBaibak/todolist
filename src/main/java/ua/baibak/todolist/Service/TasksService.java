@@ -1,6 +1,7 @@
-package dao;
+package ua.baibak.todolist.Service;
 
-import entity.Tasks;
+import ua.baibak.todolist.dao.HibernateTasksDAO;
+import ua.baibak.todolist.entity.Tasks;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -11,7 +12,7 @@ import java.util.List;
  */
 public class TasksService {
 
-    public  HibernateTasksDAO hibernateTasksDAO = new HibernateTasksDAO();
+    public HibernateTasksDAO hibernateTasksDAO = new HibernateTasksDAO();
     public  SimpleDateFormat sp = new SimpleDateFormat("yyyy-MM-dd");
     public  List tasks = new ArrayList<Tasks>();
 

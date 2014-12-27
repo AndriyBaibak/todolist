@@ -1,6 +1,6 @@
-package dao;
+package ua.baibak.todolist.dao;
 
-import entity.Tasks;
+import ua.baibak.todolist.entity.Tasks;
 
 import java.util.List;
 

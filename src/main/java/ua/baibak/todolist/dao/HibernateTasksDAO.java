@@ -1,6 +1,6 @@
-package dao;
+package ua.baibak.todolist.dao;
 
-import entity.Tasks;
+import ua.baibak.todolist.entity.Tasks;
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
 
@@ -18,7 +18,7 @@ public class HibernateTasksDAO implements TasksDAO {
     @Override
     public void save(Tasks todo)throws Exception{
         try {
-            session = HibernateUtil.getSessionFactory().getCurrentSession();
+            session = HibernateUtill.getSessionFactory().getCurrentSession();
             session.beginTransaction();
             session.save(todo);
             session.getTransaction().commit();
@@ -41,9 +41,9 @@ public class HibernateTasksDAO implements TasksDAO {
     public Tasks getTasksById(int id) throws Exception {
         Tasks res = null;
         try {
-            session = HibernateUtil.getSessionFactory().getCurrentSession();
+            session = HibernateUtill.getSessionFactory().getCurrentSession();
             session.beginTransaction();
-            res = (Tasks) session.get(entity.Tasks.class, id);
+            res = (Tasks) session.get(ua.baibak.todolist.entity.Tasks.class, id);
             session.getTransaction().commit();
         } catch (Exception e) {
             log.debug("Exception in method getTasksById from class HibernateTasksDAO", e);
@@ -60,8 +60,8 @@ public class HibernateTasksDAO implements TasksDAO {
         Session session = null;
         List tasks = new ArrayList<Tasks>();
         try {
-            session = HibernateUtil.getSessionFactory().openSession();
-            tasks = session.createCriteria(entity.Tasks.class).addOrder(org.hibernate.criterion.Order.asc("deadline")).list();
+            session = HibernateUtill.getSessionFactory().openSession();
+            tasks = session.createCriteria(ua.baibak.todolist.entity.Tasks.class).addOrder(org.hibernate.criterion.Order.asc("deadline")).list();
         } catch (Exception e) {
 
             log.info("Exception in method getAllTasks from class HibernateTasksDAO", e);
@@ -77,7 +77,7 @@ public class HibernateTasksDAO implements TasksDAO {
     @Override
     public void deleteTasks(Tasks todo) throws Exception {
         try {
-            session = HibernateUtil.getSessionFactory().getCurrentSession();
+            session = HibernateUtill.getSessionFactory().getCurrentSession();
             session.beginTransaction();
             session.delete(todo);
             session.getTransaction().commit();
