@@ -1,7 +1,7 @@
 package ua.baibak.todolist.servlet;
 
 
-import ua.baibak.todolist.Service.TasksService;
+import ua.baibak.todolist.service.TasksService;
 import org.apache.log4j.Logger;
 
 import javax.servlet.RequestDispatcher;

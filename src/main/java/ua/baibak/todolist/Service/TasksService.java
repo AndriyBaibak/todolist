@@ -1,4 +1,4 @@
-package ua.baibak.todolist.Service;
+package ua.baibak.todolist.service;
 
 import ua.baibak.todolist.dao.HibernateTasksDAO;
 import ua.baibak.todolist.entity.Tasks;
