@@ -21,6 +21,8 @@ public class MainServlet extends HttpServlet {
     public void init() throws ServletException {
         dispatcherForException = getServletContext().getRequestDispatcher("/error.jsp");
         dispatcherForShowTasks = getServletContext().getRequestDispatcher("/index.jsp");
+        someworks.createTable();
+
     }
     public void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {

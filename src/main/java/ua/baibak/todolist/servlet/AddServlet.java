@@ -25,6 +25,7 @@ public class AddServlet extends javax.servlet.http.HttpServlet implements javax.
         request.setCharacterEncoding("UTF-8");
         String taskDescription = request.getParameter("newTask");
         String taskDeadline = request.getParameter("date");
+        System.out.println(taskDescription);
         try {
             someworks.createAndSaveNewTask(taskDeadline, taskDescription);
         } catch (Exception e) {

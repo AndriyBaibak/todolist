@@ -1,6 +1,8 @@
 package ua.baibak.todolist.entity;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import java.sql.Date;
 
 /**
  * Created by Андрей on 23.11.2014.
@@ -8,25 +10,29 @@ import javax.persistence.*;
 @Entity
 @Table(name = "tasks")
 public class Tasks {
-    @Id
-    @Column(name = "idTasks")
-    @GeneratedValue(strategy=GenerationType.AUTO)
-    public int idTasks;
 
-    @Column(name = "description")
+    public int id;
+
+
     private String description;
 
-    //@Temporal(TemporalType.DATE)
-    @Column(name = "createdDate")
+
     private java.util.Date createdDate;
 
-    @Column(name = "deadline")
+
     private java.sql.Date deadline;
 
-    public Tasks(String task, java.sql.Date deadline){
-        this.description = task;
+    public Tasks(String description, java.sql.Date deadline){
+        this.description = description;
         this.createdDate = new java.util.Date();
         this.deadline = deadline;
+    }
+    public Tasks(int id, String description, Date createdDate, java.sql.Date deadline){
+        this.id = id;
+        this.description = description;
+        this.createdDate = createdDate;
+        this.deadline = deadline;
+
     }
     public Tasks() {
     }
@@ -35,11 +41,11 @@ public class Tasks {
     }
 
     public int getIdTasks() {
-        return idTasks;
+        return id;
     }
 
     public void setIdTasks(int idTasks) {
-        this.idTasks = idTasks;
+        this.id = idTasks;
     }
 
     public java.util.Date getCreatedDate() {
@@ -64,7 +70,7 @@ public class Tasks {
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder();
-        sb.append(idTasks);
+        sb.append(id);
         sb.append(" ").append(description);
         sb.append(" ").append(createdDate);
         sb.append(" ").append(deadline);

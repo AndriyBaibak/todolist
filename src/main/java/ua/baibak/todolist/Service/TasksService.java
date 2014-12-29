@@ -1,6 +1,6 @@
 package ua.baibak.todolist.Service;
 
-import ua.baibak.todolist.dao.HibernateTasksDAO;
+import ua.baibak.todolist.dao.JdbcTasksDAO;
 import ua.baibak.todolist.entity.Tasks;
 
 import java.text.SimpleDateFormat;
@@ -12,7 +12,7 @@ import java.util.List;
  */
 public class TasksService {
 
-    public HibernateTasksDAO hibernateTasksDAO = new HibernateTasksDAO();
+    public JdbcTasksDAO jdbcTasksDAO = new JdbcTasksDAO();
     public  SimpleDateFormat sp = new SimpleDateFormat("yyyy-MM-dd");
     public  List tasks = new ArrayList<Tasks>();
 
@@ -21,17 +21,23 @@ public class TasksService {
             throw new Exception("Опис завдання відсутній.");
         }
         java.sql.Date dateDeadline = java.sql.Date.valueOf(deadline);
-        Tasks newTasks = new Tasks(description, dateDeadline);
-
-        hibernateTasksDAO.save(newTasks);
+        System.out.println(description);
+        jdbcTasksDAO.save(description,dateDeadline);
     }
     public  void deleteTask(String idForDelete)throws Exception{
         int idTask = Integer.parseInt(idForDelete);
-        hibernateTasksDAO.deleteTasks(hibernateTasksDAO.getTasksById(idTask));
+       jdbcTasksDAO.deleteTasks(idTask);
     }
     public  List getAllTasks() throws Exception {
-        tasks = hibernateTasksDAO.getAllTasks();
+        tasks = jdbcTasksDAO.getAllTasks();
         return tasks;
+    }
+    public void createTable(){
+        try {
+            jdbcTasksDAO.createTable();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 
