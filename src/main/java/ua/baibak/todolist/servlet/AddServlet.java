@@ -1,7 +1,7 @@
 package ua.baibak.todolist.servlet;
 
 
-import ua.baibak.todolist.Service.TasksService;
+import ua.baibak.todolist.service.TasksService;
 import org.apache.log4j.Logger;
 
 import javax.servlet.RequestDispatcher;
@@ -12,8 +12,8 @@ import java.io.IOException;
 
 public class AddServlet extends javax.servlet.http.HttpServlet implements javax.servlet.Servlet {
     private static final long serialVersionUID = 1L;
-    static Logger log = Logger.getLogger(AddServlet.class);
-    protected TasksService someworks = new TasksService();
+    private static Logger log = Logger.getLogger(AddServlet.class);
+    private TasksService objectToActionTasks = new TasksService();
     private RequestDispatcher dispatcherForException = null;
     private RequestDispatcher dispatcherForAddTasks = null;
 
@@ -25,9 +25,8 @@ public class AddServlet extends javax.servlet.http.HttpServlet implements javax.
         request.setCharacterEncoding("UTF-8");
         String taskDescription = request.getParameter("newTask");
         String taskDeadline = request.getParameter("date");
-        System.out.println(taskDescription);
         try {
-            someworks.createAndSaveNewTask(taskDeadline, taskDescription);
+            objectToActionTasks.createAndSaveNewTask(taskDeadline, taskDescription);
         } catch (Exception e) {
             String exception = "Помилка при збереженні завдання: " + e.toString();
             request.setAttribute("Exception", exception);

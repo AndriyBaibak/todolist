@@ -29,7 +29,7 @@
 
         <p>Описання завдання:<input id="ntask" name="newTask" type="text"></p>
 
-        <p>Введіть кінцеву дату виконання:<input name="date" type="date" name="calendar"></p>
+        <p>Оберіть кінцеву дату виконання:<input name="date" type="date" name="calendar"></p>
         <div align="center">
         <input type="submit" value="Додати">
         </div>

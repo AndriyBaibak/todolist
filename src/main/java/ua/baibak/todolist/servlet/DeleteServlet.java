@@ -1,7 +1,7 @@
 package ua.baibak.todolist.servlet;
 
 
-import ua.baibak.todolist.Service.TasksService;
+import ua.baibak.todolist.service.TasksService;
 import org.apache.log4j.Logger;
 
 import javax.servlet.RequestDispatcher;
@@ -13,10 +13,10 @@ import java.io.IOException;
 
 public class DeleteServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
-    static Logger log = Logger.getLogger(DeleteServlet.class);
-    protected TasksService someworks = new TasksService();
-    public RequestDispatcher dispatcherForException  = null;
-    public RequestDispatcher dispatcherForDeleteTasks = null;
+    private static Logger log = Logger.getLogger(DeleteServlet.class);
+    private TasksService objectToActionTasks = new TasksService();
+    private RequestDispatcher dispatcherForException  = null;
+    private RequestDispatcher dispatcherForDeleteTasks = null;
 
     public void init() throws ServletException {
         dispatcherForException = getServletContext().getRequestDispatcher("/error.jsp");
@@ -26,7 +26,7 @@ public class DeleteServlet extends HttpServlet {
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String idForDelete = request.getParameter("id for delete");
         try {
-            someworks.deleteTask(idForDelete);
+            objectToActionTasks.deleteTask(idForDelete);
         } catch (Exception e) {
             String exception = "Помилка при видаленні об'єкта за його id: " + e.toString();
             request.setAttribute("Exception", exception);

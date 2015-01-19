@@ -1,33 +1,20 @@
 package ua.baibak.todolist.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
-import java.sql.Date;
+import java.util.Date;
 
-/**
- * Created by Андрей on 23.11.2014.
- */
-@Entity
-@Table(name = "tasks")
 public class Tasks {
-
     public int id;
-
-
     private String description;
-
-
     private java.util.Date createdDate;
+    private java.util.Date deadline;
 
 
-    private java.sql.Date deadline;
-
-    public Tasks(String description, java.sql.Date deadline){
+    public Tasks(String description, java.util.Date deadline){
         this.description = description;
         this.createdDate = new java.util.Date();
         this.deadline = deadline;
     }
-    public Tasks(int id, String description, Date createdDate, java.sql.Date deadline){
+    public Tasks(int id, String description, Date createdDate, java.util.Date deadline){
         this.id = id;
         this.description = description;
         this.createdDate = createdDate;
@@ -59,11 +46,11 @@ public class Tasks {
     public void setDescription(String description) {
         this.description = description;
     }
-    public java.sql.Date getDeadline() {
+    public java.util.Date getDeadline() {
         return deadline;
     }
 
-    public void setDeadline(java.sql.Date deadline) {
+    public void setDeadline(java.util.Date deadline) {
         this.deadline = deadline;
     }
 
