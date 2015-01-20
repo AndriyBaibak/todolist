@@ -17,6 +17,34 @@
         }
     </style>
 </head>
+<script type="text/javascript">
+    function update(txt){
+
+        document.getElementById('description').innerHTML = txt.value;
+        var id = document.getElementById('idTask').value;
+        var newDescription = txt.value;
+        alert(newDescription + id);
+        $.ajax({
+            type: "POST",
+            url: "/todolist/update",
+            data:{"newDescription":newDescription,"id":id},
+            success: function(msg){
+                alert( "Data Saved: " + msg );
+            }
+        });
+    }
+</script>
+<script type="text/javascript">
+    function change(idName) {
+        if(document.getElementById(idName).style.display=='none') {
+            document.getElementById(idName).style.display = '';
+        } else {
+            document.getElementById(idName).style.display = 'none';
+        }
+        return false;
+    }
+</script>
+
 <body style="background-color:rgba(48, 48, 48, 0.16)">
 <body>
 <div id="back">
@@ -29,7 +57,7 @@
 
         <p>Описання завдання:<input id="ntask" name="newTask" type="text"></p>
 
-        <p>Оберіть кінцеву дату виконання:<input name="date" type="date" name="calendar"></p>
+        <p>Оберіть кінцеву дату виконання:<input id="date" type="date" name="calendar"></p>
         <div align="center">
         <input type="submit" value="Додати">
         </div>
@@ -51,8 +79,10 @@
     <div text-align="right"
     <c:forEach var="task" items="${tasks}">
         <tr>
-            <td valign="middle" align="center">
-                <c:out value="${task.description}"></c:out>
+
+            <td valign="middle" align="center" >
+                <div id = 'description' onclick="change('test')"> <c:out value="${task.description}"> </c:out></div><br>
+                <input style="display:none" id='test' type='text' onchange="update(test)">
             </td>
             <td valign="middle" align="center">
                 <c:out value="${task.createdDate}"></c:out>
@@ -62,7 +92,7 @@
             </td>
             <td valign="middle" align="center">
                 <form id="del" action="/todolist/del" method="post">
-                    <input type="hidden" name="id for delete" value="${task.idTasks}">
+                    <input id='idTask' type="hidden" name="id for delete" value="${task.idTasks}">
                     <p><input type="submit" value="Видалити"></p>
                 </form>
             </td>

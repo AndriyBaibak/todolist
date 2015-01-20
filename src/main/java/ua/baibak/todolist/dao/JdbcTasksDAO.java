@@ -57,9 +57,24 @@ public class JDBCTasksDAO implements TasksDAO {
     }
 
     @Override
-    public void updateTasks(Tasks todo) throws Exception {
-
-    }
+    public void updateTasks(String newDesciption, String id) throws Exception {
+       String updateTableSQL = "UPDATE tasks SET description = " + newDesciption + " WHERE id=" + id + ";";
+        try {
+            dbConnection = getConnection();
+            statement = dbConnection.createStatement();
+            statement.executeUpdate(updateTableSQL);
+            System.out.println("Record is update from tasks table!");
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            if (statement != null) {
+                statement.close();
+            }
+            if (dbConnection != null) {
+                dbConnection.close();
+            }
+        }
+           }
 
     @Override
     public List getAllTasks() throws Exception {
