@@ -4,6 +4,7 @@
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" language="java" %>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 
 
 <html>
@@ -12,8 +13,8 @@
     <title>TodoList</title>
     <style type="text/css">
         #addtask {
-            margin-left: 25%; /* Отступ слева */
-            width: 50%; /* Ширина слоя */
+            margin-left: 25%;
+            width: 50%;
         }
     </style>
 </head>
@@ -23,23 +24,20 @@
         document.getElementById('description').innerHTML = txt.value;
         var id = document.getElementById('idTask').value;
         var newDescription = txt.value;
-        alert(newDescription + id);
         $.ajax({
             type: "POST",
             url: "/todolist/update",
-            data:{"newDescription":newDescription,"id":id},
-            success: function(msg){
-                alert( "Data Saved: " + msg );
-            }
+            data:{"newDescription":newDescription,"id":id}
         });
     }
 </script>
 <script type="text/javascript">
-    function change(idName) {
-        if(document.getElementById(idName).style.display=='none') {
-            document.getElementById(idName).style.display = '';
+    function change(idInput, idDescription) {
+        if(document.getElementById(idInput).style.display=='none') {
+            document.getElementById(idInput).style.display = '';
+            document.getElementById(idDescription).style.display = 'none';
         } else {
-            document.getElementById(idName).style.display = 'none';
+            document.getElementById(idInput).style.display = 'none';
         }
         return false;
     }
@@ -81,8 +79,8 @@
         <tr>
 
             <td valign="middle" align="center" >
-                <div id = 'description' onclick="change('test')"> <c:out value="${task.description}"> </c:out></div><br>
-                <input style="display:none" id='test' type='text' onchange="update(test)">
+                <div id = 'description' onclick="change('test','description')"> <c:out value="${task.description}"> </c:out></div><br>
+                <input style="display:none" id='test' type='text' onblur="update(test)" value="${task.description}">
             </td>
             <td valign="middle" align="center">
                 <c:out value="${task.createdDate}"></c:out>

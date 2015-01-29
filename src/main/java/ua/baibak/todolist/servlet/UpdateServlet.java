@@ -30,7 +30,7 @@ public class UpdateServlet extends HttpServlet {
         String newDescription = request.getParameter("newDescription");
         String idTask = request.getParameter("id");
         System.out.println("in updateservlet------------");
-        System.out.println(newDescription);
+        System.out.println(newDescription + "111111111111");
         System.out.println(idTask);
 
         try {
