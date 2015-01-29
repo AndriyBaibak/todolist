@@ -13,7 +13,6 @@ import java.io.IOException;
 public class AddServlet extends javax.servlet.http.HttpServlet implements javax.servlet.Servlet {
     private static final long serialVersionUID = 1L;
     private static Logger log = Logger.getLogger(AddServlet.class);
-    private TasksService objectToActionTasks = new TasksService();
     private RequestDispatcher dispatcherForException = null;
     private RequestDispatcher dispatcherForAddTasks = null;
 
@@ -26,7 +25,7 @@ public class AddServlet extends javax.servlet.http.HttpServlet implements javax.
         String taskDescription = request.getParameter("newTask");
         String taskDeadline = request.getParameter("calendar");
         try {
-            objectToActionTasks.createAndSaveNewTask(taskDeadline, taskDescription);
+            TasksService.getObjectToActionTasks().createAndSaveNewTask(taskDeadline, taskDescription);
         } catch (Exception e) {
             String exception = "Помилка при збереженні завдання: " + e.toString();
             request.setAttribute("Exception", exception);

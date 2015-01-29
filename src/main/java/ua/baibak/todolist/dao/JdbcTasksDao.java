@@ -16,36 +16,26 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class JdbcTasksDao implements TasksDao {
-    private Connection dbConnection;
+    private Connection dbConnection = null;
     private Statement statement = null;
-    private AtomicInteger counter = new AtomicInteger();
+    private AtomicInteger counter = new AtomicInteger(1);
     private static final long serialVersionUID = 1L;
-    static Logger log = Logger.getLogger(JdbcTasksDao.class);
-
-
-    private InitialContext ic;
-    private DataSource ds;
-
-
-
-
-
+    private static Logger log = Logger.getLogger(JdbcTasksDao.class);
+    private InitialContext ic = null;
+    private DataSource ds = null;
 
     @Override
     public void save(String description, Date deadline)throws Exception{
         String insertTableSQL = "INSERT INTO tasks VALUES ('" + counter.toString() + "','" +  description + "','" + changeUtilDateToSQL(new Date())+ "','" + changeUtilDateToSQL(deadline) +"');";
         try {
             ic = new InitialContext();
-            System.out.println("per lookup in save");
-            ds = (DataSource) ic.lookup("java:/comp/env/jdbc/todolist"); // вместо написать java:/comp/env/jdbc/TestDB
-            System.out.println(ds.toString()+ " in getConnection");
+            ds = (DataSource) ic.lookup("java:/comp/env/jdbc/todolist");
             dbConnection = ds.getConnection();
             statement = dbConnection.createStatement();
             statement.executeUpdate(insertTableSQL);
             counter.incrementAndGet() ;
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
-            log.debug(e);
+            log.debug("SQLException in save " + e);
         } finally {
             if (statement != null) {
                 statement.close();
@@ -61,16 +51,12 @@ public class JdbcTasksDao implements TasksDao {
        String updateTableSQL = "UPDATE tasks SET description = '" + newDesciption + "' WHERE id=" + id + ";";
         try {
             ic = new InitialContext();
-            System.out.println("per lookup in update");
-            ds = (DataSource) ic.lookup("java:/comp/env/jdbc/todolist"); // вместо написать java:/comp/env/jdbc/TestDB
-            System.out.println(ds.toString()+ " in getConnection");
+            ds = (DataSource) ic.lookup("java:/comp/env/jdbc/todolist");
             dbConnection = ds.getConnection();
             statement = dbConnection.createStatement();
             statement.executeUpdate(updateTableSQL);
-            System.out.println("Record is update from tasks table!");
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
-            log.debug("error in update catch " + e);
+            log.debug("SQLException in update method" + e);
         } finally {
             if (statement != null) {
                 statement.close();
@@ -79,20 +65,16 @@ public class JdbcTasksDao implements TasksDao {
                 dbConnection.close();
             }
         }
-           }
+    }
 
     @Override
     public List getAllTasks() throws Exception {
         List tasks = new ArrayList<Tasks>();
         String selectTableSQL = "SELECT*FROM tasks ORDER BY deadline;  ";
-        log.debug("in get all tasks method");
         try {
             ic = new InitialContext();
-            System.out.println("per lookup in getalltasks");
-            ds = (DataSource) ic.lookup("java:/comp/env/jdbc/todolist"); // вместо написать java:/comp/env/jdbc/TestDB
-            System.out.println(ds.toString()+ " in getConnection");
+            ds = (DataSource) ic.lookup("java:/comp/env/jdbc/todolist");
             dbConnection = ds.getConnection();
-            log.debug("in get all tasks method");
             statement = dbConnection.createStatement();
             ResultSet rs = statement.executeQuery(selectTableSQL);
             while (rs.next()) {
@@ -104,7 +86,14 @@ public class JdbcTasksDao implements TasksDao {
                 tasks.add(taskforview);
             }
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            log.debug("SQLException in getalltasks method " + e);
+        }finally {
+            if (statement != null) {
+                statement.close();
+            }
+            if (dbConnection != null) {
+                dbConnection.close();
+            }
         }
         return tasks;
     }
@@ -112,18 +101,22 @@ public class JdbcTasksDao implements TasksDao {
 
     @Override
     public void deleteTasks(int id) throws Exception {
-        String deleteTableSQL = "DELETE FROM tasks WHERE id = " + id +";";
+        String deleteTableSQL = "DELETE FROM tasks WHERE id = " + id + ";";
         try {
             ic = new InitialContext();
-            System.out.println("per lookup in delete");
-            ds = (DataSource) ic.lookup("java:/comp/env/jdbc/todolist"); // вместо написать java:/comp/env/jdbc/TestDB
-            System.out.println(ds.toString()+ " in getConnection");
+            ds = (DataSource) ic.lookup("java:/comp/env/jdbc/todolist");
             dbConnection = ds.getConnection();
             statement = dbConnection.createStatement();
             statement.execute(deleteTableSQL);
-            System.out.println("Record is deleted from tasks table!");
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            log.debug("SQLException in deleteTasks method " + e);
+        } finally {
+            if (statement != null) {
+                statement.close();
+            }
+            if (dbConnection != null) {
+                dbConnection.close();
+            }
         }
     }
 

@@ -1,5 +1,3 @@
-<%@ page import="java.util.Iterator" %>
-<%@ page import="java.util.List" %>
 
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" language="java" %>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
@@ -19,25 +17,30 @@
     </style>
 </head>
 <script type="text/javascript">
-    function update(txt){
-
-        document.getElementById('description').innerHTML = txt.value;
-        var id = document.getElementById('idTask').value;
-        var newDescription = txt.value;
+    function update(textToSave, id){
+        var idTask = id;
+        var newDescription = textToSave.value;
         $.ajax({
             type: "POST",
             url: "/todolist/update",
-            data:{"newDescription":newDescription,"id":id}
+            data:{"newDescription":newDescription,"id":idTask}
         });
+            document.getElementById('inputLine').style.display='none';
+            document.getElementById(id).style.display = '';
+            document.getElementById(id).innerHTML = textToSave.value;
+
+
+
     }
 </script>
 <script type="text/javascript">
-    function change(idInput, idDescription) {
-        if(document.getElementById(idInput).style.display=='none') {
-            document.getElementById(idInput).style.display = '';
-            document.getElementById(idDescription).style.display = 'none';
+    function change(show, hidden) {
+
+        if(document.getElementById(show).style.display=='none') {
+            document.getElementById(show).style.display = '';
+            document.getElementById(hidden).style.display = 'none';
         } else {
-            document.getElementById(idInput).style.display = 'none';
+            document.getElementById(show).style.display = 'none';
         }
         return false;
     }
@@ -74,13 +77,14 @@
         <th>Кінцева дата виконання</th>
     </tr>
 
-    <div text-align="right"
-    <c:forEach var="task" items="${tasks}">
-        <tr>
 
+    <c:forEach var="task" items="${tasks}">
+
+            <tr>
+                <div >
             <td valign="middle" align="center" >
-                <div id = 'description' onclick="change('test','description')"> <c:out value="${task.description}"> </c:out></div><br>
-                <input style="display:none" id='test' type='text' onblur="update(test)" value="${task.description}">
+                <div id = "${task.id}" onclick="change('inputLine','${task.id}')"> <c:out value="${task.description}"> </c:out></div><br>
+                <input style="display:none" id="inputLine" type='text' onchange="update(inputLine,${task.id})" value="${task.description}">
             </td>
             <td valign="middle" align="center">
                 <c:out value="${task.createdDate}"></c:out>
@@ -90,13 +94,15 @@
             </td>
             <td valign="middle" align="center">
                 <form id="del" action="/todolist/del" method="post">
-                    <input id='idTask' type="hidden" name="id for delete" value="${task.idTasks}">
+                    <input id='idTask' type="hidden" name="id for delete" value="${task.id}">
                     <p><input type="submit" value="Видалити"></p>
                 </form>
             </td>
-        </tr>
+            </div>
+            </tr>
+
     </c:forEach>
-    </div>
+
 
 </table>
 <embed align="left" src="http://www.clocktag.com/cs/m51.swf"  width="150" height="150" wmode="transparent" type="application/x-shockwave-flash"></embed><embed align="right" src="http://www.clocktag.com/cs/t51.swf"  width="200" height="110"  wmode="transparent" type="application/x-shockwave-flash"></embed>

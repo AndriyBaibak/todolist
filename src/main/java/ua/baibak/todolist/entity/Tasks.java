@@ -27,11 +27,11 @@ public class Tasks {
         return description;
     }
 
-    public int getIdTasks() {
+    public int getId() {
         return id;
     }
 
-    public void setIdTasks(int idTasks) {
+    public void setId(int idTasks) {
         this.id = idTasks;
     }
 

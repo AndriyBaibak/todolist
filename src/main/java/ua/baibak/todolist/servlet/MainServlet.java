@@ -14,7 +14,6 @@ public class MainServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
     private static Logger log = Logger.getLogger(MainServlet.class);
     private List tasks = null;
-    private TasksService objectToActionTasks = new TasksService();
     private RequestDispatcher dispatcherForException = null;
     private RequestDispatcher dispatcherForShowTasks = null;
 
@@ -26,7 +25,7 @@ public class MainServlet extends HttpServlet {
     }
     public void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
-           tasks = objectToActionTasks.getAllTasks();
+           tasks = TasksService.getObjectToActionTasks().getAllTasks();
         } catch (Exception e) {
             String exception = "Помилка при отриманні усіх наявних завдань: " + e.toString();
             request.setAttribute("Exception", exception);

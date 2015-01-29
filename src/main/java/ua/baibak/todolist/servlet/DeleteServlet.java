@@ -14,7 +14,7 @@ import java.io.IOException;
 public class DeleteServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
     private static Logger log = Logger.getLogger(DeleteServlet.class);
-    private TasksService objectToActionTasks = new TasksService();
+
     private RequestDispatcher dispatcherForException  = null;
     private RequestDispatcher dispatcherForDeleteTasks = null;
 
@@ -26,7 +26,7 @@ public class DeleteServlet extends HttpServlet {
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String idForDelete = request.getParameter("id for delete");
         try {
-            objectToActionTasks.deleteTask(idForDelete);
+            TasksService.getObjectToActionTasks().deleteTask(idForDelete);
         } catch (Exception e) {
             String exception = "Помилка при видаленні об'єкта за його id: " + e.toString();
             request.setAttribute("Exception", exception);
