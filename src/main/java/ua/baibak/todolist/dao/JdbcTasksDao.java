@@ -35,7 +35,7 @@ public class JdbcTasksDao implements TasksDao {
             statement.executeUpdate(insertTableSQL);
             counter.incrementAndGet() ;
         } catch (SQLException e) {
-            log.debug("SQLException in save " + e);
+            log.debug("SQLException in save method" + e);
         } finally {
             if (statement != null) {
                 statement.close();
@@ -47,14 +47,21 @@ public class JdbcTasksDao implements TasksDao {
     }
 
     @Override
-    public void updateTasks(String newDesciption, String id) throws Exception {
-       String updateTableSQL = "UPDATE tasks SET description = '" + newDesciption + "' WHERE id=" + id + ";";
+    public void updateTasks(String newData, String id, String type) throws Exception {
+
+       String updateDescriptionSQL = "UPDATE tasks SET description = '" + newData + "' WHERE id=" + id + ";";
+       String updateDateSQL = "UPDATE tasks SET deadline = '" + newData + "' WHERE id = " + id + ";";
+
         try {
             ic = new InitialContext();
             ds = (DataSource) ic.lookup("java:/comp/env/jdbc/todolist");
             dbConnection = ds.getConnection();
             statement = dbConnection.createStatement();
-            statement.executeUpdate(updateTableSQL);
+            if(type.equals("newDescription")) {
+                statement.executeUpdate(updateDescriptionSQL);
+            }else {
+                statement.executeUpdate(updateDateSQL);
+            }
         } catch (SQLException e) {
             log.debug("SQLException in update method" + e);
         } finally {

@@ -47,8 +47,7 @@ public class TasksService implements ActionWithTasks {
     }
 
     @Override
-    public void updateTasks(String newDescription, String id)throws Exception{
-
-        jdbcTasksDAO.updateTasks(newDescription,id);
+    public void updateTasks(String newData, String id, String type)throws Exception{
+        jdbcTasksDAO.updateTasks(newData,id,type);
     }
 }

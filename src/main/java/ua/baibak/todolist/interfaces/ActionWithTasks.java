@@ -13,7 +13,7 @@ public interface ActionWithTasks {
 
     public List getAllTasks()throws Exception;
 
-    public void updateTasks(String newDescription, String id)throws Exception;
+    public void updateTasks(String newDescription, String id, String type)throws Exception;
 
 
 }
