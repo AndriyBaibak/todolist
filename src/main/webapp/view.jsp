@@ -17,17 +17,20 @@
     </style>
 </head>
 <script type="text/javascript">
-    function update(textToSave, id){
+    function update(textToSave, beReplaced , id){
+
         var idTask = id;
-        var newDescription = textToSave.value;
+        var newDescription = document.getElementById(textToSave).value;
+        alert (newDescription)
+        alert (idTask)
         $.ajax({
             type: "POST",
             url: "/todolist/update",
             data:{"newDescription":newDescription,"id":idTask}
         });
-            document.getElementById('inputLine').style.display='none';
-            document.getElementById(id).style.display = '';
-            document.getElementById(id).innerHTML = textToSave.value;
+            document.getElementById(textToSave).style.display='none';
+            document.getElementById(beReplaced).style.display = '';
+            document.getElementById(beReplaced).innerHTML = newDescription;
 
 
 
@@ -35,7 +38,8 @@
 </script>
 <script type="text/javascript">
     function change(show, hidden) {
-
+        alert(show)
+        alert(hidden)
         if(document.getElementById(show).style.display=='none') {
             document.getElementById(show).style.display = '';
             document.getElementById(hidden).style.display = 'none';
@@ -83,14 +87,15 @@
             <tr>
                 <div >
             <td valign="middle" align="center" >
-                <div id = "${task.id}" onclick="change('inputLine','${task.id}')"> <c:out value="${task.description}"> </c:out></div><br>
-                <input style="display:none" id="inputLine" type='text' onchange="update(inputLine,${task.id})" value="${task.description}">
+                <div id = "div + ${task.description}" onclick="change('input+${task.description}','div + ${task.description}')"> <c:out value="${task.description}"> </c:out></div>
+                <input style="display:none" id="input+${task.description}" type="text" onchange="update('input+${task.description}','div + ${task.description}',${task.id})" value="${task.description}">
             </td>
             <td valign="middle" align="center">
                 <c:out value="${task.createdDate}"></c:out>
             </td>
             <td valign="middle" align="center">
-                <c:out value="${task.deadline}"></c:out>
+                <div id="div + ${task.deadline}" onclick="change('input + ${task.deadline}','div + ${task.deadline}')"> <c:out value="${task.deadline}"> </c:out></div>
+                <input style="display:none" id="input + ${task.deadline}" type = "date" onchange="update('input + ${task.deadline}','div + ${task.deadline}', ${task.id})" value="${task.deadline}">
             </td>
             <td valign="middle" align="center">
                 <form id="del" action="/todolist/del" method="post">
