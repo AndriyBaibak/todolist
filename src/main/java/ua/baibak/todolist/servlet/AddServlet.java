@@ -8,6 +8,7 @@ import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.jsp.ErrorData;
 import java.io.IOException;
 
 public class AddServlet extends javax.servlet.http.HttpServlet implements javax.servlet.Servlet {
@@ -15,6 +16,7 @@ public class AddServlet extends javax.servlet.http.HttpServlet implements javax.
     private static Logger log = Logger.getLogger(AddServlet.class);
     private RequestDispatcher dispatcherForException = null;
     private RequestDispatcher dispatcherForAddTasks = null;
+    public ErrorData errorData = null;
 
     public void init() throws ServletException {
         dispatcherForException = getServletContext().getRequestDispatcher("/error.jsp");
@@ -25,9 +27,11 @@ public class AddServlet extends javax.servlet.http.HttpServlet implements javax.
         String taskDescription = request.getParameter("newTask");
         String taskDeadline = request.getParameter("calendar");
         try {
-            TasksService.getObjectToActionTasks().createAndSaveNewTask(taskDeadline, taskDescription);
+           TasksService.getObjectToActionTasks().createAndSaveNewTask(taskDeadline, taskDescription);
         } catch (Exception e) {
             String exception = "Помилка при збереженні завдання: " + e.toString();
+            response.sendError(HttpServletResponse.SC_NOT_ACCEPTABLE, exception);
+            errorData = new ErrorData(e,406,request.getRequestURI(),getServletName());
             request.setAttribute("Exception", exception);
             log.debug("Exception", e);
             dispatcherForException.forward(request, response);

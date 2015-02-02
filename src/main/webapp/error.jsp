@@ -9,8 +9,8 @@
 <h1>Помилка</h1>
 <table width="100%" border="1">
     <tr valign="top">
-        <td width="40%"><b>Error:</b></td>
-        <td>${pageContext.exception}</td>
+        <td width="40%"><b>Error in:</b></td>
+        <td>${pageContext.errorData.servletName}</td>
     </tr>
     <tr valign="top">
         <td><b>URI:</b></td>
@@ -22,7 +22,7 @@
     </tr>
     <tr valign="top">
         <td><b>Error in stack trace:</b></td>
-        <td>${Exception}</td>
+        <td>${pageContext.errorData.throwable}</td>
     </tr>
 </table>
 <p>
