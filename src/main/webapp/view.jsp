@@ -17,10 +17,28 @@
     </style>
 </head>
 <script type="text/javascript">
+   function ValidFormFields(task,date) {
+           if (document.getElementById(task).value == "") {
+               document.getElementById(task).style.border = '2px inset red';
+               return false;
+           }
+           if (document.getElementById(date).value == "") {
+               document.getElementById(date).style.border = '2px inset red';
+               return false;
+           }
+           return true;
+   }
+</script>
+<script type="text/javascript">
     function update(textToSave, beReplaced , id, type){
         var idTask = id;
-        var newData= document.getElementById(textToSave).value;
-
+        var newData = document.getElementById(textToSave).value;
+        if(document.getElementById(textToSave).value ==''){
+            newData = document.getElementById(beReplaced).value;
+            document.getElementById(textToSave).style.border = '2px inset red';
+            document.getElementById(textToSave).focus();
+            return false;
+        }
         $.ajax({
             type: "POST",
             url: "/todolist/update",
@@ -29,9 +47,6 @@
             document.getElementById(textToSave).style.display='none';
             document.getElementById(beReplaced).style.display = '';
             document.getElementById(beReplaced).innerHTML = newData;
-
-
-
     }
 </script>
 <script type="text/javascript">
@@ -42,6 +57,7 @@
         } else {
             document.getElementById(view).style.display = 'none';
         }
+        document.getElementById(view).focus();
         return false;
     }
 </script>
@@ -50,15 +66,15 @@
 <body>
 <div id="back">
 <div id="addtask">
-    <form id="add" action="/todolist/add" method="post">
+    <form id="add" action="/todolist/add" method="post" onsubmit="return ValidFormFields('ntask','date')">
 
         <div align="center">
         <p><big>Додати нове завдання </big></p>
         </div>
 
-        <p>Описання завдання:<input id="ntask" name="newTask" type="text"></p>
+        <p>Описання завдання:<input id="ntask" name="newTask" type="text" border="1 " onfocus="this.style.border='2px inset'"></p>
 
-        <p>Оберіть кінцеву дату виконання:<input id="date" type="date" name="calendar"></p>
+        <p>Оберіть кінцеву дату виконання:<input id="date" type="date" name="calendar" border="1" onfocus="this.style.border='2px inset'"></p>
         <div align="center">
         <input type="submit" value="Додати">
         </div>
@@ -83,15 +99,15 @@
             <tr>
                 <div >
             <td valign="middle" align="center">
-                <div id = "div + ${task.description}" onclick="change('input+${task.description}','div + ${task.description}')"> <c:out value="${task.description}"> </c:out></div>
-                <input style="display:none" id="input+${task.description}" type="text" onchange="update('input+${task.description}','div + ${task.description}',${task.id},'newDescription')" value="${task.description}">
+                <div id = "div + ${task.description} + ${task.id}" onclick="change('input + ${task.description} + ${task.id}','div + ${task.description} + ${task.id}')"> <c:out value="${task.description}"> </c:out></div>
+                <input style="display:none" id="input + ${task.description} + ${task.id}" type="text" onblur="update('input + ${task.description} + ${task.id}','div + ${task.description} + ${task.id}',${task.id},'newDescription')" value="${task.description}" >
             </td>
             <td valign="middle" align="center">
                 <c:out value="${task.createdDate}"></c:out>
             </td>
             <td valign="middle" align="center">
-                <div id="div + ${task.deadline}" onclick="change('input + ${task.deadline}','div + ${task.deadline}')"> <c:out value="${task.deadline}"> </c:out></div>
-                <input style="display:none" id="input + ${task.deadline}" type = "date" onchange="update('input + ${task.deadline}','div + ${task.deadline}', ${task.id},'newDate')" value="${task.deadline}">
+                <div id="div + ${task.deadline} + ${task.id}" onclick="change('input + ${task.deadline} + ${task.id}','div + ${task.deadline} + ${task.id}')"> <c:out value="${task.deadline}"> </c:out></div>
+                <input style="display:none" id="input + ${task.deadline} + ${task.id}" type = "date" onblur="update('input + ${task.deadline} + ${task.id}','div + ${task.deadline} + ${task.id}', ${task.id},'newDate')" value="${task.deadline}" >
             </td>
             <td valign="middle" align="center">
                 <form id="del" action="/todolist/del" method="post">

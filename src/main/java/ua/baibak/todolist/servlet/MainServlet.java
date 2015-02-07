@@ -20,16 +20,15 @@ public class MainServlet extends HttpServlet {
     public void init() throws ServletException {
         dispatcherForException = getServletContext().getRequestDispatcher("/error.jsp");
         dispatcherForShowTasks = getServletContext().getRequestDispatcher("/view.jsp");
-
-
     }
+
     public void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
            tasks = TasksService.getObjectToActionTasks().getAllTasks();
         } catch (Exception e) {
             String exception = "Помилка при отриманні усіх наявних завдань: " + e.toString();
             request.setAttribute("Exception", exception);
-            log.debug("Exception", e);
+            log.error("Exception", e);
             dispatcherForException.forward(request, response);
         }
         request.setAttribute("tasks", tasks);

@@ -14,7 +14,6 @@ import java.io.IOException;
 public class DeleteServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
     private static Logger log = Logger.getLogger(DeleteServlet.class);
-
     private RequestDispatcher dispatcherForException  = null;
     private RequestDispatcher dispatcherForDeleteTasks = null;
 
@@ -33,7 +32,6 @@ public class DeleteServlet extends HttpServlet {
             log.debug("Exception", e);
             dispatcherForException.forward(request, response);
         }
-
         dispatcherForDeleteTasks.forward(request, response);
     }
 }

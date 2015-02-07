@@ -18,7 +18,6 @@ public class TasksService implements ActionWithTasks {
     public  SimpleDateFormat sp = new SimpleDateFormat("yyyy-MM-dd");
     public  List tasks = new ArrayList<Tasks>();
     public static TasksService objectToActionTasks = new TasksService();
-
     public static TasksService getObjectToActionTasks() {
         return objectToActionTasks;
     }
@@ -26,12 +25,8 @@ public class TasksService implements ActionWithTasks {
     public static void setObjectToActionTasks(TasksService objectToActionTasks) {
         TasksService.objectToActionTasks = objectToActionTasks;
     }
-
     @Override
     public  void createAndSaveNewTask(String deadline, String description) throws Exception {
-        if(description == ""){
-            throw new Exception("Опис завдання відсутній.");
-        }
         java.util.Date dateDeadline = sp.parse(deadline);
         jdbcTasksDAO.save(description,dateDeadline);
     }
@@ -45,7 +40,6 @@ public class TasksService implements ActionWithTasks {
         tasks = jdbcTasksDAO.getAllTasks();
         return tasks;
     }
-
     @Override
     public void updateTasks(String newData, String id, String type)throws Exception{
         jdbcTasksDAO.updateTasks(newData,id,type);

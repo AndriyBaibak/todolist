@@ -16,7 +16,7 @@ public class AddServlet extends javax.servlet.http.HttpServlet implements javax.
     private static Logger log = Logger.getLogger(AddServlet.class);
     private RequestDispatcher dispatcherForException = null;
     private RequestDispatcher dispatcherForAddTasks = null;
-    public ErrorData errorData = null;
+    private ErrorData errorData = null;
 
     public void init() throws ServletException {
         dispatcherForException = getServletContext().getRequestDispatcher("/error.jsp");
@@ -26,17 +26,20 @@ public class AddServlet extends javax.servlet.http.HttpServlet implements javax.
         request.setCharacterEncoding("UTF-8");
         String taskDescription = request.getParameter("newTask");
         String taskDeadline = request.getParameter("calendar");
+
         try {
+            if(taskDescription.equals("")){
+                throw new Exception("description empty");
+            }
            TasksService.getObjectToActionTasks().createAndSaveNewTask(taskDeadline, taskDescription);
         } catch (Exception e) {
             String exception = "Помилка при збереженні завдання: " + e.toString();
-            response.sendError(HttpServletResponse.SC_NOT_ACCEPTABLE, exception);
+            response.setStatus(406);
             errorData = new ErrorData(e,406,request.getRequestURI(),getServletName());
-            request.setAttribute("Exception", exception);
-            log.debug("Exception", e);
+            System.out.println(errorData.getStatusCode());
+            log.error("Exception", e);
             dispatcherForException.forward(request, response);
         }
-
         dispatcherForAddTasks.forward(request, response);
     }
 }
