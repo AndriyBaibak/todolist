@@ -1,11 +1,26 @@
 package ua.baibak.todolist.entity;
 
+import javax.persistence.*;
 import java.util.Date;
 
+@Entity
+@Table(name = "tasks")
 public class Tasks {
+
+    @Id
+    @Column(name = "id")
+    @GeneratedValue(strategy=GenerationType.AUTO)
     public int id;
+
+    @Column(name = "description")
     private String description;
+
+    @Temporal(TemporalType.DATE)
+    @Column(name = "createdDate")
     private java.util.Date createdDate;
+
+    @Temporal(TemporalType.DATE)
+    @Column(name = "deadline")
     private java.util.Date deadline;
 
 
