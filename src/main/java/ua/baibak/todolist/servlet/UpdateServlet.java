@@ -1,8 +1,7 @@
 package ua.baibak.todolist.servlet;
 
-
-import ua.baibak.todolist.service.TasksService;
 import org.apache.log4j.Logger;
+import ua.baibak.todolist.service.TasksService;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -11,28 +10,32 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-public class DeleteServlet extends HttpServlet {
+public class UpdateServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
-    static Logger log = Logger.getLogger(DeleteServlet.class);
-    public RequestDispatcher dispatcherForException  = null;
-    public RequestDispatcher dispatcherForDeleteTasks = null;
+    private static Logger log = Logger.getLogger(AddServlet.class);
+    private RequestDispatcher dispatcherForException = null;
+    private RequestDispatcher dispatcherForAddTasks = null;
+
 
     public void init() throws ServletException {
         dispatcherForException = getServletContext().getRequestDispatcher("/error.jsp");
-        dispatcherForDeleteTasks = getServletContext().getRequestDispatcher("/todolist");
+        dispatcherForAddTasks = getServletContext().getRequestDispatcher("/todolist/");
     }
-
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String idForDelete = request.getParameter("id for delete");
+        request.setCharacterEncoding("UTF-8");
+        String type = request.getParameter("type");
+        String newData = request.getParameter("newData");
+        String idTask = request.getParameter("id");
         try {
-           TasksService.getObjectToActionTasks().deleteTask(idForDelete);
+            TasksService.getObjectToActionTasks().updateTasks(newData,idTask,type);
         } catch (Exception e) {
-            String exception = "Помилка при видаленні об'єкта за його id: " + e.toString();
+            String exception = "Помилка при змінні завдання: " + e.toString();
             request.setAttribute("Exception", exception);
             log.debug("Exception", e);
             dispatcherForException.forward(request, response);
         }
 
-        dispatcherForDeleteTasks.forward(request, response);
+        dispatcherForAddTasks.forward(request, response);
+
     }
 }

@@ -13,7 +13,6 @@ import java.io.IOException;
 public class AddServlet extends javax.servlet.http.HttpServlet implements javax.servlet.Servlet {
     private static final long serialVersionUID = 1L;
     static Logger log = Logger.getLogger(AddServlet.class);
-    protected TasksService someworks = new TasksService();
     private RequestDispatcher dispatcherForException = null;
     private RequestDispatcher dispatcherForAddTasks = null;
 
@@ -24,11 +23,13 @@ public class AddServlet extends javax.servlet.http.HttpServlet implements javax.
     public void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         String taskDescription = request.getParameter("newTask");
-        String taskDeadline = request.getParameter("date");
+        String taskDeadline = request.getParameter("calendar");
+        log.debug(taskDescription + "=================================== in servlet");
         try {
-            someworks.createAndSaveNewTask(taskDeadline, taskDescription);
+            TasksService.getObjectToActionTasks().createAndSaveNewTask(taskDescription ,taskDeadline);
         } catch (Exception e) {
             String exception = "Помилка при збереженні завдання: " + e.toString();
+            System.out.println(e);
             request.setAttribute("Exception", exception);
             log.debug("Exception", e);
             dispatcherForException.forward(request, response);

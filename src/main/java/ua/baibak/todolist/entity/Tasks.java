@@ -9,21 +9,22 @@ import javax.persistence.*;
 @Table(name = "tasks")
 public class Tasks {
     @Id
-    @Column(name = "idTasks")
+    @Column(name = "id")
     @GeneratedValue(strategy=GenerationType.AUTO)
-    public int idTasks;
+    public int id;
 
     @Column(name = "description")
     private String description;
 
-    //@Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.DATE)
     @Column(name = "createdDate")
     private java.util.Date createdDate;
 
+    @Temporal(TemporalType.DATE)
     @Column(name = "deadline")
-    private java.sql.Date deadline;
+    private java.util.Date deadline;
 
-    public Tasks(String task, java.sql.Date deadline){
+    public Tasks(String task, java.util.Date deadline){
         this.description = task;
         this.createdDate = new java.util.Date();
         this.deadline = deadline;
@@ -34,12 +35,12 @@ public class Tasks {
         return description;
     }
 
-    public int getIdTasks() {
-        return idTasks;
+    public int getId() {
+        return id;
     }
 
-    public void setIdTasks(int idTasks) {
-        this.idTasks = idTasks;
+    public void setId(int id) {
+        this.id= id;
     }
 
     public java.util.Date getCreatedDate() {
@@ -53,18 +54,18 @@ public class Tasks {
     public void setDescription(String description) {
         this.description = description;
     }
-    public java.sql.Date getDeadline() {
+    public java.util.Date getDeadline() {
         return deadline;
     }
 
-    public void setDeadline(java.sql.Date deadline) {
+    public void setDeadline(java.util.Date deadline) {
         this.deadline = deadline;
     }
 
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder();
-        sb.append(idTasks);
+        sb.append(id);
         sb.append(" ").append(description);
         sb.append(" ").append(createdDate);
         sb.append(" ").append(deadline);

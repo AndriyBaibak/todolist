@@ -14,17 +14,18 @@ public class MainServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
     static Logger log = Logger.getLogger(MainServlet.class);
     protected List tasks = null;
-    protected TasksService someworks = new TasksService();
+
     private RequestDispatcher dispatcherForException = null;
     private RequestDispatcher dispatcherForShowTasks = null;
 
     public void init() throws ServletException {
         dispatcherForException = getServletContext().getRequestDispatcher("/error.jsp");
-        dispatcherForShowTasks = getServletContext().getRequestDispatcher("/index.jsp");
+        dispatcherForShowTasks = getServletContext().getRequestDispatcher("/view.jsp");
     }
     public void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
-           tasks = someworks.getAllTasks();
+            log.debug("=============in mainservlet ");
+           tasks = TasksService.getObjectToActionTasks().getAllTasks();
         } catch (Exception e) {
             String exception = "Помилка при отриманні усіх наявних завдань: " + e.toString();
             request.setAttribute("Exception", exception);
