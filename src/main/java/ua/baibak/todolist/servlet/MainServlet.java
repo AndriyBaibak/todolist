@@ -1,6 +1,7 @@
 package ua.baibak.todolist.servlet;
-import ua.baibak.todolist.service.TasksService;
+
 import org.apache.log4j.Logger;
+import ua.baibak.todolist.service.TasksService;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -24,7 +25,7 @@ public class MainServlet extends HttpServlet {
 
     public void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
-           tasks = TasksService.getObjectToActionTasks().getAllTasks();
+            tasks = TasksService.getObjectToActionTasks().getAllTasks();
         } catch (Exception e) {
             String exception = "Помилка при отриманні усіх наявних завдань: " + e.toString();
             request.setAttribute("Exception", exception);

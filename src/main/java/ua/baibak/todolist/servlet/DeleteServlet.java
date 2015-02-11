@@ -1,8 +1,8 @@
 package ua.baibak.todolist.servlet;
 
 
-import ua.baibak.todolist.service.TasksService;
 import org.apache.log4j.Logger;
+import ua.baibak.todolist.service.TasksService;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -14,7 +14,7 @@ import java.io.IOException;
 public class DeleteServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
     private static Logger log = Logger.getLogger(DeleteServlet.class);
-    private RequestDispatcher dispatcherForException  = null;
+    private RequestDispatcher dispatcherForException = null;
     private RequestDispatcher dispatcherForDeleteTasks = null;
 
     public void init() throws ServletException {

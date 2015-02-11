@@ -9,15 +9,13 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Андрей on 16.12.2014.
- */
 public class TasksService implements ActionWithTasks {
 
-    public TasksDao jdbcTasksDAO = new JdbcTasksDao();
-    public  SimpleDateFormat sp = new SimpleDateFormat("yyyy-MM-dd");
-    public  List tasks = new ArrayList<Tasks>();
+    public TasksDao jdbcTasksDao = new JdbcTasksDao();
+    public SimpleDateFormat sp = new SimpleDateFormat("yyyy-MM-dd");
+    public List tasks = new ArrayList<Tasks>();
     public static TasksService objectToActionTasks = new TasksService();
+
     public static TasksService getObjectToActionTasks() {
         return objectToActionTasks;
     }
@@ -25,23 +23,27 @@ public class TasksService implements ActionWithTasks {
     public static void setObjectToActionTasks(TasksService objectToActionTasks) {
         TasksService.objectToActionTasks = objectToActionTasks;
     }
+
     @Override
-    public  void createAndSaveNewTask(String deadline, String description) throws Exception {
+    public void createAndSaveNewTask(String description, String deadline) throws Exception {
         java.util.Date dateDeadline = sp.parse(deadline);
-        jdbcTasksDAO.save(description,dateDeadline);
+        jdbcTasksDao.save(description, dateDeadline);
     }
+
     @Override
-    public  void deleteTask(String idForDelete)throws Exception{
+    public void deleteTask(String idForDelete) throws Exception {
         int idTask = Integer.parseInt(idForDelete);
-        jdbcTasksDAO.deleteTasks(idTask);
+        jdbcTasksDao.deleteTasks(idTask);
     }
+
     @Override
-    public  List getAllTasks() throws Exception {
-        tasks = jdbcTasksDAO.getAllTasks();
+    public List getAllTasks() throws Exception {
+        tasks = jdbcTasksDao.getAllTasks();
         return tasks;
     }
+
     @Override
-    public void updateTasks(String newData, String id, String type)throws Exception{
-        jdbcTasksDAO.updateTasks(newData,id,type);
+    public void updateTasks(String newData, String id, String type) throws Exception {
+        jdbcTasksDao.updateTasks(newData, id, type);
     }
 }

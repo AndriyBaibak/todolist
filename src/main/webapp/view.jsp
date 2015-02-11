@@ -34,10 +34,7 @@
         var idTask = id;
         var newData = document.getElementById(textToSave).value;
         if(document.getElementById(textToSave).value ==''){
-            newData = document.getElementById(beReplaced).value;
-            document.getElementById(textToSave).style.border = '2px inset red';
-            document.getElementById(textToSave).focus();
-            return false;
+            newData = document.getElementById(beReplaced).innerHTML;
         }
         $.ajax({
             type: "POST",

@@ -9,20 +9,23 @@ public class Tasks {
     private java.util.Date deadline;
 
 
-    public Tasks(String description, java.util.Date deadline){
+    public Tasks(String description, java.util.Date deadline) {
         this.description = description;
         this.createdDate = new java.util.Date();
         this.deadline = deadline;
     }
-    public Tasks(int id, String description, Date createdDate, java.util.Date deadline){
+
+    public Tasks(int id, String description, Date createdDate, java.util.Date deadline) {
         this.id = id;
         this.description = description;
         this.createdDate = createdDate;
         this.deadline = deadline;
 
     }
+
     public Tasks() {
     }
+
     public String getDescription() {
         return description;
     }
@@ -46,6 +49,7 @@ public class Tasks {
     public void setDescription(String description) {
         this.description = description;
     }
+
     public java.util.Date getDeadline() {
         return deadline;
     }
@@ -68,9 +72,7 @@ public class Tasks {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Tasks)) return false;
-
         Tasks tasks = (Tasks) o;
-
         if (createdDate != null ? !createdDate.equals(tasks.createdDate) : tasks.createdDate != null) return false;
         if (deadline != null ? !deadline.equals(tasks.deadline) : tasks.deadline != null) return false;
         if (description != null ? !description.equals(tasks.description) : tasks.description != null) return false;
