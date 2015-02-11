@@ -2,15 +2,12 @@ package ua.baibak.todolist.entity;
 
 import javax.persistence.*;
 
-/**
- * Created by Андрей on 23.11.2014.
- */
 @Entity
 @Table(name = "tasks")
 public class Tasks {
     @Id
     @Column(name = "id")
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     public int id;
 
     @Column(name = "description")
@@ -24,13 +21,15 @@ public class Tasks {
     @Column(name = "deadline")
     private java.util.Date deadline;
 
-    public Tasks(String task, java.util.Date deadline){
+    public Tasks(String task, java.util.Date deadline) {
         this.description = task;
         this.createdDate = new java.util.Date();
         this.deadline = deadline;
     }
+
     public Tasks() {
     }
+
     public String getDescription() {
         return description;
     }
@@ -40,7 +39,7 @@ public class Tasks {
     }
 
     public void setId(int id) {
-        this.id= id;
+        this.id = id;
     }
 
     public java.util.Date getCreatedDate() {
@@ -54,6 +53,7 @@ public class Tasks {
     public void setDescription(String description) {
         this.description = description;
     }
+
     public java.util.Date getDeadline() {
         return deadline;
     }
