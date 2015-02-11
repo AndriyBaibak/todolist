@@ -5,7 +5,6 @@ import org.apache.log4j.Logger;
 import ua.baibak.todolist.dao.JdbcTasksDao;
 import ua.baibak.todolist.service.TasksService;
 import ua.baibak.todolist.service.Validate;
-
 import javax.servlet.RequestDispatcher;
 import javax.servlet.Servlet;
 import javax.servlet.ServletException;

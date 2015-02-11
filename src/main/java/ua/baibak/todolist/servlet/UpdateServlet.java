@@ -2,7 +2,6 @@ package ua.baibak.todolist.servlet;
 
 import org.apache.log4j.Logger;
 import ua.baibak.todolist.service.TasksService;
-
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -11,7 +10,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class UpdateServlet extends HttpServlet {
-    private static final long serialVersionUID = 1L;
     private static Logger log = Logger.getLogger(AddServlet.class);
     private RequestDispatcher dispatcherForException = null;
     private RequestDispatcher dispatcherForAddTasks = null;

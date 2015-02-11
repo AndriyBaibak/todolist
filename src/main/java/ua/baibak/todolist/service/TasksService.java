@@ -4,13 +4,11 @@ import ua.baibak.todolist.dao.JdbcTasksDao;
 import ua.baibak.todolist.entity.Tasks;
 import ua.baibak.todolist.interfaces.ActionWithTasks;
 import ua.baibak.todolist.interfaces.TasksDao;
-
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 public class TasksService implements ActionWithTasks {
-
     public TasksDao jdbcTasksDao = new JdbcTasksDao();
     public SimpleDateFormat sp = new SimpleDateFormat("yyyy-MM-dd");
     public List tasks = new ArrayList<Tasks>();
@@ -18,10 +16,6 @@ public class TasksService implements ActionWithTasks {
 
     public static TasksService getObjectToActionTasks() {
         return objectToActionTasks;
-    }
-
-    public static void setObjectToActionTasks(TasksService objectToActionTasks) {
-        TasksService.objectToActionTasks = objectToActionTasks;
     }
 
     @Override
