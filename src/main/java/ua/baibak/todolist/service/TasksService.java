@@ -12,8 +12,8 @@ import java.util.List;
 public class TasksService implements ActionWithTasks {
 
     private TasksDao tasksDao = null;
-    public SimpleDateFormat sp = new SimpleDateFormat("yyyy-MM-dd");
-    public List tasks = new ArrayList<Tasks>();
+    private SimpleDateFormat sp = new SimpleDateFormat("yyyy-MM-dd");
+    private List tasks = new ArrayList<Tasks>();
 
     public void setTasksDao(TasksDao tasksDao) {
         this.tasksDao = tasksDao;

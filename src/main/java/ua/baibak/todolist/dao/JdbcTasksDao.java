@@ -34,7 +34,6 @@ public class JdbcTasksDao implements TasksDao {
         }
     }
 
-
     @Override
     public void save(String description, Date deadline) throws Exception {
         Connection dbConnection = null;
@@ -97,8 +96,8 @@ public class JdbcTasksDao implements TasksDao {
                 String description = rs.getString("description");
                 java.util.Date createdDate = rs.getDate("createdDate");
                 java.util.Date deadline = rs.getDate("deadline");
-                Tasks taskforview = new Tasks(id, description, createdDate, deadline);
-                tasks.add(taskforview);
+                Tasks taskForView = new Tasks(id, description, createdDate, deadline);
+                tasks.add(taskForView);
             }
         } catch (SQLException e) {
             log.error("SQLException during getAllTasks " + e);

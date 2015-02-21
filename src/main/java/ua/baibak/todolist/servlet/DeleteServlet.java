@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class DeleteServlet extends HttpServlet {
+
     private WebApplicationContext ctx = null;
     private TasksService beanForService = null;
     private static Logger log = Logger.getLogger(DeleteServlet.class);

@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.util.List;
 
 public class MainServlet extends HttpServlet {
+
     private WebApplicationContext ctx = null;
     private TasksService beanForService = null;
     private static Logger log = Logger.getLogger(MainServlet.class);
