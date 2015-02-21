@@ -25,9 +25,7 @@ public class DeleteServlet extends HttpServlet {
         try {
             TasksService.getObjectToActionTasks().deleteTask(idForDelete);
         } catch (Exception e) {
-            String exception = "Помилка при видаленні об'єкта за його id: " + e.toString();
-            request.setAttribute("Exception", exception);
-            log.debug("Exception", e);
+            log.error("Exception", e);
             dispatcherForException.forward(request, response);
         }
         dispatcherForDeleteTasks.forward(request, response);

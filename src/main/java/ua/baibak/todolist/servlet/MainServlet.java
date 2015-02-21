@@ -25,8 +25,6 @@ public class MainServlet extends HttpServlet {
         try {
             tasks = TasksService.getObjectToActionTasks().getAllTasks();
         } catch (Exception e) {
-            String exception = "Помилка при отриманні усіх наявних завдань: " + e.toString();
-            request.setAttribute("Exception", exception);
             log.error("Exception", e);
             dispatcherForException.forward(request, response);
         }

@@ -27,9 +27,7 @@ public class UpdateServlet extends HttpServlet {
         try {
             TasksService.getObjectToActionTasks().updateTasks(newData, idTask, type);
         } catch (Exception e) {
-            String exception = "Помилка при змінні завдання: " + e.toString();
-            request.setAttribute("Exception", exception);
-            log.debug("Exception", e);
+            log.error("Exception", e);
             dispatcherForException.forward(request, response);
         }
 
