@@ -1,7 +1,5 @@
 package ua.baibak.todolist.interfaces;
 
-
-
 import java.util.Date;
 import java.util.List;
 

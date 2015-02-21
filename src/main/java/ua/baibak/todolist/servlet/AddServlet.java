@@ -30,8 +30,6 @@ public class AddServlet extends HttpServlet implements Servlet {
             Validate.validateTaskData(taskDescription, taskDeadline);
             TasksService.getObjectToActionTasks().createAndSaveNewTask(taskDescription, taskDeadline);
         } catch (Exception e) {
-            String exception = "Помилка при збереженні завдання: " + e.toString();
-            request.setAttribute("Exception", exception);
             log.error("Exception", e);
             dispatcherForException.forward(request, response);
         }
