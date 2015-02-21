@@ -9,4 +9,6 @@
     <bean id="tasksService" class="ua.baibak.todolist.service.TasksService">
     <property name="tasksDao" ref="jdbcImplementation"></property>
     </bean>
+    <bean id="validate" class="ua.baibak.todolist.service.Validate">
+    </bean>
 </beans>

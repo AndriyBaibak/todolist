@@ -4,6 +4,7 @@ import org.apache.log4j.Logger;
 import ua.baibak.todolist.entity.Tasks;
 import ua.baibak.todolist.interfaces.TasksDao;
 import ua.baibak.todolist.service.DateService;
+
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
 import java.sql.Connection;
@@ -18,11 +19,10 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class JdbcTasksDao implements TasksDao {
     private AtomicInteger counter = new AtomicInteger();
     private static Logger log = Logger.getLogger(JdbcTasksDao.class);
-    private static InitialContext ic = null;
-    private static DataSource ds = null;
+    private InitialContext ic = null;
+    private DataSource ds = null;
 
     public JdbcTasksDao() {
-        log.debug("in constructor");
         try {
             ic = new InitialContext();
             ds = (DataSource) ic.lookup("java:/comp/env/jdbc/todolist");
