@@ -9,7 +9,7 @@ public class Tasks {
 
     @Id
     @Column(name = "id")
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     public int id;
 
     @Column(name = "description")
@@ -24,20 +24,23 @@ public class Tasks {
     private java.util.Date deadline;
 
 
-    public Tasks(String description, java.util.Date deadline){
+    public Tasks(String description, java.util.Date deadline) {
         this.description = description;
         this.createdDate = new java.util.Date();
         this.deadline = deadline;
     }
-    public Tasks(int id, String description, Date createdDate, java.util.Date deadline){
+
+    public Tasks(int id, String description, Date createdDate, java.util.Date deadline) {
         this.id = id;
         this.description = description;
         this.createdDate = createdDate;
         this.deadline = deadline;
 
     }
+
     public Tasks() {
     }
+
     public String getDescription() {
         return description;
     }
@@ -61,6 +64,7 @@ public class Tasks {
     public void setDescription(String description) {
         this.description = description;
     }
+
     public java.util.Date getDeadline() {
         return deadline;
     }
