@@ -25,6 +25,7 @@ public class JdbcTasksDao implements TasksDao {
 
     public JdbcTasksDao() {
         try {
+            log.error("asdasdsadsad--------------------------------------------");
             ic = new InitialContext();
             ds = (DataSource) ic.lookup("java:/comp/env/jdbc/todolist");
             counter.set(this.selectLastId());

@@ -1,6 +1,5 @@
 package ua.baibak.todolist.dao;
 
-
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import ua.baibak.todolist.entity.Tasks;
@@ -12,13 +11,12 @@ import java.util.List;
 
 public class HibernateTasksDao implements TasksDao {
 
-    private Tasks tasks = null;
     private static Logger log = Logger.getLogger(HibernateTasksDao.class);
-    private Session session;
+    private Session session = null;
 
     @Override
     public void save(String description, Date deadline) throws Exception {
-        tasks = new Tasks(description, deadline);
+        Tasks tasks = new Tasks(description, deadline);
         try {
             session = HibernateUtil.getSessionFactory().getCurrentSession();
             session.beginTransaction();

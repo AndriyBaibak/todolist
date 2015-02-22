@@ -23,7 +23,6 @@ public class AddServlet extends HttpServlet {
     private Validate beanForValidation = null;
     private RequestDispatcher dispatcherForException = null;
     private RequestDispatcher dispatcherForAddTasks = null;
-    private ErrorData errorData = null;
 
     public void init() throws ServletException {
         ctx = WebApplicationContextUtils.getRequiredWebApplicationContext(getServletContext());

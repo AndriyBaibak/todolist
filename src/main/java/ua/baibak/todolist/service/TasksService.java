@@ -13,7 +13,6 @@ public class TasksService implements ActionWithTasks {
 
     private TasksDao tasksDao = null;
     private SimpleDateFormat sp = new SimpleDateFormat("yyyy-MM-dd");
-    private List tasks = new ArrayList<Tasks>();
 
     public void setTasksDao(TasksDao tasksDao) {
         this.tasksDao = tasksDao;
@@ -33,7 +32,7 @@ public class TasksService implements ActionWithTasks {
 
     @Override
     public List getAllTasks() throws Exception {
-        tasks = tasksDao.getAllTasks();
+        List<Tasks> tasks = tasksDao.getAllTasks();
         return tasks;
     }
 
