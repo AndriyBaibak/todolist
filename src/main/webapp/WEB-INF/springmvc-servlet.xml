@@ -1,0 +1,38 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+
+    <bean id="hibernateImplementation" class="ua.baibak.todolist.dao.HibernateTasksDao"></bean>
+
+    <bean id="jdbcImplementation" class="ua.baibak.todolist.dao.JdbcTasksDao"></bean>
+
+    <bean id="tasksService" class="ua.baibak.todolist.service.TasksService">
+        <property name="tasksDao" ref="jdbcImplementation"></property>
+    </bean>
+
+    <bean id="validation" class="ua.baibak.todolist.service.Validate"></bean>
+
+    <bean name="/main.htm"
+          class="ua.baibak.todolist.Controllers.MainController" init-method="initializationContextMain"/>
+
+    <bean name="/add.htm"
+          class="ua.baibak.todolist.Controllers.AddController" init-method="initializationContextAdd" />
+
+    <bean name="/delete.htm"
+          class="ua.baibak.todolist.Controllers.DeleteController" init-method="initializedContextDelete" />
+
+    <bean name="/update.htm"
+          class="ua.baibak.todolist.Controllers.UpdateController" init-method="initializationContextUpdate" />
+
+    <bean id="viewResolver"
+          class="org.springframework.web.servlet.view.InternalResourceViewResolver" >
+        <property name="prefix">
+            <value>/WEB-INF/jsp/</value>
+        </property>
+        <property name="suffix">
+            <value>.jsp</value>
+        </property>
+    </bean>
+
+</beans>
