@@ -1,6 +1,5 @@
 package ua.baibak.todolist.servlet;
 
-
 import org.apache.log4j.Logger;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;

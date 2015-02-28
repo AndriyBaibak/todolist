@@ -18,21 +18,14 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class JdbcTasksDao implements TasksDao {
 
-    private AtomicInteger counter = new AtomicInteger();
     private static Logger log = Logger.getLogger(JdbcTasksDao.class);
+    private AtomicInteger counter;
     private InitialContext ic = null;
-    private DataSource ds = null;
+    private DataSource dataSource = null;
 
-    public JdbcTasksDao() {
-        try {
-            log.error("asdasdsadsad--------------------------------------------");
-            ic = new InitialContext();
-            ds = (DataSource) ic.lookup("java:/comp/env/jdbc/todolist");
-            counter.set(this.selectLastId());
-        } catch (Exception e) {
-            log.error("Exception in InitialContext" + e);
-            System.exit(434);
-        }
+    public JdbcTasksDao(DataSource ds) {
+        this.dataSource = ds;
+        this.counter = new AtomicInteger(selectLastId());
     }
 
     @Override
@@ -41,7 +34,7 @@ public class JdbcTasksDao implements TasksDao {
         Statement statement = null;
         String insertTableSQL = "INSERT INTO tasks VALUES ('" + counter.incrementAndGet() + "','" + description + "','" + DateService.changeUtilDateToSqlDate(new Date()) + "','" + DateService.changeUtilDateToSqlDate(deadline) + "');";
         try {
-            dbConnection = ds.getConnection();
+            dbConnection = dataSource.getConnection();
             statement = dbConnection.createStatement();
             statement.executeUpdate(insertTableSQL);
         } catch (SQLException e) {
@@ -63,7 +56,7 @@ public class JdbcTasksDao implements TasksDao {
         String updateDescriptionSQL = "UPDATE tasks SET description = '" + newData + "' WHERE id=" + id + ";";
         String updateDateSQL = "UPDATE tasks SET deadline = '" + newData + "' WHERE id = " + id + ";";
         try {
-            dbConnection = ds.getConnection();
+            dbConnection = dataSource.getConnection();
             statement = dbConnection.createStatement();
             if (type.equals("newDescription")) {
                 statement.executeUpdate(updateDescriptionSQL);
@@ -89,7 +82,7 @@ public class JdbcTasksDao implements TasksDao {
         List tasks = new ArrayList<Tasks>();
         String selectTableSQL = "SELECT*FROM tasks ORDER BY deadline;  ";
         try {
-            dbConnection = ds.getConnection();
+            dbConnection = dataSource.getConnection();
             statement = dbConnection.createStatement();
             ResultSet rs = statement.executeQuery(selectTableSQL);
             while (rs.next()) {
@@ -119,7 +112,7 @@ public class JdbcTasksDao implements TasksDao {
         Statement statement = null;
         String deleteTableSQL = "DELETE FROM tasks WHERE id = " + id + ";";
         try {
-            dbConnection = ds.getConnection();
+            dbConnection = dataSource.getConnection();
             statement = dbConnection.createStatement();
             statement.execute(deleteTableSQL);
         } catch (SQLException e) {
@@ -140,7 +133,7 @@ public class JdbcTasksDao implements TasksDao {
         Statement statement = null;
         String selectLastIdSQL = "SELECT id FROM tasks;";
         try {
-            dbconnection = ds.getConnection();
+            dbconnection = dataSource.getConnection();
             statement = dbconnection.createStatement();
             ResultSet rs = statement.executeQuery(selectLastIdSQL);
             while (rs.next()) {
@@ -151,6 +144,4 @@ public class JdbcTasksDao implements TasksDao {
         }
         return lastId;
     }
-
-
 }

@@ -24,7 +24,7 @@ public class MainServlet extends HttpServlet {
 
     public void init() throws ServletException {
         ctx = WebApplicationContextUtils.getRequiredWebApplicationContext(getServletContext());
-        beanForService = (TasksService) ctx.getBean("tasksService");
+        beanForService =  (TasksService) ctx.getBean("tasksService");
         dispatcherForException = getServletContext().getRequestDispatcher("/error.jsp");
         dispatcherForShowTasks = getServletContext().getRequestDispatcher("/view.jsp");
     }

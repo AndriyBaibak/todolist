@@ -2,6 +2,7 @@ package ua.baibak.todolist.dao;
 
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import ua.baibak.todolist.entity.Tasks;
 import ua.baibak.todolist.interfaces.TasksDao;
 
@@ -12,13 +13,18 @@ import java.util.List;
 public class HibernateTasksDao implements TasksDao {
 
     private static Logger log = Logger.getLogger(HibernateTasksDao.class);
-    private Session session = null;
+    private SessionFactory mySessionFactory;
+
+    public HibernateTasksDao(SessionFactory sf) {
+        this.mySessionFactory = sf;
+    }
 
     @Override
     public void save(String description, Date deadline) throws Exception {
+        Session session = null;
         Tasks tasks = new Tasks(description, deadline);
         try {
-            session = HibernateUtil.getSessionFactory().getCurrentSession();
+            session = mySessionFactory.getCurrentSession();
             session.beginTransaction();
             session.save(tasks);
             session.getTransaction().commit();
@@ -34,6 +40,7 @@ public class HibernateTasksDao implements TasksDao {
 
     @Override
     public void updateTasks(String newData, String id, String type) throws Exception {
+        Session session = null;
         Tasks taskForUpdate = this.getTasksById(Integer.parseInt(id));
         if (type.equals("newDescription")) {
             taskForUpdate.setDescription(newData);
@@ -41,7 +48,7 @@ public class HibernateTasksDao implements TasksDao {
             taskForUpdate.setDeadline((Date) java.sql.Date.valueOf(newData));
         }
         try {
-            session = HibernateUtil.getSessionFactory().getCurrentSession();
+            session = mySessionFactory.getCurrentSession();
             session.beginTransaction();
             session.update(taskForUpdate);
             session.getTransaction().commit();
@@ -56,9 +63,10 @@ public class HibernateTasksDao implements TasksDao {
     }
 
     public Tasks getTasksById(int id) throws Exception {
+        Session session = null;
         Tasks res = null;
         try {
-            session = HibernateUtil.getSessionFactory().getCurrentSession();
+            session = mySessionFactory.getCurrentSession();
             session.beginTransaction();
             res = (Tasks) session.get(ua.baibak.todolist.entity.Tasks.class, id);
             session.getTransaction().commit();
@@ -75,9 +83,10 @@ public class HibernateTasksDao implements TasksDao {
 
     @Override
     public List getAllTasks() throws Exception {
+        Session session = null;
         List tasks = new ArrayList<Tasks>();
         try {
-            session = HibernateUtil.getSessionFactory().getCurrentSession();
+            session = mySessionFactory.getCurrentSession();
             session.beginTransaction();
             tasks = session.createCriteria(ua.baibak.todolist.entity.Tasks.class).addOrder(org.hibernate.criterion.Order.asc("deadline")).list();
             session.getTransaction().commit();
@@ -94,9 +103,10 @@ public class HibernateTasksDao implements TasksDao {
 
     @Override
     public void deleteTasks(int id) throws Exception {
+        Session session = null;
         Tasks taskForDelete = this.getTasksById(id);
         try {
-            session = HibernateUtil.getSessionFactory().getCurrentSession();
+            session = mySessionFactory.getCurrentSession();
             session.beginTransaction();
             session.delete(taskForDelete);
             session.getTransaction().commit();
