@@ -10,8 +10,9 @@ import java.util.Date;
 import java.util.List;
 
 public class HibernateTasksDao implements TasksDao {
-    private Tasks tasks = null;
+
     private static Logger log = Logger.getLogger(HibernateTasksDao.class);
+    private Tasks tasks = null;
     private Session session;
 
     @Override
