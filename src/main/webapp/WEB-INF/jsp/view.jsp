@@ -36,7 +36,7 @@
         }
         $.ajax({
             type: "POST",
-            url: "/todolist/update.htm",
+            url: "/todolist/update",
             data: {"newData": newData, "id": idTask, "type": type}
         });
         document.getElementById(textToSave).style.display = 'none';
@@ -61,7 +61,7 @@
 <body>
 <div id="back">
     <div id="addtask">
-        <form id="add" action="/todolist/add.htm" method="post" onsubmit="return ValidFormFields('ntask','date')">
+        <form id="add" action="/todolist/add" method="post" onsubmit="return ValidFormFields('ntask','date')">
 
             <div align="center">
                 <p><big>Додати нове завдання </big></p>
@@ -116,7 +116,7 @@
                                value="${task.deadline}">
                     </td>
                     <td valign="middle" align="center">
-                        <form id="del" action="/todolist/delete.htm" method="post">
+                        <form id="del" action="/todolist/delete" method="post">
                             <input id='idTask' type="hidden" name="id for delete" value="${task.id}">
 
                             <p><input type="submit" value="Видалити"></p>

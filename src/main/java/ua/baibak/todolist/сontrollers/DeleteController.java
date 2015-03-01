@@ -1,4 +1,4 @@
-package ua.baibak.todolist.Controllers;
+package ua.baibak.todolist.сontrollers;
 
 
 import org.apache.log4j.Logger;
@@ -15,28 +15,26 @@ import javax.servlet.http.HttpServletResponse;
 public class DeleteController extends AbstractController {
 
     private WebApplicationContext ctx = null;
-    private TasksService beanForService = null;
+    private TasksService objectForService = null;
     private static Logger log = Logger.getLogger(DeleteController.class);
 
     public void initializedContextDelete(){
         ctx = WebApplicationContextUtils.getRequiredWebApplicationContext(getServletContext());
-        beanForService = (TasksService) ctx.getBean("tasksService");
-
+        objectForService = (TasksService) ctx.getBean("tasksService");
     }
 
     @Override
     protected ModelAndView handleRequestInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws Exception {
-
         ModelAndView model = null;
         String idForDelete = httpServletRequest.getParameter("id for delete");
         try {
-            beanForService.deleteTask(idForDelete);
+            objectForService.deleteTask(idForDelete);
         } catch (Exception e) {
             model = new ModelAndView("error");
             log.error("Exception", e);
             return model;
         }
-        model = new ModelAndView(new RedirectView("main.htm"));
+        model = new ModelAndView(new RedirectView("main"));
         return model;
     }
 

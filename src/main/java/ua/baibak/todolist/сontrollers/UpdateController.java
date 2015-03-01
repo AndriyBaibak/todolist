@@ -1,4 +1,4 @@
-package ua.baibak.todolist.Controllers;
+package ua.baibak.todolist.сontrollers;
 
 import org.apache.log4j.Logger;
 import org.springframework.web.context.WebApplicationContext;
@@ -14,28 +14,29 @@ import javax.servlet.http.HttpServletResponse;
 public class UpdateController extends AbstractController {
 
     private WebApplicationContext ctx = null;
-    private TasksService beanForService = null;
+    private TasksService objectForService = null;
     private static Logger log = Logger.getLogger(AddController.class);
 
     public void initializationContextUpdate(){
         ctx = WebApplicationContextUtils.getRequiredWebApplicationContext(getServletContext());
-        beanForService = (TasksService) ctx.getBean("tasksService");
+        objectForService = (TasksService) ctx.getBean("tasksService");
+
     }
 
     public ModelAndView handleRequestInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws Exception {
-        ModelAndView model;
+        ModelAndView model = null;
         httpServletRequest.setCharacterEncoding("UTF-8");
         String newData = httpServletRequest.getParameter("newData");
         String idTask = httpServletRequest.getParameter("id");
         String type = httpServletRequest.getParameter("type");
         try {
-            beanForService.updateTasks(newData, idTask, type);
+            objectForService.updateTasks(newData, idTask, type);
         } catch (Exception e) {
             model = new ModelAndView("error");
             log.error("Exception", e);
             return model;
         }
-        model = new ModelAndView(new RedirectView("main.htm"));
+        model = new ModelAndView(new RedirectView("main"));
         return model;
     }
 }

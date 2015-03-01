@@ -1,8 +1,6 @@
-package ua.baibak.todolist.Controllers;
+package ua.baibak.todolist.сontrollers;
 
 import org.apache.log4j.Logger;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 import org.springframework.web.servlet.ModelAndView;
@@ -17,14 +15,14 @@ import java.util.List;
 public class MainController extends AbstractController {
 
     private WebApplicationContext ctx = null;
-    private TasksService beanForService = null;
+    private TasksService objectForService = null;
     private static Logger log = Logger.getLogger(MainController.class);
     private List tasks = null;
 
 
     public void initializationContextMain(){
         ctx = WebApplicationContextUtils.getRequiredWebApplicationContext(getServletContext());
-        beanForService = (TasksService) ctx.getBean("tasksService");
+        objectForService = (TasksService) ctx.getBean("tasksService");
     }
 
 
@@ -34,7 +32,7 @@ public class MainController extends AbstractController {
 
         ModelAndView model= null;
         try {
-            tasks = beanForService.getAllTasks();
+            tasks = objectForService.getAllTasks();
         } catch (Exception e) {
             model = new ModelAndView("error");
             model.addObject("error", e);

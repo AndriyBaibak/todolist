@@ -20,13 +20,11 @@ public class JdbcTasksDao implements TasksDao {
 
     private AtomicInteger counter = new AtomicInteger();
     private static Logger log = Logger.getLogger(JdbcTasksDao.class);
-    private InitialContext ic = null;
     private DataSource ds = null;
 
     public JdbcTasksDao() {
         try {
-            log.error("asdasdsadsad--------------------------------------------");
-            ic = new InitialContext();
+            InitialContext ic = new InitialContext();
             ds = (DataSource) ic.lookup("java:/comp/env/jdbc/todolist");
             counter.set(this.selectLastId());
         } catch (Exception e) {
