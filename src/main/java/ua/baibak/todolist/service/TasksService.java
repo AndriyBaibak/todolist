@@ -11,7 +11,6 @@ import java.util.List;
 public class TasksService implements ActionWithTasks {
     public TasksDao jdbcTasksDao = new JdbcTasksDao();
     public SimpleDateFormat sp = new SimpleDateFormat("yyyy-MM-dd");
-    public List tasks = new ArrayList<Tasks>();
     public static TasksService objectToActionTasks = new TasksService();
 
     public static TasksService getObjectToActionTasks() {
@@ -32,7 +31,7 @@ public class TasksService implements ActionWithTasks {
 
     @Override
     public List getAllTasks() throws Exception {
-        tasks = jdbcTasksDao.getAllTasks();
+        List tasks = jdbcTasksDao.getAllTasks();
         return tasks;
     }
 
