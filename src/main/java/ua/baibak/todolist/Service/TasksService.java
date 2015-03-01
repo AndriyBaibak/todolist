@@ -11,7 +11,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 
 public class TasksService implements ActionWithTasks {
-    
+
     private TasksDao hibernateTasksDao = new HibernateTasksDao();
     private List tasks = new CopyOnWriteArrayList<Tasks>();
     private static Logger log = org.apache.log4j.Logger.getLogger(TasksService.class);
