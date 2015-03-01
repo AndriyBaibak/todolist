@@ -12,12 +12,12 @@ import java.util.List;
 public class HibernateTasksDao implements TasksDao {
 
     private static Logger log = Logger.getLogger(HibernateTasksDao.class);
-    private Tasks tasks = null;
-    private Session session;
+
 
     @Override
     public void save(String description, Date deadline) throws Exception {
-        tasks = new Tasks(description, deadline);
+        Session session = null;
+        Tasks tasks = new Tasks(description, deadline);
         try {
             session = HibernateUtil.getSessionFactory().getCurrentSession();
             session.beginTransaction();
@@ -35,6 +35,7 @@ public class HibernateTasksDao implements TasksDao {
 
     @Override
     public void updateTasks(String newData, String id, String type) throws Exception {
+        Session session = null;
         Tasks taskForUpdate = this.getTasksById(Integer.parseInt(id));
         if (type.equals("newDescription")) {
             taskForUpdate.setDescription(newData);
@@ -57,6 +58,7 @@ public class HibernateTasksDao implements TasksDao {
     }
 
     public Tasks getTasksById(int id) throws Exception {
+        Session session = null;
         Tasks res = null;
         try {
             session = HibernateUtil.getSessionFactory().getCurrentSession();
@@ -76,6 +78,7 @@ public class HibernateTasksDao implements TasksDao {
 
     @Override
     public List getAllTasks() throws Exception {
+        Session session = null;
         List tasks = new ArrayList<Tasks>();
         try {
             session = HibernateUtil.getSessionFactory().getCurrentSession();
@@ -95,6 +98,7 @@ public class HibernateTasksDao implements TasksDao {
 
     @Override
     public void deleteTasks(int id) throws Exception {
+        Session session = null;
         Tasks taskForDelete = this.getTasksById(id);
         try {
             session = HibernateUtil.getSessionFactory().getCurrentSession();

@@ -27,8 +27,10 @@ public class AddServlet extends HttpServlet implements Servlet {
         String taskDescription = request.getParameter("newTask");
         String taskDeadline = request.getParameter("calendar");
         try {
-            Validate.validateTaskData(taskDescription, taskDeadline);
-            TasksService.getObjectToActionTasks().createAndSaveNewTask(taskDescription, taskDeadline);
+            synchronized (this) {
+                Validate.validateTaskData(taskDescription, taskDeadline);
+                TasksService.getObjectToActionTasks().createAndSaveNewTask(taskDescription, taskDeadline);
+            }
         } catch (Exception e) {
             log.error("Exception", e);
             dispatcherForException.forward(request, response);

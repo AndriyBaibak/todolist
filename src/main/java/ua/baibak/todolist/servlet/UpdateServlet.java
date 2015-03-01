@@ -27,7 +27,9 @@ public class UpdateServlet extends HttpServlet {
         String idTask = request.getParameter("id");
         String type = request.getParameter("type");
         try {
-            TasksService.getObjectToActionTasks().updateTasks(newData, idTask, type);
+            synchronized (this) {
+                TasksService.getObjectToActionTasks().updateTasks(newData, idTask, type);
+            }
         } catch (Exception e) {
             log.error("Exception", e);
             dispatcherForException.forward(request, response);

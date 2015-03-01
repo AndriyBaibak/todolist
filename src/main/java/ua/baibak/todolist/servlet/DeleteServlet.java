@@ -24,7 +24,9 @@ public class DeleteServlet extends HttpServlet {
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String idForDelete = request.getParameter("id for delete");
         try {
-            TasksService.getObjectToActionTasks().deleteTask(idForDelete);
+            synchronized (this) {
+                TasksService.getObjectToActionTasks().deleteTask(idForDelete);
+            }
         } catch (Exception e) {
             log.error("Exception", e);
             dispatcherForException.forward(request, response);
