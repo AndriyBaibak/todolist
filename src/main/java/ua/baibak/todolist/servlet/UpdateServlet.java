@@ -2,6 +2,7 @@ package ua.baibak.todolist.servlet;
 
 import org.apache.log4j.Logger;
 import ua.baibak.todolist.service.TasksService;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -30,8 +31,6 @@ public class UpdateServlet extends HttpServlet {
             log.error("Exception", e);
             dispatcherForException.forward(request, response);
         }
-
         dispatcherForAddTasks.forward(request, response);
-
     }
 }

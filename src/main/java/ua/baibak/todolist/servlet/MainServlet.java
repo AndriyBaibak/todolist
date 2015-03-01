@@ -1,7 +1,9 @@
 package ua.baibak.todolist.servlet;
 
 import org.apache.log4j.Logger;
+import ua.baibak.todolist.dao.JdbcTasksDao;
 import ua.baibak.todolist.service.TasksService;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -17,6 +19,7 @@ public class MainServlet extends HttpServlet {
     private RequestDispatcher dispatcherForShowTasks = null;
 
     public void init() throws ServletException {
+        new JdbcTasksDao();
         dispatcherForException = getServletContext().getRequestDispatcher("/error.jsp");
         dispatcherForShowTasks = getServletContext().getRequestDispatcher("/view.jsp");
     }

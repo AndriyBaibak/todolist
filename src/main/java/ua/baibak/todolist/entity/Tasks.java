@@ -30,6 +30,10 @@ public class Tasks {
         return description;
     }
 
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     public int getId() {
         return id;
     }
@@ -44,10 +48,6 @@ public class Tasks {
 
     public void setCreatedDate(java.util.Date createdDate) {
         this.createdDate = createdDate;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
     }
 
     public java.util.Date getDeadline() {

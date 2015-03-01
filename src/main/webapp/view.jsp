@@ -94,14 +94,14 @@
             <tr>
                 <div >
             <td valign="middle" align="center">
-                <div id = "div + ${task.description} + ${task.id}" onclick="change('input + ${task.description} + ${task.id}','div + ${task.description} + ${task.id}')"> <c:out value="${task.description}"> </c:out></div>
+                <div id = "div + ${task.description} + ${task.id}" onclick="change('input + ${task.description} + ${task.id}','div + ${task.description} + ${task.id}')"> <c:out value="${task.description}"/></div>
                 <input style="display:none" id="input + ${task.description} + ${task.id}" type="text" onblur="update('input + ${task.description} + ${task.id}','div + ${task.description} + ${task.id}',${task.id},'newDescription')" value="${task.description}" >
             </td>
             <td valign="middle" align="center">
                 <c:out value="${task.createdDate}"></c:out>
             </td>
             <td valign="middle" align="center">
-                <div id="div + ${task.deadline} + ${task.id}" onclick="change('input + ${task.deadline} + ${task.id}','div + ${task.deadline} + ${task.id}')"> <c:out value="${task.deadline}"> </c:out></div>
+                <div id="div + ${task.deadline} + ${task.id}" onclick="change('input + ${task.deadline} + ${task.id}','div + ${task.deadline} + ${task.id}')"> <c:out value="${task.deadline}"/></div>
                 <input style="display:none" id="input + ${task.deadline} + ${task.id}" type = "date" onblur="update('input + ${task.deadline} + ${task.id}','div + ${task.deadline} + ${task.id}', ${task.id},'newDate')" value="${task.deadline}" >
             </td>
             <td valign="middle" align="center">
