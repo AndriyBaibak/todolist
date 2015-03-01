@@ -2,19 +2,16 @@ package ua.baibak.todolist.service;
 
 import org.apache.log4j.Logger;
 import ua.baibak.todolist.dao.HibernateTasksDao;
-import ua.baibak.todolist.entity.Tasks;
 import ua.baibak.todolist.interfaces.ActionWithTasks;
 import ua.baibak.todolist.interfaces.TasksDao;
-import java.util.ArrayList;
+
 import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 
 public class TasksService implements ActionWithTasks {
 
     private TasksDao hibernateTasksDao = new HibernateTasksDao();
-    private List tasks = new CopyOnWriteArrayList<Tasks>();
-    private static Logger log = org.apache.log4j.Logger.getLogger(TasksService.class);
+    private static Logger log = Logger.getLogger(TasksService.class);
     private static TasksService objectToActionTasks = new TasksService();
 
     public static TasksService getObjectToActionTasks() {
@@ -35,7 +32,7 @@ public class TasksService implements ActionWithTasks {
 
     @Override
     public List getAllTasks() throws Exception {
-        tasks = hibernateTasksDao.getAllTasks();
+        List tasks = hibernateTasksDao.getAllTasks();
         return tasks;
     }
 
