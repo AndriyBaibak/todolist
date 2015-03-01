@@ -18,15 +18,15 @@ public class AddServlet extends HttpServlet {
 
     private static Logger log = Logger.getLogger(AddServlet.class);
     private WebApplicationContext ctx = null;
-    private TasksService beanForService = null;
-    private Validate beanForValidation = null;
+    private TasksService objectForService = null;
+    private Validate objectForValidation = null;
     private RequestDispatcher dispatcherForException = null;
     private RequestDispatcher dispatcherForAddTasks = null;
 
     public void init() throws ServletException {
         ctx = WebApplicationContextUtils.getRequiredWebApplicationContext(getServletContext());
-        beanForService = (TasksService) ctx.getBean("tasksService");
-        beanForValidation = (Validate) ctx.getBean("validation");
+        objectForService = (TasksService) ctx.getBean("tasksService");
+        objectForValidation = (Validate) ctx.getBean("validation");
         dispatcherForException = getServletContext().getRequestDispatcher("/error.jsp");
         dispatcherForAddTasks = getServletContext().getRequestDispatcher("/todolist");
     }
@@ -36,8 +36,8 @@ public class AddServlet extends HttpServlet {
         String taskDescription = request.getParameter("newTask");
         String taskDeadline = request.getParameter("calendar");
         try {
-            beanForValidation.validateTaskData(taskDescription, taskDeadline);
-            beanForService.createAndSaveNewTask(taskDescription, taskDeadline);
+            objectForValidation.validateTaskData(taskDescription, taskDeadline);
+            objectForService.createAndSaveNewTask(taskDescription, taskDeadline);
         } catch (Exception e) {
             log.error("Exception", e);
             dispatcherForException.forward(request, response);

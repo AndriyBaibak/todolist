@@ -19,8 +19,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class JdbcTasksDao implements TasksDao {
 
     private static Logger log = Logger.getLogger(JdbcTasksDao.class);
-    private AtomicInteger counter;
-    private InitialContext ic = null;
+    private AtomicInteger counter = new AtomicInteger();
     private DataSource dataSource = null;
 
     public JdbcTasksDao(DataSource ds) {

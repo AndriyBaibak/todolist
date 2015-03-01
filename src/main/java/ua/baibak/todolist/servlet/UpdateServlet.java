@@ -15,14 +15,14 @@ import java.io.IOException;
 public class UpdateServlet extends HttpServlet {
 
     private WebApplicationContext ctx = null;
-    private TasksService beanForService = null;
+    private TasksService objectForService = null;
     private static Logger log = Logger.getLogger(AddServlet.class);
     private RequestDispatcher dispatcherForException = null;
     private RequestDispatcher dispatcherForAddTasks = null;
 
     public void init() throws ServletException {
         ctx = WebApplicationContextUtils.getRequiredWebApplicationContext(getServletContext());
-        beanForService = (TasksService) ctx.getBean("tasksService");
+        objectForService = (TasksService) ctx.getBean("tasksService");
         dispatcherForException = getServletContext().getRequestDispatcher("/error.jsp");
         dispatcherForAddTasks = getServletContext().getRequestDispatcher("/todolist");
     }
@@ -33,7 +33,7 @@ public class UpdateServlet extends HttpServlet {
         String idTask = request.getParameter("id");
         String type = request.getParameter("type");
         try {
-            beanForService.updateTasks(newData, idTask, type);
+            objectForService.updateTasks(newData, idTask, type);
         } catch (Exception e) {
             log.error("Exception", e);
             dispatcherForException.forward(request, response);

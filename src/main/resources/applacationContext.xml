@@ -6,7 +6,7 @@ http://www.springframework.org/schema/beans
 http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
 
     <bean id="tasksService" class="ua.baibak.todolist.service.TasksService">
-        <property name="tasksDao" ref="jdbcImplementation"/>
+        <property name="tasksDao" ref="hibernateImplementation"/>
     </bean>
 
     <bean id="jdbcImplementation" class="ua.baibak.todolist.dao.JdbcTasksDao">

@@ -16,7 +16,7 @@ import java.util.List;
 public class MainServlet extends HttpServlet {
 
     private WebApplicationContext ctx = null;
-    private TasksService beanForService = null;
+    private TasksService objectForService = null;
     private static Logger log = Logger.getLogger(MainServlet.class);
     private List tasks = null;
     private RequestDispatcher dispatcherForException = null;
@@ -24,14 +24,14 @@ public class MainServlet extends HttpServlet {
 
     public void init() throws ServletException {
         ctx = WebApplicationContextUtils.getRequiredWebApplicationContext(getServletContext());
-        beanForService =  (TasksService) ctx.getBean("tasksService");
+        objectForService =  (TasksService) ctx.getBean("tasksService");
         dispatcherForException = getServletContext().getRequestDispatcher("/error.jsp");
         dispatcherForShowTasks = getServletContext().getRequestDispatcher("/view.jsp");
     }
 
     public void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
-            tasks = beanForService.getAllTasks();
+            tasks = objectForService.getAllTasks();
         } catch (Exception e) {
             log.error("Exception", e);
             dispatcherForException.forward(request, response);

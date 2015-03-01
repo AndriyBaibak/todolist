@@ -15,14 +15,14 @@ import java.io.IOException;
 public class DeleteServlet extends HttpServlet {
 
     private WebApplicationContext ctx = null;
-    private TasksService beanForService = null;
+    private TasksService objectForService = null;
     private static Logger log = Logger.getLogger(DeleteServlet.class);
     private RequestDispatcher dispatcherForException = null;
     private RequestDispatcher dispatcherForDeleteTasks = null;
 
     public void init() throws ServletException {
         ctx = WebApplicationContextUtils.getRequiredWebApplicationContext(getServletContext());
-        beanForService = (TasksService) ctx.getBean("tasksService");
+        objectForService = (TasksService) ctx.getBean("tasksService");
         dispatcherForException = getServletContext().getRequestDispatcher("/error.jsp");
         dispatcherForDeleteTasks = getServletContext().getRequestDispatcher("/todolist");
     }
@@ -30,7 +30,7 @@ public class DeleteServlet extends HttpServlet {
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String idForDelete = request.getParameter("id for delete");
         try {
-            beanForService.deleteTask(idForDelete);
+            objectForService.deleteTask(idForDelete);
         } catch (Exception e) {
             log.error("Exception", e);
             dispatcherForException.forward(request, response);
