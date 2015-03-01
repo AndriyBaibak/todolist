@@ -1,4 +1,4 @@
-package ua.baibak.todolist.service1;
+package ua.baibak.todolist.service123;
 
 import org.apache.log4j.Logger;
 import ua.baibak.todolist.dao.HibernateTasksDao;
@@ -11,7 +11,7 @@ import java.util.List;
 public class TasksService implements ActionWithTasks {
 
     private TasksDao hibernateTasksDao = new HibernateTasksDao();
-    private static Logger log = org.apache.log4j.Logger.getLogger(TasksService.class);
+    private static Logger log = Logger.getLogger(TasksService.class);
     private static TasksService objectToActionTasks = new TasksService();
 
     public static TasksService getObjectToActionTasks() {
