@@ -10,7 +10,7 @@ public class Tasks {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.AUTO)
-    public int id;
+    private int id;
 
     @Column(name = "description")
     private String description;
@@ -23,7 +23,6 @@ public class Tasks {
     @Column(name = "deadline")
     private java.util.Date deadline;
 
-
     public Tasks(String description, java.util.Date deadline) {
         this.description = description;
         this.createdDate = new java.util.Date();
@@ -35,7 +34,6 @@ public class Tasks {
         this.description = description;
         this.createdDate = createdDate;
         this.deadline = deadline;
-
     }
 
     public Tasks() {
@@ -87,9 +85,7 @@ public class Tasks {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Tasks)) return false;
-
         Tasks tasks = (Tasks) o;
-
         if (createdDate != null ? !createdDate.equals(tasks.createdDate) : tasks.createdDate != null) return false;
         if (deadline != null ? !deadline.equals(tasks.deadline) : tasks.deadline != null) return false;
         if (description != null ? !description.equals(tasks.description) : tasks.description != null) return false;

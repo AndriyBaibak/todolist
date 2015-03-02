@@ -10,23 +10,20 @@ import java.util.Date;
 import java.util.List;
 
 public class HibernateTasksDao implements TasksDao {
-    private Tasks tasks = null;
+
     private static Logger log = Logger.getLogger(HibernateTasksDao.class);
     private Session session = null;
 
-    public HibernateTasksDao() {
-    }
-
     @Override
     public void save(String description, Date deadline) throws Exception {
-        tasks = new Tasks(description, deadline);
+        Tasks tasks = new Tasks(description, deadline);
         try {
-            session = HibernateUtill.getSessionFactory().getCurrentSession();
+            session = HibernateUtil.getSessionFactory().getCurrentSession();
             session.beginTransaction();
             session.save(tasks);
             session.getTransaction().commit();
         } catch (Exception e) {
-            log.error("Exception in save from HibernateTasksDap", e);
+            log.error("Exception during saving ", e);
             session.getTransaction().rollback();
         } finally {
             if (session != null && session.isOpen()) {
@@ -44,12 +41,12 @@ public class HibernateTasksDao implements TasksDao {
             taskForUpdate.setDeadline((Date) java.sql.Date.valueOf(newData));
         }
         try {
-            session = HibernateUtill.getSessionFactory().getCurrentSession();
+            session = HibernateUtil.getSessionFactory().getCurrentSession();
             session.beginTransaction();
             session.update(taskForUpdate);
             session.getTransaction().commit();
         } catch (Exception e) {
-            log.error("Exception in save from HibernateTasksDao", e);
+            log.error("Exception during updating task", e);
             session.getTransaction().rollback();
         } finally {
             if (session != null && session.isOpen()) {
@@ -61,12 +58,12 @@ public class HibernateTasksDao implements TasksDao {
     public Tasks getTasksById(int id) throws Exception {
         Tasks res = null;
         try {
-            session = HibernateUtill.getSessionFactory().getCurrentSession();
+            session = HibernateUtil.getSessionFactory().getCurrentSession();
             session.beginTransaction();
             res = (Tasks) session.get(ua.baibak.todolist.entity.Tasks.class, id);
             session.getTransaction().commit();
         } catch (Exception e) {
-            log.error("Exception in getTasksById from HibernateTasksDao", e);
+            log.error("Exception during getTasksById", e);
             session.getTransaction().rollback();
         } finally {
             if (session != null && session.isOpen()) {
@@ -80,12 +77,12 @@ public class HibernateTasksDao implements TasksDao {
     public List getAllTasks() throws Exception {
         List tasks = new ArrayList<Tasks>();
         try {
-            session = HibernateUtill.getSessionFactory().getCurrentSession();
+            session = HibernateUtil.getSessionFactory().getCurrentSession();
             session.beginTransaction();
             tasks = session.createCriteria(ua.baibak.todolist.entity.Tasks.class).addOrder(org.hibernate.criterion.Order.asc("deadline")).list();
             session.getTransaction().commit();
         } catch (Exception e) {
-            log.error("Exception in getAllTasks from  HibernateTasksDao", e);
+            log.error("Exception during getAllTasks", e);
             session.getTransaction().rollback();
         } finally {
             if (session != null && session.isOpen()) {
@@ -99,12 +96,12 @@ public class HibernateTasksDao implements TasksDao {
     public void deleteTasks(int id) throws Exception {
         Tasks taskForDelete = this.getTasksById(id);
         try {
-            session = HibernateUtill.getSessionFactory().getCurrentSession();
+            session = HibernateUtil.getSessionFactory().getCurrentSession();
             session.beginTransaction();
             session.delete(taskForDelete);
             session.getTransaction().commit();
         } catch (Exception e) {
-            log.error("Exception in deleteTasks from HibernateTasksDao", e);
+            log.error("Exception during deleting task", e);
             session.getTransaction().rollback();
         } finally {
             if (session != null && session.isOpen()) {

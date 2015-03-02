@@ -17,14 +17,14 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class JdbcTasksDao implements TasksDao {
+
     private AtomicInteger counter = new AtomicInteger();
     private static Logger log = Logger.getLogger(JdbcTasksDao.class);
-    private InitialContext ic = null;
     private DataSource ds = null;
 
     public JdbcTasksDao() {
         try {
-            ic = new InitialContext();
+            InitialContext ic = new InitialContext();
             ds = (DataSource) ic.lookup("java:/comp/env/jdbc/todolist");
             counter.set(this.selectLastId());
         } catch (Exception e) {
@@ -43,7 +43,7 @@ public class JdbcTasksDao implements TasksDao {
             statement = dbConnection.createStatement();
             statement.executeUpdate(insertTableSQL);
         } catch (SQLException e) {
-            log.debug("SQLException in save method" + e);
+            log.error("SQLException during saving" + e);
         } finally {
             if (statement != null) {
                 statement.close();
@@ -60,7 +60,6 @@ public class JdbcTasksDao implements TasksDao {
         Statement statement = null;
         String updateDescriptionSQL = "UPDATE tasks SET description = '" + newData + "' WHERE id=" + id + ";";
         String updateDateSQL = "UPDATE tasks SET deadline = '" + newData + "' WHERE id = " + id + ";";
-
         try {
             dbConnection = ds.getConnection();
             statement = dbConnection.createStatement();
@@ -70,7 +69,7 @@ public class JdbcTasksDao implements TasksDao {
                 statement.executeUpdate(updateDateSQL);
             }
         } catch (SQLException e) {
-            log.debug("SQLException in update method" + e);
+            log.error("SQLException during updating " + e);
         } finally {
             if (statement != null) {
                 statement.close();
@@ -96,11 +95,11 @@ public class JdbcTasksDao implements TasksDao {
                 String description = rs.getString("description");
                 java.util.Date createdDate = rs.getDate("createdDate");
                 java.util.Date deadline = rs.getDate("deadline");
-                Tasks taskforview = new Tasks(id, description, createdDate, deadline);
-                tasks.add(taskforview);
+                Tasks taskForView = new Tasks(id, description, createdDate, deadline);
+                tasks.add(taskForView);
             }
         } catch (SQLException e) {
-            log.debug("SQLException in getalltasks method " + e);
+            log.error("SQLException during getAllTasks " + e);
         } finally {
             if (statement != null) {
                 statement.close();
@@ -112,7 +111,6 @@ public class JdbcTasksDao implements TasksDao {
         return tasks;
     }
 
-
     @Override
     public void deleteTasks(int id) throws Exception {
         Connection dbConnection = null;
@@ -123,7 +121,7 @@ public class JdbcTasksDao implements TasksDao {
             statement = dbConnection.createStatement();
             statement.execute(deleteTableSQL);
         } catch (SQLException e) {
-            log.debug("SQLException in deleteTasks method " + e);
+            log.error("SQLException during deletin task " + e);
         } finally {
             if (statement != null) {
                 statement.close();
@@ -147,7 +145,7 @@ public class JdbcTasksDao implements TasksDao {
                 lastId = rs.getInt("id");
             }
         } catch (SQLException e) {
-            log.error("Problem in selectLastId-method");
+            log.error("Problem in selectLastId");
         }
         return lastId;
     }

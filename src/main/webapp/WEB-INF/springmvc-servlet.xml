@@ -1,0 +1,29 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+
+
+    <bean name="/main"
+          class="ua.baibak.todolist.сontrollers.MainController" init-method="initializationContextMain"/>
+
+    <bean name="/add"
+          class="ua.baibak.todolist.сontrollers.AddController" init-method="initializationContextAdd" />
+
+    <bean name="/delete"
+          class="ua.baibak.todolist.сontrollers.DeleteController" init-method="initializedContextDelete" />
+
+    <bean name="/update"
+          class="ua.baibak.todolist.сontrollers.UpdateController" init-method="initializationContextUpdate" />
+
+    <bean id="viewResolver"
+          class="org.springframework.web.servlet.view.InternalResourceViewResolver" >
+        <property name="prefix">
+            <value>/WEB-INF/jsp/</value>
+        </property>
+        <property name="suffix">
+            <value>.jsp</value>
+        </property>
+    </bean>
+
+</beans>

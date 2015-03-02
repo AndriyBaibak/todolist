@@ -1,9 +1,6 @@
 package ua.baibak.todolist.service;
 
 
-import org.apache.log4j.Logger;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 import ua.baibak.todolist.entity.Tasks;
 import ua.baibak.todolist.interfaces.ActionWithTasks;
 import ua.baibak.todolist.interfaces.TasksDao;
@@ -14,20 +11,13 @@ import java.util.List;
 
 public class TasksService implements ActionWithTasks {
 
-    private static Logger log = Logger.getLogger(TasksService.class);
-    public TasksDao tasksDao = null;
-    public SimpleDateFormat sp = new SimpleDateFormat("yyyy-MM-dd");
-    public List tasks = new ArrayList<Tasks>();
-
+    private TasksDao tasksDao = null;
+    private SimpleDateFormat sp = new SimpleDateFormat("yyyy-MM-dd");
 
     public void setTasksDao(TasksDao tasksDao) {
-
         this.tasksDao = tasksDao;
     }
 
-    public TasksService(){
-
-    }
     @Override
     public void createAndSaveNewTask(String description, String deadline) throws Exception {
         java.util.Date dateDeadline = sp.parse(deadline);
@@ -42,7 +32,7 @@ public class TasksService implements ActionWithTasks {
 
     @Override
     public List getAllTasks() throws Exception {
-        tasks = tasksDao.getAllTasks();
+        List<Tasks> tasks = tasksDao.getAllTasks();
         return tasks;
     }
 
