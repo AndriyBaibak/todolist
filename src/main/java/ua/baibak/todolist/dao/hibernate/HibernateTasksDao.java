@@ -45,7 +45,7 @@ public class HibernateTasksDao implements TasksDao {
         if (type.equals("newDescription")) {
             taskForUpdate.setDescription(newData);
         } else {
-            taskForUpdate.setDeadline((Date) java.sql.Date.valueOf(newData));
+            taskForUpdate.setDeadline(java.sql.Date.valueOf(newData));
         }
         try {
             session = mySessionFactory.getCurrentSession();

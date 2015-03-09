@@ -61,7 +61,7 @@ public class Tasks {
 
     @Override
     public String toString() {
-        final StringBuilder sb = new StringBuilder();
+        StringBuilder sb = new StringBuilder();
         sb.append(id);
         sb.append(" ").append(description);
         sb.append(" ").append(createdDate);
