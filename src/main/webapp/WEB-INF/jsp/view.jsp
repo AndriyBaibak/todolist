@@ -37,7 +37,7 @@
         }
         $.ajax({
             type: "POST",
-            url: "/todolist/updateTasks",
+            url: "/todolist/updateTasks/"+newData+"/"+idTask+"/"+type,
             data: {"newData": newData, "id": idTask, "type": type}
         });
         document.getElementById(textToSave).style.display = 'none';
@@ -72,10 +72,10 @@
                     <td>Description:</td>
                     <td><form:input id="ntask" path="description" onfocus="this.style.border='2px inset'"/></td>
                 </tr>
-
-            <td>Оберіть кінцеву дату виконання:</td>
-            <td><form:input id="date" path="deadline" placeholder="yyyy/MM/dd"
-                                                     onfocus="this.style.border='2px inset'"/></td>
+                <tr>
+                    <td>Оберіть кінцеву дату виконання:</td>
+                    <td><form:input id="date" path="deadline" placeholder="yyyy-MM-dd" onfocus="this.style.border='2px inset'"/></td>
+                </tr>
 
             <div align="center">
                 <input type="submit" value="Додати">
@@ -117,7 +117,7 @@
                                value="${task.deadline}">
                     </td>
                     <td valign="middle" align="center">
-                        <form id="del" action="/todolist/deleteTasks" method="post">
+                        <form id="del" action="/todolist/deleteTasks" method="get">
                             <input id='idTask' type="hidden" name="id for delete" value="${task.id}">
                             <p><input type="submit" value="Видалити"></p>
                         </form>

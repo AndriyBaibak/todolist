@@ -7,10 +7,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import ua.baibak.todolist.entity.Tasks;
 import ua.baibak.todolist.service.TasksService;
@@ -73,12 +70,8 @@ public class TasksController {
         return modelAndView;
     }
 
-    @RequestMapping(value = "/updateTasks", method = RequestMethod.POST)
-    public ModelAndView updateTasks(HttpServletRequest request) throws Exception {
-        request.setCharacterEncoding("UTF-8");
-        String type = request.getParameter("type");
-        String newData = request.getParameter("newData");
-        String idTask = request.getParameter("id");
+    @RequestMapping(value = "/updateTasks/{newData}/{idTask}/{type}", method = RequestMethod.POST)
+    public ModelAndView updateTasks(@PathVariable ("newData") String newData, @PathVariable ("idTask") String idTask, @PathVariable ("type") String type) throws Exception {
         objectForAction = (TasksService) ctx.getBean("tasksService");
         try {
             objectForAction.updateTasks(newData, idTask, type);
@@ -95,12 +88,11 @@ public class TasksController {
         return modelAndView;
     }
 
-    @RequestMapping(value = "/deleteTasks", method = RequestMethod.POST)
-    public ModelAndView deleteTasks(HttpServletRequest request) throws Exception {
-        String idForDelete = request.getParameter("id for delete");
+    @RequestMapping(value = "/deleteTasks", method = RequestMethod.GET)
+    public ModelAndView deleteTasks(@RequestParam("id for delete") String id) throws Exception {
         objectForAction = (TasksService) ctx.getBean("tasksService");
         try {
-            objectForAction.deleteTask(idForDelete);
+            objectForAction.deleteTask(id);
             tasks = objectForAction.getAllTasks();
         } catch (Exception ex) {
             log.error("Exception" + ex);
