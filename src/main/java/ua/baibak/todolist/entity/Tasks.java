@@ -25,6 +25,7 @@ public class Tasks {
     }
 
     public Tasks() {
+        this.createdDate = new java.util.Date();
     }
 
     public String getDescription() {

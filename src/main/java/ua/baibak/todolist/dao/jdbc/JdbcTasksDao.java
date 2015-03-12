@@ -3,7 +3,7 @@ package ua.baibak.todolist.dao.jdbc;
 import org.apache.log4j.Logger;
 import ua.baibak.todolist.dao.TasksDao;
 import ua.baibak.todolist.entity.Tasks;
-import ua.baibak.todolist.service.DateUtil;
+import ua.baibak.todolist.utils.DateUtil;
 
 import javax.sql.DataSource;
 import java.sql.Connection;

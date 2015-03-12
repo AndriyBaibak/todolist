@@ -1,9 +1,10 @@
 package ua.baibak.todolist.service;
 
+import java.util.Date;
 import java.util.List;
 
 public interface ActionWithTasks {
-    public void createAndSaveNewTask(String deadline, String description) throws Exception;
+    public void createAndSaveNewTask(String description, Date deadline) throws Exception;
 
     public void deleteTask(String idForDelete) throws Exception;
 

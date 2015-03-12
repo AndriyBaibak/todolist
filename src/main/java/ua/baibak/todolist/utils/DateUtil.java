@@ -1,4 +1,4 @@
-package ua.baibak.todolist.service;
+package ua.baibak.todolist.utils;
 
 import java.util.Date;
 

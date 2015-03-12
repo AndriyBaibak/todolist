@@ -1,6 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 
 
@@ -62,22 +62,25 @@
 <body>
 <div id="back">
     <div id="addtask">
-        <form id="add" action="/todolist/allTasks" method="post" onsubmit="return ValidFormFields('ntask','date')">
 
             <div align="center">
                 <p><big>Додати нове завдання </big></p>
             </div>
+            <form:form action="/todolist/allTasks" method="post" commandName="tasksView" onsubmit="return ValidFormFields('ntask','date')">
 
-            <p>Описання завдання:<input id="ntask" name="newTask" type="text" border="1 "
-                                        onfocus="this.style.border='2px inset'"></p>
+                <tr>
+                    <td>Description:</td>
+                    <td><form:input id="ntask" path="description" onfocus="this.style.border='2px inset'"/></td>
+                </tr>
 
-            <p>Оберіть кінцеву дату виконання:<input id="date" type="date" name="calendar" border="1"
-                                                     onfocus="this.style.border='2px inset'"></p>
+            <td>Оберіть кінцеву дату виконання:</td>
+            <td><form:input id="date" path="deadline" placeholder="yyyy/MM/dd"
+                                                     onfocus="this.style.border='2px inset'"/></td>
 
             <div align="center">
                 <input type="submit" value="Додати">
             </div>
-        </form>
+            </form:form>
     </div>
 
     <table width="700" border="1"

@@ -3,6 +3,7 @@ package ua.baibak.todolist.service;
 
 import ua.baibak.todolist.dao.TasksDao;
 
+import java.util.Date;
 import java.util.List;
 
 
@@ -15,9 +16,9 @@ public class TasksService implements ActionWithTasks {
     }
 
     @Override
-    public void createAndSaveNewTask(String description, String deadline) throws Exception {
-        java.sql.Date dateDeadline = java.sql.Date.valueOf(deadline);
-        tasksDao.save(description, DateUtil.changeSqlDateToUtilDate(dateDeadline));
+    public void createAndSaveNewTask(String description, Date deadline) throws Exception {
+       // java.sql.Date dateDeadline = java.sql.Date.valueOf(deadline);
+        tasksDao.save(description, deadline);
     }
 
     @Override
