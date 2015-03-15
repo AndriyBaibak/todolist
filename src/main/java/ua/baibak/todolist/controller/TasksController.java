@@ -13,7 +13,6 @@ import ua.baibak.todolist.entity.Tasks;
 import ua.baibak.todolist.service.TasksService;
 import ua.baibak.todolist.service.Validate;
 
-import javax.servlet.http.HttpServletRequest;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -35,7 +34,7 @@ public class TasksController {
     }
 
     @RequestMapping(value = "/allTasks", method = RequestMethod.GET)
-    public ModelAndView tasks() {
+    public ModelAndView allTasks() {
         objectForAction = (TasksService) ctx.getBean("tasksService");
         try {
             tasks = objectForAction.getAllTasks();
@@ -56,6 +55,7 @@ public class TasksController {
         objectForValidation = (Validate) ctx.getBean("validate");
         objectForAction = (TasksService) ctx.getBean("tasksService");
        try {
+            objectForValidation.validateTaskData(taskForSaving.getDescription(), taskForSaving.getDeadline());
             objectForAction.createAndSaveNewTask(taskForSaving.getDescription(), taskForSaving.getDeadline());
             tasks = objectForAction.getAllTasks();
         } catch (Exception ex) {
@@ -89,7 +89,7 @@ public class TasksController {
     }
 
     @RequestMapping(value = "/deleteTasks", method = RequestMethod.GET)
-    public ModelAndView deleteTasks(@RequestParam("id for delete") String id) throws Exception {
+    public ModelAndView deleteTasks(@RequestParam("idForDelete") String id) throws Exception {
         objectForAction = (TasksService) ctx.getBean("tasksService");
         try {
             objectForAction.deleteTask(id);

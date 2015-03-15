@@ -69,7 +69,7 @@
             <form:form action="/todolist/allTasks" method="post" commandName="tasksView" onsubmit="return ValidFormFields('ntask','date')">
 
                 <tr>
-                    <td>Description:</td>
+                    <td>Описання:</td>
                     <td><form:input id="ntask" path="description" onfocus="this.style.border='2px inset'"/></td>
                 </tr>
                 <tr>
@@ -118,7 +118,7 @@
                     </td>
                     <td valign="middle" align="center">
                         <form id="del" action="/todolist/deleteTasks" method="get">
-                            <input id='idTask' type="hidden" name="id for delete" value="${task.id}">
+                            <input id='idTask' type="hidden" name="idForDelete" value="${task.id}">
                             <p><input type="submit" value="Видалити"></p>
                         </form>
                     </td>
