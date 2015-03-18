@@ -17,7 +17,6 @@ public class TasksService implements ActionWithTasks {
 
     @Override
     public void createAndSaveNewTask(String description, Date deadline) throws Exception {
-       // java.sql.Date dateDeadline = java.sql.Date.valueOf(deadline);
         tasksDao.save(description, deadline);
     }
 
