@@ -29,17 +29,25 @@
     }
 </script>
 <script type="text/javascript">
-    function update(textToSave, beReplaced, id, type) {
-        var idTask = id;
+    function update(textToSave, beReplaced, id, newDescription, newDeadline, type) {
         var newData = document.getElementById(textToSave).value;
         if (document.getElementById(textToSave).value == '') {
             newData = document.getElementById(beReplaced).innerHTML;
         }
-        $.ajax({
-            type: "POST",
-            url: "/todolist/updateTasks/"+newData+"/"+idTask+"/"+type,
-            data: {"newData": newData, "id": idTask, "type": type}
-        });
+        if(type=='description') {
+            $.ajax({
+                type: "POST",
+                url: "/todolist/updateTask/" + id,
+                data: {"description": newDescription.value, "deadline": newDeadline}
+
+            });
+        }else{
+            $.ajax({
+                type: "POST",
+                url: "/todolist/updateTask/" + id,
+                data: {"description": newDescription, "deadline": newDeadline.value}
+            });
+        }
         document.getElementById(textToSave).style.display = 'none';
         document.getElementById(beReplaced).style.display = '';
         document.getElementById(beReplaced).innerHTML = newData;
@@ -66,15 +74,15 @@
             <div align="center">
                 <p><big>Додати нове завдання </big></p>
             </div>
-            <form:form action="/todolist/allTasks" method="post" commandName="tasksView" onsubmit="return ValidFormFields('ntask','date')">
+            <form:form action="/todolist/addTask" method="post" commandName="taskView" onsubmit="return ValidFormFields('ntask','date')">
 
                 <tr>
                     <td>Описання:</td>
-                    <td><form:input id="ntask" path="description" onfocus="this.style.border='2px inset'"/></td>
+                    <td><form:input id="ntask" path="description" onfocus="this.style.border='2px inset'"/></td></br>
                 </tr>
                 <tr>
                     <td>Оберіть кінцеву дату виконання:</td>
-                    <td><form:input id="date" path="deadline" placeholder="yyyy-MM-dd" onfocus="this.style.border='2px inset'"/></td>
+                    <td><form:input id="date" path="deadline" type="date" placeholder="yyyy-MM-dd" onfocus="this.style.border='2px inset'"/></td>
                 </tr>
 
             <div align="center">
@@ -94,38 +102,36 @@
         </tr>
 
         <c:forEach var="task" items="${tasks}">
-
+            <form:form commandName="taskViewUpdate" method="post" action="/todolist/updateTask">
             <tr>
                 <div>
                     <td valign="middle" align="center">
                         <div id="div + ${task.description} + ${task.id}"
                              onclick="change('input + ${task.description} + ${task.id}','div + ${task.description} + ${task.id}')">
                             <c:out value="${task.description}"> </c:out></div>
-                        <input style="display:none" id="input + ${task.description} + ${task.id}" type="text"
-                               onblur="update('input + ${task.description} + ${task.id}','div + ${task.description} + ${task.id}',${task.id},'newDescription')"
-                               value="${task.description}">
+                        <form:input  cssStyle="display:none" path="description" id='input + ${task.description} + ${task.id}'
+                               onblur="update('input + ${task.description} + ${task.id}','div + ${task.description} + ${task.id}','${task.id}',this, '${task.deadline}','description')" value="${task.description}"/>
                     </td>
                     <td valign="middle" align="center">
                         <c:out value="${task.createdDate}"></c:out>
                     </td>
                     <td valign="middle" align="center">
                         <div id="div + ${task.deadline} + ${task.id}"
-                             onclick="change('input + ${task.deadline} + ${task.id}','div + ${task.deadline} + ${task.id}')">
+                             onclick="change('input + ${task.deadline} + ${task.id}','div + ${task.deadline} + ${task.id}')" >
                             <c:out value="${task.deadline}"> </c:out></div>
-                        <input style="display:none" id="input + ${task.deadline} + ${task.id}" type="date"
-                               onblur="update('input + ${task.deadline} + ${task.id}','div + ${task.deadline} + ${task.id}', ${task.id},'newDate')"
-                               value="${task.deadline}">
+                        <form:input cssStyle="display:none" id="input + ${task.deadline} + ${task.id}" type="date"
+                               onblur="update('input + ${task.deadline} + ${task.id}','div + ${task.deadline} + ${task.id}','${task.id}','${task.description}',this,'deadline')"
+                               value="${task.deadline}" path="deadline"/>
                     </td>
+            </form:form>
                     <td valign="middle" align="center">
-                        <form id="del" action="/todolist/deleteTasks" method="get">
-                            <input id='idTask' type="hidden" name="idForDelete" value="${task.id}">
-                            <p><input type="submit" value="Видалити"></p>
+                        <form id="del" action="/todolist/deleteTask/${task.id}" method="post">
+                           <p><input type="submit" value="Видалити"></p>
                         </form>
                     </td>
                 </div>
             </tr>
-
-        </c:forEach>
+       </c:forEach>
 
     </table>
     <embed align="left" src="http://www.clocktag.com/cs/m51.swf" width="150" height="150" wmode="transparent"

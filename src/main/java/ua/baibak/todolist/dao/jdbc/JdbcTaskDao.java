@@ -1,8 +1,8 @@
 package ua.baibak.todolist.dao.jdbc;
 
 import org.apache.log4j.Logger;
-import ua.baibak.todolist.dao.TasksDao;
-import ua.baibak.todolist.entity.Tasks;
+import ua.baibak.todolist.dao.TaskDao;
+import ua.baibak.todolist.entity.Task;
 import ua.baibak.todolist.utils.DateUtil;
 
 import javax.sql.DataSource;
@@ -15,13 +15,13 @@ import java.util.Date;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class JdbcTasksDao implements TasksDao {
+public class JdbcTaskDao implements TaskDao {
 
-    private static Logger log = Logger.getLogger(JdbcTasksDao.class);
+    private static Logger log = Logger.getLogger(JdbcTaskDao.class);
     private AtomicInteger counter = new AtomicInteger();
     private DataSource ds = null;
 
-    public JdbcTasksDao(DataSource dataSource) {
+    public JdbcTaskDao(DataSource dataSource) {
         this.ds = dataSource;
         counter.set(this.selectLastId());
     }
@@ -48,19 +48,16 @@ public class JdbcTasksDao implements TasksDao {
     }
 
     @Override
-    public void updateTasks(String newData, String id, String type) throws Exception {
+    public void updateTasks(Task taskForUpdate, String id) throws Exception {
         Connection dbConnection = null;
         Statement statement = null;
-        String updateDescriptionSQL = "UPDATE tasks SET description = '" + newData + "' WHERE id=" + id + ";";
-        String updateDateSQL = "UPDATE tasks SET deadline = '" + newData + "' WHERE id = " + id + ";";
+        String updateDescriptionSQL = "UPDATE tasks SET description = '" + taskForUpdate.getDescription() + "' WHERE id=" + id + ";";
+        String updateDateSQL = "UPDATE tasks SET deadline = '" + taskForUpdate.getDeadline() + "' WHERE id = " + id + ";";
         try {
             dbConnection = ds.getConnection();
             statement = dbConnection.createStatement();
-            if (type.equals("newDescription")) {
-                statement.executeUpdate(updateDescriptionSQL);
-            } else {
-                statement.executeUpdate(updateDateSQL);
-            }
+            statement.executeUpdate(updateDescriptionSQL);
+            statement.executeUpdate(updateDateSQL);
         } catch (SQLException e) {
             log.error("SQLException during updating " + e);
         } finally {
@@ -77,7 +74,7 @@ public class JdbcTasksDao implements TasksDao {
     public List getAllTasks() throws Exception {
         Connection dbConnection = null;
         Statement statement = null;
-        List tasks = new ArrayList<Tasks>();
+        List tasks = new ArrayList<Task>();
         String selectTableSQL = "SELECT*FROM tasks ORDER BY deadline;  ";
         try {
             dbConnection = ds.getConnection();
@@ -88,7 +85,7 @@ public class JdbcTasksDao implements TasksDao {
                 String description = rs.getString("description");
                 Date createdDate = rs.getDate("createdDate");
                 Date deadline = rs.getDate("deadline");
-                Tasks taskForView = new Tasks(id, description, createdDate, deadline);
+                Task taskForView = new Task(id, description, createdDate, deadline);
                 tasks.add(taskForView);
             }
         } catch (SQLException e) {

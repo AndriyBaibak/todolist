@@ -4,7 +4,7 @@
         "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping>
-    <class name="ua.baibak.todolist.entity.Tasks" table="tasks">
+    <class name="ua.baibak.todolist.entity.Task" table="tasks">
 
         <id name="id" type="int" column="id">
             <generator class="increment"/>

@@ -1,14 +1,18 @@
 package ua.baibak.todolist.dao;
 
+import ua.baibak.todolist.entity.Task;
+
 import java.util.Date;
 import java.util.List;
 
-public interface TasksDao {
+public interface TaskDao {
     public void save(String description, Date deadline) throws Exception;
 
-    public void updateTasks(String newData, String id, String type) throws Exception;
+    public void updateTasks(Task taskForUpdate, String id) throws Exception;
 
     public List getAllTasks() throws Exception;
 
     public void deleteTasks(int id) throws Exception;
+
+
 }

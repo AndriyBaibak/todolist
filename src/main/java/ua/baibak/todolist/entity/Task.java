@@ -2,7 +2,7 @@ package ua.baibak.todolist.entity;
 
 import java.util.Date;
 
-public class Tasks {
+public class Task {
 
     public int id;
 
@@ -12,19 +12,19 @@ public class Tasks {
 
     private java.util.Date deadline;
 
-    public Tasks(int id, String description, Date createdDate, java.util.Date deadline) {
+    public Task(int id, String description, Date createdDate, java.util.Date deadline) {
         this.id = id;
         this.description = description;
         this.createdDate = createdDate;
         this.deadline = deadline;
     }
-    public Tasks(String task, java.util.Date deadline) {
+    public Task(String task, java.util.Date deadline) {
         this.description = task;
         this.createdDate = new java.util.Date();
         this.deadline = deadline;
     }
 
-    public Tasks() {
+    public Task() {
         this.createdDate = new java.util.Date();
     }
 
@@ -73,13 +73,13 @@ public class Tasks {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Tasks)) return false;
+        if (!(o instanceof Task)) return false;
 
-        Tasks tasks = (Tasks) o;
+        Task task = (Task) o;
 
-        if (createdDate != null ? !createdDate.equals(tasks.createdDate) : tasks.createdDate != null) return false;
-        if (deadline != null ? !deadline.equals(tasks.deadline) : tasks.deadline != null) return false;
-        if (description != null ? !description.equals(tasks.description) : tasks.description != null) return false;
+        if (createdDate != null ? !createdDate.equals(task.createdDate) : task.createdDate != null) return false;
+        if (deadline != null ? !deadline.equals(task.deadline) : task.deadline != null) return false;
+        if (description != null ? !description.equals(task.description) : task.description != null) return false;
 
         return true;
     }
