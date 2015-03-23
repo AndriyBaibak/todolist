@@ -13,7 +13,11 @@
             margin-left: 25%;
             width: 50%;
         }
+        .error {
+            color: #ff0000;
+        }
     </style>
+
 </head>
 <script type="text/javascript">
     function ValidFormFields(task, date) {
@@ -78,11 +82,13 @@
 
                 <tr>
                     <td>Описання:</td>
-                    <td><form:input id="ntask" path="description" onfocus="this.style.border='2px inset'"/></td></br>
+                    <td><form:input id="ntask" path="description" onfocus="this.style.border='2px inset'"/></td>
+                    <td><form:errors path="description" cssClass="error" /></td></br>
                 </tr>
                 <tr>
                     <td>Оберіть кінцеву дату виконання:</td>
                     <td><form:input id="date" path="deadline" type="date" placeholder="yyyy-MM-dd" onfocus="this.style.border='2px inset'"/></td>
+                    <td><form:errors path="deadline" cssClass="error" /></td></br>
                 </tr>
 
             <div align="center">
@@ -110,9 +116,9 @@
                              onclick="change('input + ${task.description} + ${task.id}','div + ${task.description} + ${task.id}')">
                             <c:out value="${task.description}"> </c:out></div>
                         <form:input  cssStyle="display:none" path="description" id='input + ${task.description} + ${task.id}'
-                               onblur="update('input + ${task.description} + ${task.id}','div + ${task.description} + ${task.id}','${task.id}',this, '${task.deadline}','description')" value="${task.description}"/>
-                    </td>
-                    <td valign="middle" align="center">
+                               onblur="update('input + ${task.description} + ${task.id}','div + ${task.description} + ${task.id}','${task.id}',this, '${task.deadline}','description')" value="${task.description}"/></td>
+
+                <td valign="middle" align="center">
                         <c:out value="${task.createdDate}"></c:out>
                     </td>
                     <td valign="middle" align="center">

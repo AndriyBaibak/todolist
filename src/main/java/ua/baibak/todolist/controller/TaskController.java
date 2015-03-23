@@ -24,7 +24,6 @@ public class TaskController {
     private static Logger log = Logger.getLogger(TaskController.class);
     private ApplicationContext ctx = new ClassPathXmlApplicationContext("springContext.xml");
     private TaskService objectForOperationsWithTask = null;
-    private Validate objectForValidation = null;
     private List tasks = new ArrayList();
 
     @InitBinder
@@ -53,44 +52,48 @@ public class TaskController {
     }
 
     @RequestMapping(value = "/addTask", method = RequestMethod.POST)
-    public ModelAndView addTask(@ModelAttribute Task taskForSaving, BindingResult result, @RequestParam ("description") String description) throws Exception {
-        objectForValidation = (Validate) ctx.getBean("validate");
-        objectForOperationsWithTask = (TaskService) ctx.getBean("taskService");
-       try {
-            objectForValidation.validateTaskData(taskForSaving.getDescription(), taskForSaving.getDeadline());
-           objectForOperationsWithTask.createAndSaveNewTask(taskForSaving.getDescription(), taskForSaving.getDeadline());
-            tasks = objectForOperationsWithTask.getAllTasks();
-        } catch (Exception ex) {
-            log.error("Exception" + ex);
-            ModelAndView model = new ModelAndView("error");
-            model.addObject("Exception", ex);
+    public ModelAndView addTask(@ModelAttribute("taskView") @Valid Task taskForSaving, BindingResult result, @RequestParam("description") String description) throws Exception {
+        if (result.hasErrors()) {
+            ModelAndView model = new ModelAndView("view");
             return model;
+        } else {
+            objectForOperationsWithTask = (TaskService) ctx.getBean("taskService");
+            try {
+                objectForOperationsWithTask.createAndSaveNewTask(taskForSaving.getDescription(), taskForSaving.getDeadline());
+                tasks = objectForOperationsWithTask.getAllTasks();
+            } catch (Exception ex) {
+                log.error("Exception" + ex);
+                ModelAndView model = new ModelAndView("error");
+                model.addObject("Exception", ex);
+                return model;
+            }
+            ModelAndView modelAndView = new ModelAndView("view");
+            modelAndView.addObject("tasks", tasks);
+            modelAndView.addObject("taskView", new Task());
+            modelAndView.addObject("taskViewUpdate", new Task());
+            return modelAndView;
         }
-        ModelAndView modelAndView = new ModelAndView("view");
-        modelAndView.addObject("tasks", tasks);
-        modelAndView.addObject("taskView", new Task());
-        modelAndView.addObject("taskViewUpdate", new Task());
-        return modelAndView;
     }
 
     @RequestMapping(value = "/updateTask/{id}", method = RequestMethod.POST)
-    public ModelAndView updateTask(@ModelAttribute Task taskForUpdate, BindingResult result, @PathVariable("id") String id) throws Exception {
-        objectForOperationsWithTask = (TaskService) ctx.getBean("taskService");
-        try {
-            objectForOperationsWithTask.updateTasks(taskForUpdate,id);
-            tasks = objectForOperationsWithTask.getAllTasks();
-        } catch (Exception ex) {
-            log.error("Exception" + ex);
-            ModelAndView model = new ModelAndView("error");
-            model.addObject("Exception", ex);
-            return model;
+    public ModelAndView updateTask(@ModelAttribute("taskViewUpdate") @Valid Task taskForUpdate, BindingResult result, @PathVariable("id") String id) throws Exception {
+
+            objectForOperationsWithTask = (TaskService) ctx.getBean("taskService");
+            try {
+                objectForOperationsWithTask.updateTasks(taskForUpdate, id);
+                tasks = objectForOperationsWithTask.getAllTasks();
+            } catch (Exception ex) {
+                log.error("Exception" + ex);
+                ModelAndView model = new ModelAndView("error");
+                model.addObject("Exception", ex);
+                return model;
+            }
+            ModelAndView modelAndView = new ModelAndView("view");
+            modelAndView.addObject("tasks", tasks);
+            modelAndView.addObject("taskView", new Task());
+            modelAndView.addObject("taskViewUpdate", new Task());
+            return modelAndView;
         }
-        ModelAndView modelAndView = new ModelAndView("view");
-        modelAndView.addObject("tasks", tasks);
-        modelAndView.addObject("taskView", new Task());
-        modelAndView.addObject("taskViewUpdate", new Task());
-        return modelAndView;
-    }
 
     @RequestMapping(value = "/deleteTask/{id}", method = RequestMethod.POST)
     public ModelAndView deleteTask(@PathVariable("id") String id) throws Exception {

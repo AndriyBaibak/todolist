@@ -1,15 +1,28 @@
 package ua.baibak.todolist.entity;
 
+
+
+
+
+import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 import java.util.Date;
 
 public class Task {
 
     public int id;
 
+    @NotEmpty(message = "Please enter your description.")
+    @Size(min = 6, max = 200)
     private String description;
 
     private java.util.Date createdDate;
-
+    @NotNull
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private java.util.Date deadline;
 
     public Task(int id, String description, Date createdDate, java.util.Date deadline) {
