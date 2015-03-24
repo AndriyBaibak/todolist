@@ -33,7 +33,7 @@ public class TaskController {
         binder.registerCustomEditor(Date.class, new CustomDateEditor(sdf, true));
     }
 
-    @RequestMapping(value = "/allTask", method = RequestMethod.GET)
+    @RequestMapping(value = "/allTasks", method = RequestMethod.GET)
     public ModelAndView allTasks() {
         objectForOperationsWithTask = (TaskService) ctx.getBean("taskService");
         try {

@@ -40,15 +40,8 @@ public class HibernateTaskDao implements TaskDao {
 
     @Override
     public void updateTasks(Task taskForUpdate, String id) throws Exception {
-        log.error("---------------------------" + taskForUpdate.toString() );
         Session session = null;
         Task temporaryTask = this.getTasksById(Integer.parseInt(id));
-        log.error("---------------------------before" + temporaryTask.toString() );
-       /* if (type.equals("newDescription")) {
-            taskForUpdate.setDescription(newData);
-        } else {
-            taskForUpdate.setDeadline(java.sql.Date.valueOf(newData));
-        }*/
         temporaryTask.setDescription(taskForUpdate.getDescription());
         temporaryTask.setDeadline(taskForUpdate.getDeadline());
         try {
@@ -56,7 +49,6 @@ public class HibernateTaskDao implements TaskDao {
             session.beginTransaction();
             session.update(temporaryTask);
             session.getTransaction().commit();
-            log.error("---------------------------after" + temporaryTask.toString() );
         } catch (Exception e) {
             log.error("Exception during updating task ", e);
             session.getTransaction().rollback();
