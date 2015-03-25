@@ -78,7 +78,7 @@
             <div align="center">
                 <p><big>Додати нове завдання </big></p>
             </div>
-            <form:form action="/todolist/addTask" method="post" commandName="taskView" onsubmit="return ValidFormFields('ntask','date')">
+            <form:form action="/todolist/addTask" method="post" commandName="taskForAdd" onsubmit="return ValidFormFields('ntask','date')">
 
                 <tr>
                     <td>Описання:</td>
@@ -108,7 +108,7 @@
         </tr>
 
         <c:forEach var="task" items="${tasks}">
-            <form:form commandName="taskViewUpdate" method="post" action="/todolist/updateTask">
+            <form:form commandName="taskForUpdate" method="post" action="/todolist/updateTask">
             <tr>
                 <div>
                     <td valign="middle" align="center">

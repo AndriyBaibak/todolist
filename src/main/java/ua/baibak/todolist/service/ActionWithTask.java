@@ -6,7 +6,7 @@ import java.util.Date;
 import java.util.List;
 
 public interface ActionWithTask {
-    public void createAndSaveNewTask(String description, Date deadline) throws Exception;
+    public void createAndSaveNewTask(Task taskForSave) throws Exception;
 
     public void deleteTask(String idForDelete) throws Exception;
 

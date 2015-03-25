@@ -27,10 +27,10 @@ public class JdbcTaskDao implements TaskDao {
     }
 
     @Override
-    public void save(String description, Date deadline) throws Exception {
+    public void save(Task taskForSave) throws Exception {
         Connection dbConnection = null;
         Statement statement = null;
-        String insertTableSQL = "INSERT INTO tasks VALUES ('" + counter.incrementAndGet() + "','" + description + "','" + DateUtil.changeUtilDateToSqlDate(new Date()) + "','" + DateUtil.changeUtilDateToSqlDate(deadline) + "');";
+        String insertTableSQL = "INSERT INTO tasks VALUES ('" + counter.incrementAndGet() + "','" + taskForSave.getDescription() + "','" + DateUtil.changeUtilDateToSqlDate(new Date()) + "','" + DateUtil.changeUtilDateToSqlDate(taskForSave.getDeadline()) + "');";
         try {
             dbConnection = ds.getConnection();
             statement = dbConnection.createStatement();

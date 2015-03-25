@@ -7,7 +7,6 @@ import ua.baibak.todolist.entity.Task;
 import ua.baibak.todolist.dao.TaskDao;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class HibernateTaskDao implements TaskDao {
@@ -20,17 +19,17 @@ public class HibernateTaskDao implements TaskDao {
     }
 
     @Override
-    public void save(String description, Date deadline) throws Exception {
+    public void save(Task taskForSave) throws Exception {
         Session session = null;
-        Task task = new Task(description, deadline);
         try {
             session = mySessionFactory.getCurrentSession();
             session.beginTransaction();
-            session.save(task);
+            session.save(taskForSave);
             session.getTransaction().commit();
         } catch (Exception e) {
             log.error("Exception during saving task", e);
             session.getTransaction().rollback();
+            throw e;
         } finally {
             if (session != null && session.isOpen()) {
                 session.close();
@@ -52,6 +51,7 @@ public class HibernateTaskDao implements TaskDao {
         } catch (Exception e) {
             log.error("Exception during updating task ", e);
             session.getTransaction().rollback();
+            throw e;
         } finally {
             if (session != null && session.isOpen()) {
                 session.close();
@@ -70,6 +70,7 @@ public class HibernateTaskDao implements TaskDao {
         } catch (Exception e) {
             log.error("Exception during getTasksById", e);
             session.getTransaction().rollback();
+            throw e;
         } finally {
             if (session != null && session.isOpen()) {
                 session.close();
@@ -90,6 +91,7 @@ public class HibernateTaskDao implements TaskDao {
         } catch (Exception e) {
             log.error("Exception during  getAllTasks ", e);
             session.getTransaction().rollback();
+            throw e;
         } finally {
             if (session != null && session.isOpen()) {
                 session.close();
@@ -110,6 +112,7 @@ public class HibernateTaskDao implements TaskDao {
         } catch (Exception e) {
             log.error("Exception during delete task", e);
             session.getTransaction().rollback();
+            throw e;
         } finally {
             if (session != null && session.isOpen()) {
                 session.close();

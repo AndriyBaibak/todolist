@@ -4,21 +4,21 @@ package ua.baibak.todolist.service;
 import ua.baibak.todolist.dao.TaskDao;
 import ua.baibak.todolist.entity.Task;
 
-import java.util.Date;
 import java.util.List;
 
 
 public class TaskService implements ActionWithTask {
 
+
     private TaskDao taskDao;
 
-    public TaskService(TaskDao task){
-        this.taskDao = task;
+    public TaskService(TaskDao taskDao){
+        this.taskDao = taskDao;
     }
 
     @Override
-    public void createAndSaveNewTask(String description, Date deadline) throws Exception {
-        taskDao.save(description, deadline);
+    public void createAndSaveNewTask(Task taskForSave) throws Exception {
+        taskDao.save(taskForSave);
     }
 
     @Override

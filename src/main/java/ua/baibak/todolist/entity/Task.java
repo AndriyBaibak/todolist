@@ -8,7 +8,6 @@ import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.util.Date;
 
@@ -17,7 +16,7 @@ public class Task {
     public int id;
 
     @NotEmpty(message = "Please enter your description.")
-    @Size(min = 6, max = 200)
+    @Size(min = 6, max = 200,message = "Description must be beetwen 6 and 200 characters")
     private String description;
 
     private java.util.Date createdDate;
@@ -29,11 +28,6 @@ public class Task {
         this.id = id;
         this.description = description;
         this.createdDate = createdDate;
-        this.deadline = deadline;
-    }
-    public Task(String task, java.util.Date deadline) {
-        this.description = task;
-        this.createdDate = new java.util.Date();
         this.deadline = deadline;
     }
 
