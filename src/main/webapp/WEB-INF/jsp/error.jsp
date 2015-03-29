@@ -9,24 +9,20 @@
 <h1>Помилка</h1>
 <table width="100%" border="1">
     <tr valign="top">
-        <td width="40%"><b>Error:</b></td>
-        <td>${pageContext.exception}</td>
-    </tr>
-    <tr valign="top">
         <td><b>URI:</b></td>
-        <td>${pageContext.errorData.requestURI}</td>
+        <td>${exception}</td>
     </tr>
     <tr valign="top">
         <td><b>Status code:</b></td>
-        <td>${pageContext.errorData.statusCode}</td>
+        <td>${exceptionMessage}</td>
     </tr>
     <tr valign="top">
         <td><b>Error in stack trace:</b></td>
-        <td>${Exception}</td>
+        <td>${exception.stackTrace}</td>
     </tr>
 </table>
 <p>
-    <a href="/todolist">Повернутися на головну</a>
+    <a href="/todolist/success/allTasks">Повернутися на головну</a>
 </p>
 </body>
 </html>

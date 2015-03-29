@@ -72,13 +72,16 @@
 
 <body style="background-color:rgba(48, 48, 48, 0.16)">
 <body>
+
+Welcome : ${pageContext.request.userPrincipal.name} | <a href="<c:url value="/j_spring_security_logout" />" > Вийти</a>
+
 <div id="back">
     <div id="addtask">
 
             <div align="center">
                 <p><big>Додати нове завдання </big></p>
             </div>
-            <form:form action="/todolist/addTask" method="post" commandName="taskForAdd" onsubmit="return ValidFormFields('ntask','date')">
+            <form:form action="/todolist/success/addTask" method="post" commandName="taskForAdd" onsubmit="return ValidFormFields('ntask','date')">
 
                 <tr>
                     <td>Описання:</td>
@@ -108,7 +111,7 @@
         </tr>
 
         <c:forEach var="task" items="${tasks}">
-            <form:form commandName="taskForUpdate" method="post" action="/todolist/updateTask">
+            <form:form commandName="taskForUpdate" method="post" action="/todolist/success/updateTask">
             <tr>
                 <div>
                     <td valign="middle" align="center">
@@ -131,7 +134,7 @@
                     </td>
             </form:form>
                     <td valign="middle" align="center">
-                        <form id="del" action="/todolist/deleteTask/${task.id}" method="post">
+                        <form id="del" action="/todolist/success/deleteTask/${task.id}" method="post">
                            <p><input type="submit" value="Видалити"></p>
                         </form>
                     </td>
