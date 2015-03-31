@@ -73,7 +73,7 @@
 <body style="background-color:rgba(48, 48, 48, 0.16)">
 <body>
 
-Welcome : ${pageContext.request.userPrincipal.name} | <a href="<c:url value="/j_spring_security_logout" />" > Вийти</a>
+    Welcome : ${pageContext.request.userPrincipal.name} |<c:url value="/j_spring_security_logout" var="logoutUrl" /> <a href="${logoutUrl}"> Вийти</a>
 
 <div id="back">
     <div id="addtask">

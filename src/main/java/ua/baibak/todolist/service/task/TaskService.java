@@ -1,8 +1,9 @@
-package ua.baibak.todolist.service;
+package ua.baibak.todolist.service.task;
 
 
 import ua.baibak.todolist.dao.TaskDao;
 import ua.baibak.todolist.entity.Task;
+import ua.baibak.todolist.service.task.ActionWithTask;
 
 import java.util.List;
 

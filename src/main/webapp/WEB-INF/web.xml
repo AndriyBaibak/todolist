@@ -10,7 +10,7 @@
         </servlet-class>
         <init-param>
         <param-name>contextConfigLocation</param-name>
-        <param-value>/WEB-INF/dispatcherServlet-context.xml</param-value>
+        <param-value>classpath*:rootContext.xml</param-value>
     </init-param>
     <load-on-startup>1</load-on-startup>
     </servlet>
@@ -24,10 +24,8 @@
     <context-param>
         <param-name>contextConfigLocation</param-name>
         <param-value>
-            classpath*:applicationContext.xml
-            classpath*:spring-security.xml
+            classpath*:rootContext.xml
         </param-value>
-
     </context-param>
     <listener>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
