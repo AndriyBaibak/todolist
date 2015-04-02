@@ -1,6 +1,7 @@
 package ua.baibak.todolist.service.user;
 
 import org.apache.log4j.Logger;
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import ua.baibak.todolist.entity.User;
@@ -12,16 +13,15 @@ public class UserServiceImpl implements UserService {
     @Inject
     private SessionFactory sessionFactory;
 
-
     @Override
-    public void createNewUser(User newUser) throws Exception {
+    public void createNewUser(User newUser) throws HibernateException {
         Session session = null;
         try {
             session = sessionFactory.getCurrentSession();
             session.beginTransaction();
             session.save(newUser);
             session.getTransaction().commit();
-        } catch (Exception e) {
+        } catch (HibernateException e) {
             log.error("exception during register new User" + e);
             session.getTransaction().rollback();
             throw e;

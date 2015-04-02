@@ -1,10 +1,11 @@
 package ua.baibak.todolist.dao.hibernate;
 
 import org.apache.log4j.Logger;
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import ua.baibak.todolist.entity.Task;
 import ua.baibak.todolist.dao.TaskDao;
+import ua.baibak.todolist.entity.Task;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,19 +15,19 @@ public class HibernateTaskDao implements TaskDao {
     private static Logger log = Logger.getLogger(HibernateTaskDao.class);
     private SessionFactory mySessionFactory;
 
-    public HibernateTaskDao(SessionFactory sf){
+    public HibernateTaskDao(SessionFactory sf) {
         this.mySessionFactory = sf;
     }
 
     @Override
-    public void save(Task taskForSave) throws Exception {
+    public void save(Task taskForSave) throws HibernateException {
         Session session = null;
         try {
             session = mySessionFactory.getCurrentSession();
             session.beginTransaction();
             session.save(taskForSave);
             session.getTransaction().commit();
-        } catch (Exception e) {
+        } catch (HibernateException e) {
             log.error("Exception during saving task", e);
             session.getTransaction().rollback();
             throw e;
@@ -38,7 +39,7 @@ public class HibernateTaskDao implements TaskDao {
     }
 
     @Override
-    public void updateTasks(Task taskForUpdate, String id) throws Exception {
+    public void updateTask(Task taskForUpdate, String id) throws Exception {
         Session session = null;
         Task temporaryTask = this.getTasksById(Integer.parseInt(id));
         temporaryTask.setDescription(taskForUpdate.getDescription());
@@ -48,7 +49,7 @@ public class HibernateTaskDao implements TaskDao {
             session.beginTransaction();
             session.update(temporaryTask);
             session.getTransaction().commit();
-        } catch (Exception e) {
+        } catch (HibernateException e) {
             log.error("Exception during updating task ", e);
             session.getTransaction().rollback();
             throw e;
@@ -59,7 +60,7 @@ public class HibernateTaskDao implements TaskDao {
         }
     }
 
-    public Task getTasksById(int id) throws Exception {
+    public Task getTasksById(int id) throws HibernateException {
         Session session = null;
         Task res = null;
         try {
@@ -67,7 +68,7 @@ public class HibernateTaskDao implements TaskDao {
             session.beginTransaction();
             res = (Task) session.get(Task.class, id);
             session.getTransaction().commit();
-        } catch (Exception e) {
+        } catch (HibernateException e) {
             log.error("Exception during getTasksById", e);
             session.getTransaction().rollback();
             throw e;
@@ -101,7 +102,7 @@ public class HibernateTaskDao implements TaskDao {
     }
 
     @Override
-    public void deleteTasks(int id) throws Exception {
+    public void deleteTask(int id) throws HibernateException {
         Session session = null;
         Task taskForDelete = this.getTasksById(id);
         try {
@@ -109,7 +110,7 @@ public class HibernateTaskDao implements TaskDao {
             session.beginTransaction();
             session.delete(taskForDelete);
             session.getTransaction().commit();
-        } catch (Exception e) {
+        } catch (HibernateException e) {
             log.error("Exception during delete task", e);
             session.getTransaction().rollback();
             throw e;

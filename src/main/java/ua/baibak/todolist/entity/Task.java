@@ -1,9 +1,6 @@
 package ua.baibak.todolist.entity;
 
 
-
-
-
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -16,7 +13,7 @@ public class Task {
     public int id;
 
     @NotEmpty(message = "Please enter your description.")
-    @Size(min = 6, max = 200,message = "Description must be beetwen 6 and 200 characters")
+    @Size(min = 6, max = 200, message = "Description must be beetwen 6 and 200 characters")
     private String description;
 
     private java.util.Date createdDate;

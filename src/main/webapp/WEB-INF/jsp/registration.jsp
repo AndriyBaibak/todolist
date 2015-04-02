@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: Andriy
-  Date: 30.03.2015
-  Time: 19:55
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
@@ -20,10 +13,10 @@
 <body>
 
 
-<h1>Registration</h1>
+<h1 align="center">Registration</h1>
 
 <form:form name='registerForm' commandName="userAdd"
-      action="/todolist/register" method='POST' >
+      action="/todolist/registration" method='POST' >
 
     <table align="center">
         <tr>

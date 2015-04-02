@@ -1,6 +1,5 @@
-package ua.baibak.todolist.controller;
+package ua.baibak.todolist.controllers;
 
-import org.apache.log4j.Logger;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -19,7 +18,6 @@ import java.util.List;
 
 @Controller
 public class TaskController {
-    private static Logger log = Logger.getLogger(TaskController.class);
     @Inject
     private TaskService taskService;
 
@@ -30,79 +28,49 @@ public class TaskController {
         binder.registerCustomEditor(Date.class, new CustomDateEditor(sdf, true));
     }
 
-    @RequestMapping(value = "/success/allTasks", method = RequestMethod.GET)
-    public ModelAndView allTasks() {
+    @RequestMapping(value = "/authorized/allTasks", method = RequestMethod.GET)
+    public ModelAndView allTasks() throws Exception {
         return generateModelForView("view");
     }
 
-    @RequestMapping(value = "/success/addTask", method = RequestMethod.POST)
+    @RequestMapping(value = "/authorized/addTask", method = RequestMethod.POST)
     public ModelAndView addTask(@ModelAttribute("taskForAdd") @Valid Task taskForSaving, BindingResult result) throws Exception {
         if (result.hasErrors()) {
-            return generateModelForView("view",taskForSaving);
+            return generateModelForView("view", taskForSaving);
         } else {
-            try {
-                taskService.createAndSaveNewTask(taskForSaving);
-            } catch (Exception ex) {
-                return catchError(ex);
-            }
+            taskService.createAndSaveNewTask(taskForSaving);
             return generateModelForView("view");
         }
     }
 
-    @RequestMapping(value = "/success/updateTask/{id}", method = RequestMethod.POST)
+    @RequestMapping(value = "/authorized/updateTask/{id}", method = RequestMethod.POST)
     public ModelAndView updateTask(@ModelAttribute("taskForUpdate") @Valid Task taskForUpdate, BindingResult result, @PathVariable("id") String id) throws Exception {
-        try {
-            taskService.updateTasks(taskForUpdate, id);
-        } catch (Exception ex) {
-            return catchError(ex);
-        }
+        taskService.updateTasks(taskForUpdate, id);
         return generateModelForView("view");
     }
 
-    @RequestMapping(value = "/success/deleteTask/{id}", method = RequestMethod.POST)
+    @RequestMapping(value = "/authorized/deleteTask/{id}", method = RequestMethod.POST)
     public ModelAndView deleteTask(@PathVariable("id") String id) throws Exception {
-        try {
-            taskService.deleteTask(id);
-        } catch (Exception someException) {
-            return catchError(someException);
-        }
+        taskService.deleteTask(id);
         return generateModelForView("view");
     }
 
-
-    private ModelAndView generateModelForView(String viewPage) {
+    private ModelAndView generateModelForView(String viewPage) throws Exception {
         ModelAndView modelSuccess = new ModelAndView(viewPage);
         List tasks = new ArrayList<Task>();
-        try {
-            tasks = taskService.getAllTasks();
-
-        } catch (Exception e) {
-            catchError(e);
-        }
+        tasks = taskService.getAllTasks();
         modelSuccess.addObject("tasks", tasks);
         modelSuccess.addObject("taskForAdd", new Task());
         modelSuccess.addObject("taskForUpdate", new Task());
         return modelSuccess;
     }
-    private ModelAndView generateModelForView(String viewPage, Task taskForSaving){
+
+    private ModelAndView generateModelForView(String viewPage, Task taskForSaving) throws Exception {
         List tasks = new ArrayList<Task>();
-        try {
-            tasks = taskService.getAllTasks();
-        } catch (Exception e) {
-            catchError(e);
-        }
+        tasks = taskService.getAllTasks();
         ModelAndView model = new ModelAndView(viewPage, "taskForAdd", taskForSaving);
         model.addObject("tasks", tasks);
         model.addObject("taskForUpdate", new Task());
         return model;
     }
-
-    private ModelAndView catchError(Exception exception) {
-        log.error("Exception" + exception);
-        ModelAndView modelError = new ModelAndView("error");
-        modelError.addObject("exception", exception);
-        modelError.addObject("exceptionMessage", exception.getMessage());
-        return modelError;
-    }
-
 }

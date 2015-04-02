@@ -1,15 +1,12 @@
 package ua.baibak.todolist.service.task;
 
-
 import ua.baibak.todolist.dao.TaskDao;
 import ua.baibak.todolist.entity.Task;
-import ua.baibak.todolist.service.task.ActionWithTask;
 
 import java.util.List;
 
 
 public class TaskService implements ActionWithTask {
-
 
     private TaskDao taskDao;
 
@@ -25,7 +22,7 @@ public class TaskService implements ActionWithTask {
     @Override
     public void deleteTask(String idForDelete) throws Exception {
         int idTask = Integer.parseInt(idForDelete);
-        taskDao.deleteTasks(idTask);
+        taskDao.deleteTask(idTask);
     }
 
     @Override
@@ -35,7 +32,7 @@ public class TaskService implements ActionWithTask {
 
     @Override
     public void updateTasks(Task taskForUpdate, String id) throws Exception {
-        taskDao.updateTasks(taskForUpdate, id);
+        taskDao.updateTask(taskForUpdate, id);
     }
 
 }

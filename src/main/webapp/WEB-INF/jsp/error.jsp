@@ -8,13 +8,10 @@
 <body>
 <h1>Помилка</h1>
 <table width="100%" border="1">
-    <tr valign="top">
-        <td><b>URI:</b></td>
-        <td>${exception}</td>
-    </tr>
+
     <tr valign="top">
         <td><b>Status code:</b></td>
-        <td>${exceptionMessage}</td>
+        <td>${exception.message}</td>
     </tr>
     <tr valign="top">
         <td><b>Error in stack trace:</b></td>
@@ -22,7 +19,7 @@
     </tr>
 </table>
 <p>
-    <a href="/todolist/success/allTasks">Повернутися на головну</a>
+    <a href="/todolist/authorized/allTasks">Повернутися на головну</a>
 </p>
 </body>
 </html>

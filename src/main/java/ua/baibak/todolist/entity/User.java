@@ -2,14 +2,8 @@ package ua.baibak.todolist.entity;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
-import javax.validation.constraints.NotNull;
-
-/**
- * Created by Andriy on 31.03.2015.
- */
-
 public class User {
-    
+
     private int id;
 
     @NotEmpty
@@ -23,7 +17,7 @@ public class User {
 
     private String roleUser;
 
-    public User(){
+    public User() {
         this.roleUser = "ROLE_USER";
         this.enabled = 1;
     }

@@ -27,14 +27,14 @@ public class JdbcTaskDao implements TaskDao {
     }
 
     @Override
-    public void save(Task taskForSave) throws Exception {
+    public void save(Task taskForSave) throws SQLException {
         Connection dbConnection = null;
         Statement statement = null;
-        String insertTableSQL = "INSERT INTO tasks VALUES ('" + counter.incrementAndGet() + "','" + taskForSave.getDescription() + "','" + DateUtil.changeUtilDateToSqlDate(new Date()) + "','" + DateUtil.changeUtilDateToSqlDate(taskForSave.getDeadline()) + "');";
+        String saveTask = "INSERT INTO tasks VALUES ('" + counter.incrementAndGet() + "','" + taskForSave.getDescription() + "','" + DateUtil.changeUtilDateToSqlDate(new Date()) + "','" + DateUtil.changeUtilDateToSqlDate(taskForSave.getDeadline()) + "');";
         try {
             dbConnection = ds.getConnection();
             statement = dbConnection.createStatement();
-            statement.executeUpdate(insertTableSQL);
+            statement.executeUpdate(saveTask);
         } catch (SQLException e) {
             log.error("SQLException during saving" + e);
         } finally {
@@ -48,16 +48,16 @@ public class JdbcTaskDao implements TaskDao {
     }
 
     @Override
-    public void updateTasks(Task taskForUpdate, String id) throws Exception {
+    public void updateTask(Task taskForUpdate, String id) throws SQLException {
         Connection dbConnection = null;
         Statement statement = null;
-        String updateDescriptionSQL = "UPDATE tasks SET description = '" + taskForUpdate.getDescription() + "' WHERE id=" + id + ";";
-        String updateDateSQL = "UPDATE tasks SET deadline = '" + taskForUpdate.getDeadline() + "' WHERE id = " + id + ";";
+        String updateDescriptionTask = "UPDATE tasks SET description = '" + taskForUpdate.getDescription() + "' WHERE id=" + id + ";";
+        String updateDateTask = "UPDATE tasks SET deadline = '" + taskForUpdate.getDeadline() + "' WHERE id = " + id + ";";
         try {
             dbConnection = ds.getConnection();
             statement = dbConnection.createStatement();
-            statement.executeUpdate(updateDescriptionSQL);
-            statement.executeUpdate(updateDateSQL);
+            statement.executeUpdate(updateDescriptionTask);
+            statement.executeUpdate(updateDateTask);
         } catch (SQLException e) {
             log.error("SQLException during updating " + e);
         } finally {
@@ -71,15 +71,15 @@ public class JdbcTaskDao implements TaskDao {
     }
 
     @Override
-    public List getAllTasks() throws Exception {
+    public List getAllTasks() throws SQLException {
         Connection dbConnection = null;
         Statement statement = null;
         List tasks = new ArrayList<Task>();
-        String selectTableSQL = "SELECT*FROM tasks ORDER BY deadline;  ";
+        String getAllTask = "SELECT*FROM tasks ORDER BY deadline;  ";
         try {
             dbConnection = ds.getConnection();
             statement = dbConnection.createStatement();
-            ResultSet rs = statement.executeQuery(selectTableSQL);
+            ResultSet rs = statement.executeQuery(getAllTask);
             while (rs.next()) {
                 int id = rs.getInt("id");
                 String description = rs.getString("description");
@@ -102,14 +102,14 @@ public class JdbcTaskDao implements TaskDao {
     }
 
     @Override
-    public void deleteTasks(int id) throws Exception {
+    public void deleteTask(int id) throws Exception {
         Connection dbConnection = null;
         Statement statement = null;
-        String deleteTableSQL = "DELETE FROM tasks WHERE id = " + id + ";";
+        String deleteTask = "DELETE FROM tasks WHERE id = " + id + ";";
         try {
             dbConnection = ds.getConnection();
             statement = dbConnection.createStatement();
-            statement.execute(deleteTableSQL);
+            statement.execute(deleteTask);
         } catch (SQLException e) {
             log.error("SQLException during deletin task " + e);
         } finally {

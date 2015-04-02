@@ -66,7 +66,7 @@
 					<td colspan='2'><input name="submit" type="submit"
 						value="submit" /></td>
                     <td colspan='2'>
-                    <a href="/todolist/register"><input type="button" value="Register"></a>
+                    <a href="/todolist/registration"><input type="button" value="Register"></a>
                     </td>
 
                 </tr>

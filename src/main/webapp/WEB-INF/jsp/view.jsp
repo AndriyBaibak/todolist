@@ -41,7 +41,7 @@
         if(type=='description') {
             $.ajax({
                 type: "POST",
-                url: "/todolist/updateTask/" + id,
+                url: "/todolist/authorized/updateTask/" + id,
                 data: {"description": newDescription.value, "deadline": newDeadline}
 
             });
@@ -81,7 +81,7 @@
             <div align="center">
                 <p><big>Додати нове завдання </big></p>
             </div>
-            <form:form action="/todolist/success/addTask" method="post" commandName="taskForAdd" onsubmit="return ValidFormFields('ntask','date')">
+            <form:form action="/todolist/authorized/addTask" method="post" commandName="taskForAdd" onsubmit="return ValidFormFields('ntask','date')">
 
                 <tr>
                     <td>Описання:</td>
@@ -111,7 +111,7 @@
         </tr>
 
         <c:forEach var="task" items="${tasks}">
-            <form:form commandName="taskForUpdate" method="post" action="/todolist/success/updateTask">
+            <form:form commandName="taskForUpdate" method="post" action="/todolist/authorized/updateTask">
             <tr>
                 <div>
                     <td valign="middle" align="center">
@@ -134,7 +134,7 @@
                     </td>
             </form:form>
                     <td valign="middle" align="center">
-                        <form id="del" action="/todolist/success/deleteTask/${task.id}" method="post">
+                        <form id="del" action="/todolist/authorized/deleteTask/${task.id}" method="post">
                            <p><input type="submit" value="Видалити"></p>
                         </form>
                     </td>
