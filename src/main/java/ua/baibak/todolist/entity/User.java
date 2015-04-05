@@ -1,14 +1,14 @@
 package ua.baibak.todolist.entity;
 
-import org.hibernate.validator.constraints.NotEmpty;
+import org.hibernate.validator.constraints.NotBlank;
 
 public class User {
 
     private int id;
 
-    @NotEmpty
+   @NotBlank
     private String userName;
-    @NotEmpty
+
     private String password;
 
     private String confirmPassword;

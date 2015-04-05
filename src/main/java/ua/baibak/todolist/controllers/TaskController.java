@@ -57,8 +57,7 @@ public class TaskController {
 
     private ModelAndView generateModelForView(String viewPage) throws Exception {
         ModelAndView modelSuccess = new ModelAndView(viewPage);
-        List tasks = new ArrayList<Task>();
-        tasks = taskService.getAllTasks();
+        List tasks = taskService.getAllTasks();
         modelSuccess.addObject("tasks", tasks);
         modelSuccess.addObject("taskForAdd", new Task());
         modelSuccess.addObject("taskForUpdate", new Task());
@@ -66,8 +65,7 @@ public class TaskController {
     }
 
     private ModelAndView generateModelForView(String viewPage, Task taskForSaving) throws Exception {
-        List tasks = new ArrayList<Task>();
-        tasks = taskService.getAllTasks();
+        List tasks =  taskService.getAllTasks();
         ModelAndView model = new ModelAndView(viewPage, "taskForAdd", taskForSaving);
         model.addObject("tasks", tasks);
         model.addObject("taskForUpdate", new Task());

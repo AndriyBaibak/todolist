@@ -1,5 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+
 
 <html>
 <head>
@@ -26,16 +28,17 @@
         </tr>
         <tr>
             <td>Password:</td>
-            <td><form:input path="password" type='password'/></td>
+            <td><form:input  id="password" path="password" type='password'/></td>
             <td><form:errors path="password" cssClass="error" /></td></br>
         </tr>
         <tr>
             <td>Confirm Password:</td>
-            <td><input type='password' name='confirmPassword' /></td>
+            <td><input id="confirmPassword" type='password' name='confirmPassword' /></td>
+            <td><form:errors path="confirmPassword" cssClass="error" /></td></br>
         </tr>
         <tr>
             <td colspan='2'><input name="submit" type="submit"
-                                   value="submit" /></td>
+                                   value="submit" ></td>
             </td>
         </tr>
     </table>

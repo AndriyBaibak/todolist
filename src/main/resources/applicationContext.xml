@@ -14,7 +14,10 @@
         <constructor-arg ref="hibernateImplementation"/>
     </bean>
 
-    <bean id="userService" class="ua.baibak.todolist.service.user.UserServiceImpl">
+    <bean id="userServiceImpl" class="ua.baibak.todolist.service.user.UserServiceImpl">
+    </bean>
+
+    <bean id="passwordValidator" class="ua.baibak.todolist.service.user.PasswordValidator">
     </bean>
 
     <bean id="hibernateImplementation" class="ua.baibak.todolist.dao.hibernate.HibernateTaskDao">
@@ -24,6 +27,8 @@
     <bean id="jdbcImplementation" class="ua.baibak.todolist.dao.jdbc.JdbcTaskDao">
         <constructor-arg ref="dataSource"/>
     </bean>
+
+    <bean id="passwordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>
 
     <bean id="sessionFactory"
           class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">

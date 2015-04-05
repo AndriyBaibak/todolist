@@ -10,8 +10,6 @@
 
         <intercept-url pattern="/authorized/**" access="hasRole('ROLE_USER')"/>
 
-        <access-denied-handler error-page="/403"/>
-
         <form-login
                 login-page="/login"
                 authentication-failure-url="/login?error"
@@ -22,11 +20,14 @@
 
     <authentication-manager>
         <authentication-provider>
-            <jdbc-user-service data-source-ref="dataSource"
+            <password-encoder ref="passwordEncoder"/>
+            <jdbc-user-service
+                               data-source-ref="dataSource"
                                users-by-username-query=
                                        "select userName, password, enabled from users where userName=?"
                                authorities-by-username-query=
-                                       "select userName, userRole from users where userName =?  "/>
+                                       "select userName, userRole from users where userName =?  "
+                    />
         </authentication-provider>
     </authentication-manager>
 </beans:beans>
