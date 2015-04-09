@@ -23,7 +23,11 @@ public class JdbcTaskDao implements TaskDao {
 
     public JdbcTaskDao(DataSource dataSource) {
         this.ds = dataSource;
-        counter.set(this.selectLastId());
+        try {
+            counter.set(this.selectLastId());
+        } catch (SQLException e) {
+             log.error("Excception" + e);
+        }
     }
 
     @Override
@@ -60,6 +64,7 @@ public class JdbcTaskDao implements TaskDao {
             statement.executeUpdate(updateDateTask);
         } catch (SQLException e) {
             log.error("SQLException during updating " + e);
+            throw e;
         } finally {
             if (statement != null) {
                 statement.close();
@@ -90,6 +95,7 @@ public class JdbcTaskDao implements TaskDao {
             }
         } catch (SQLException e) {
             log.error("SQLException during getAllTasks " + e);
+            throw e;
         } finally {
             if (statement != null) {
                 statement.close();
@@ -112,6 +118,7 @@ public class JdbcTaskDao implements TaskDao {
             statement.execute(deleteTask);
         } catch (SQLException e) {
             log.error("SQLException during deletin task " + e);
+            throw e;
         } finally {
             if (statement != null) {
                 statement.close();
@@ -122,7 +129,7 @@ public class JdbcTaskDao implements TaskDao {
         }
     }
 
-    public int selectLastId() {
+    public int selectLastId()throws SQLException{
         int lastId = 1;
         Connection dbconnection = null;
         Statement statement = null;
@@ -136,6 +143,7 @@ public class JdbcTaskDao implements TaskDao {
             }
         } catch (SQLException e) {
             log.error("Problem in selectLastId");
+            throw e;
         }
         return lastId;
     }

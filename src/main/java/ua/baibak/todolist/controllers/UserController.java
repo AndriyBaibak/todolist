@@ -23,7 +23,7 @@ public class UserController {
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public ModelAndView login(@RequestParam(value = "error", required = false) String error,
-                              @RequestParam(value = "logout", required = false) String logout) {
+                              @RequestParam(value = "logout", required = false) String logout)throws Exception{
         ModelAndView model = new ModelAndView();
         if (error != null) {
             model.addObject("error", "Invalid username and password!");
@@ -36,7 +36,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "/registration", method = RequestMethod.GET)
-    public ModelAndView registration() {
+    public ModelAndView registration() throws Exception{
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("registration");
         modelAndView.addObject("userAdd", new User());

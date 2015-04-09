@@ -12,7 +12,6 @@ import ua.baibak.todolist.service.task.TaskService;
 import javax.inject.Inject;
 import javax.validation.Valid;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 

@@ -12,6 +12,9 @@ public class GlobalExceptionController {
 
     @ExceptionHandler(Exception.class)
     public ModelAndView handleException(Exception ex) {
+        if(ex.toString().equalsIgnoreCase("org.hibernate.TransactionException: Transaction not successfully started")) {
+            System.exit(500);
+        }
         log.error("Exception" + ex.toString());
         ModelAndView model = new ModelAndView("error");
         model.addObject("Exception", ex);

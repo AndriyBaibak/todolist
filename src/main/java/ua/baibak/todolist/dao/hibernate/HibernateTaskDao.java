@@ -20,7 +20,7 @@ public class HibernateTaskDao implements TaskDao {
     }
 
     @Override
-    public void save(Task taskForSave) throws HibernateException {
+    public void save(Task taskForSave) throws Exception {
         Session session = null;
         try {
             session = mySessionFactory.getCurrentSession();
@@ -29,7 +29,6 @@ public class HibernateTaskDao implements TaskDao {
             session.getTransaction().commit();
         } catch (HibernateException e) {
             log.error("Exception during saving task", e);
-            session.getTransaction().rollback();
             throw e;
         } finally {
             if (session != null && session.isOpen()) {

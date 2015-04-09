@@ -1,11 +1,11 @@
 package ua.baibak.todolist.service.task;
 
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import ua.baibak.todolist.dao.TaskDao;
 import ua.baibak.todolist.entity.Task;
 
 import java.util.List;
-
-
 public class TaskService implements ActionWithTask {
 
     private TaskDao taskDao;
@@ -15,6 +15,7 @@ public class TaskService implements ActionWithTask {
     }
 
     @Override
+    @Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW, rollbackFor = Exception.class)
     public void createAndSaveNewTask(Task taskForSave) throws Exception {
         taskDao.save(taskForSave);
     }
