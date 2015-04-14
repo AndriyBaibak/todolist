@@ -81,20 +81,20 @@
             <div align="center">
                 <p><big>Додати нове завдання </big></p>
             </div>
-            <form:form action="/todolist/authorized/addTask" method="post" commandName="taskForAdd" onsubmit="return ValidFormFields('ntask','date')">
+            <form:form action="/todolist/authorized/${pageContext.request.userPrincipal.name}/addTask" method="post" commandName="taskForAdd" onsubmit="return ValidFormFields('ntask','date')">
 
                 <tr>
                     <td>Описання:</td>
-                    <td><form:input id="ntask" path="description" onfocus="this.style.border='2px inset'"/></td>
+                    <td><form:input  id="ntask" path="description" onfocus="this.style.border='2px inset'"/></td>
                     <td><form:errors path="description" cssClass="error" /></td></br>
                 </tr>
                 <tr>
                     <td>Оберіть кінцеву дату виконання:</td>
-                    <td><form:input id="date" path="deadline" type="date" placeholder="yyyy-MM-dd" onfocus="this.style.border='2px inset'"/></td>
+                    <td><form:input id="date" path="deadline" type="date" onfocus="this.style.border='2px inset'"/></td>
                     <td><form:errors path="deadline" cssClass="error" /></td></br>
                 </tr>
 
-            <div align="center">
+                <div align="center">
                 <input type="submit" value="Додати">
             </div>
             </form:form>
@@ -111,7 +111,7 @@
         </tr>
 
         <c:forEach var="task" items="${tasks}">
-            <form:form commandName="taskForUpdate" method="post" action="/todolist/authorized/updateTask">
+            <form:form commandName="taskForUpdate" method="post" action="/todolist/authorized/${pageContext.request.userPrincipal.name}/updateTask">
             <tr>
                 <div>
                     <td valign="middle" align="center">
@@ -134,7 +134,7 @@
                     </td>
             </form:form>
                     <td valign="middle" align="center">
-                        <form id="del" action="/todolist/authorized/deleteTask/${task.id}" method="post">
+                        <form id="del" action="/todolist/authorized/${pageContext.request.userPrincipal.name}/deleteTask/${task.id}" method="post">
                            <p><input type="submit" value="Видалити"></p>
                         </form>
                     </td>

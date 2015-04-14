@@ -16,12 +16,12 @@ public class Task {
     @Size(min = 6, max = 200, message = "Description must be beetwen 6 and 200 characters")
     private String description;
 
-    private java.util.Date createdDate;
+    private Date createdDate;
     @NotNull
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-    private java.util.Date deadline;
+    private Date deadline;
 
-    public Task(int id, String description, Date createdDate, java.util.Date deadline) {
+    public Task(int id, String description, Date createdDate, Date deadline) {
         this.id = id;
         this.description = description;
         this.createdDate = createdDate;
@@ -29,7 +29,7 @@ public class Task {
     }
 
     public Task() {
-        this.createdDate = new java.util.Date();
+        this.createdDate = new Date();
     }
 
     public String getDescription() {
@@ -48,19 +48,19 @@ public class Task {
         this.id = id;
     }
 
-    public java.util.Date getCreatedDate() {
+    public Date getCreatedDate() {
         return createdDate;
     }
 
-    public void setCreatedDate(java.util.Date createdDate) {
+    public void setCreatedDate(Date createdDate) {
         this.createdDate = createdDate;
     }
 
-    public java.util.Date getDeadline() {
+    public Date getDeadline() {
         return deadline;
     }
 
-    public void setDeadline(java.util.Date deadline) {
+    public void setDeadline(Date deadline) {
         this.deadline = deadline;
     }
 

@@ -16,24 +16,24 @@ public class TaskService implements ActionWithTask {
 
     @Override
     @Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW, rollbackFor = Exception.class)
-    public void createAndSaveNewTask(Task taskForSave) throws Exception {
-        taskDao.save(taskForSave);
+    public void createAndSaveNewTask(Task taskForSave, String author) throws Exception {
+        taskDao.save(taskForSave,author);
     }
 
     @Override
-    public void deleteTask(String idForDelete) throws Exception {
+    public void deleteTask(String idForDelete,String author) throws Exception {
         int idTask = Integer.parseInt(idForDelete);
-        taskDao.deleteTask(idTask);
+        taskDao.deleteTask(idTask,author);
     }
 
     @Override
-    public List getAllTasks() throws Exception {
-        return taskDao.getAllTasks();
+    public List getAllTasks(String author) throws Exception {
+        return taskDao.getAllTasks(author);
     }
 
     @Override
-    public void updateTasks(Task taskForUpdate, String id) throws Exception {
-        taskDao.updateTask(taskForUpdate, id);
+    public void updateTasks(Task taskForUpdate, String id,String author) throws Exception {
+        taskDao.updateTask(taskForUpdate, id,author);
     }
 
 }

@@ -10,12 +10,12 @@
 <table width="100%" border="1">
 
     <tr valign="top">
-        <td><b>Status code:</b></td>
-        <td>${exception.message}</td>
+        <td><b>exception message:</b></td>
+        <td>${Exception.message}</td>
     </tr>
     <tr valign="top">
         <td><b>Error in stack trace:</b></td>
-        <td>${exception.stackTrace}</td>
+        <td>${Exception.stackTrace}</td>
     </tr>
 </table>
 <p>

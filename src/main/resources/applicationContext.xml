@@ -25,7 +25,7 @@
     </bean>
 
     <bean id="taskService" class="ua.baibak.todolist.service.task.TaskService">
-        <constructor-arg ref="hibernateImplementation"/>
+        <constructor-arg ref="jdbcImplementation"/>
     </bean>
 
     <bean id="userServiceImpl" class="ua.baibak.todolist.service.user.UserServiceImpl">

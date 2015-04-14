@@ -20,7 +20,7 @@ public class HibernateTaskDao implements TaskDao {
     }
 
     @Override
-    public void save(Task taskForSave) throws Exception {
+    public void save(Task taskForSave, String author) throws Exception {
         Session session = null;
         try {
             session = mySessionFactory.getCurrentSession();
@@ -38,9 +38,9 @@ public class HibernateTaskDao implements TaskDao {
     }
 
     @Override
-    public void updateTask(Task taskForUpdate, String id) throws Exception {
+    public void updateTask(Task taskForUpdate, String id, String author) throws Exception {
         Session session = null;
-        Task temporaryTask = this.getTasksById(Integer.parseInt(id));
+        Task temporaryTask = this.getTasksById(Integer.parseInt(id),author);
         temporaryTask.setDescription(taskForUpdate.getDescription());
         temporaryTask.setDeadline(taskForUpdate.getDeadline());
         try {
@@ -59,7 +59,7 @@ public class HibernateTaskDao implements TaskDao {
         }
     }
 
-    public Task getTasksById(int id) throws HibernateException {
+    public Task getTasksById(int id, String author) throws HibernateException {
         Session session = null;
         Task res = null;
         try {
@@ -80,7 +80,7 @@ public class HibernateTaskDao implements TaskDao {
     }
 
     @Override
-    public List getAllTasks() throws Exception {
+    public List getAllTasks(String author) throws Exception {
         Session session = null;
         List tasks = new ArrayList<Task>();
         try {
@@ -101,9 +101,9 @@ public class HibernateTaskDao implements TaskDao {
     }
 
     @Override
-    public void deleteTask(int id) throws HibernateException {
+    public void deleteTask(int id, String author) throws HibernateException {
         Session session = null;
-        Task taskForDelete = this.getTasksById(id);
+        Task taskForDelete = this.getTasksById(id, author);
         try {
             session = mySessionFactory.getCurrentSession();
             session.beginTransaction();

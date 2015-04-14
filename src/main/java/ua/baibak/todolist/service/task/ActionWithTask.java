@@ -6,11 +6,11 @@ import java.util.Date;
 import java.util.List;
 
 public interface ActionWithTask {
-    public void createAndSaveNewTask(Task taskForSave) throws Exception;
+    public void createAndSaveNewTask(Task taskForSave,String author) throws Exception;
 
-    public void deleteTask(String idForDelete) throws Exception;
+    public void deleteTask(String idForDelete, String author) throws Exception;
 
-    public List getAllTasks() throws Exception;
+    public List getAllTasks(String author) throws Exception;
 
-    public void updateTasks(Task taskForUpdate, String id) throws Exception;
+    public void updateTasks(Task taskForUpdate, String id, String author) throws Exception;
 }
