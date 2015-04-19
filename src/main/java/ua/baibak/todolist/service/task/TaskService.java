@@ -16,14 +16,16 @@ public class TaskService implements ActionWithTask {
 
     @Override
     @Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW, rollbackFor = Exception.class)
-    public void createAndSaveNewTask(Task taskForSave, String author) throws Exception {
-        taskDao.save(taskForSave,author);
+    public void createAndSaveNewTask(Task taskForSave) throws Exception {
+
+        taskDao.save(taskForSave);
+
     }
 
     @Override
-    public void deleteTask(String idForDelete,String author) throws Exception {
+    public void deleteTask(String idForDelete) throws Exception {
         int idTask = Integer.parseInt(idForDelete);
-        taskDao.deleteTask(idTask,author);
+        taskDao.deleteTask(idTask);
     }
 
     @Override
@@ -32,8 +34,8 @@ public class TaskService implements ActionWithTask {
     }
 
     @Override
-    public void updateTasks(Task taskForUpdate, String id,String author) throws Exception {
-        taskDao.updateTask(taskForUpdate, id,author);
+    public void updateTasks(Task taskForUpdate, String id) throws Exception {
+        taskDao.updateTask(taskForUpdate, id);
     }
 
 }

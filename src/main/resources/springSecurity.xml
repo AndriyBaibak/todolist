@@ -6,10 +6,11 @@
 	http://www.springframework.org/schema/security
 	http://www.springframework.org/schema/security/spring-security-3.2.xsd">
 
+
     <http auto-config="true" use-expressions="true">
 
-        <intercept-url pattern="/authorized/**" access="hasRole('ROLE_USER')" />
-        <intercept-url pattern="/authorized/**/**" access="hasRole('ROLE_USER')"/>
+        <intercept-url pattern="/users/**" access="hasRole('ROLE_USER')"/>
+
 
         <form-login
                 login-page="/login"
@@ -19,16 +20,11 @@
         <logout logout-success-url="/login?logout"/>
     </http>
 
-    <authentication-manager>
-        <authentication-provider>
-            <password-encoder ref="passwordEncoder"/>
-            <jdbc-user-service
-                               data-source-ref="dataSource"
-                               users-by-username-query=
-                                       "select userName, password, enabled from users where userName=?"
-                               authorities-by-username-query=
-                                       "select userName, userRole from users where userName =?  "
-                    />
+    <beans:bean id="myUserDetailsService" class="ua.baibak.todolist.service.user.MyUserDetailsService"/>
+
+    <authentication-manager alias="authenticationManager">
+        <authentication-provider user-service-ref="myUserDetailsService">
+
         </authentication-provider>
     </authentication-manager>
 </beans:beans>

@@ -6,6 +6,6 @@
     <title></title>
 </head>
 <body>
-<c:redirect  url="/authorized/${pageContext.request.userPrincipal.name}/allTasks" />
+<c:redirect  url="/users/${pageContext.request.userPrincipal.name}/allTasks" />
 </body>
 </html>

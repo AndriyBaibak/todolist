@@ -1,27 +1,25 @@
 package ua.baibak.todolist.service.user;
 
 import org.apache.log4j.Logger;
+import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.hibernate.criterion.Restrictions;
 import ua.baibak.todolist.entity.User;
 
 import javax.inject.Inject;
-import java.util.HashSet;
 import java.util.List;
 
 public class UserServiceImpl implements UserService {
     private static Logger log = Logger.getLogger(UserServiceImpl.class);
+
     @Inject
     private SessionFactory sessionFactory;
-    @Inject
-    private BCryptPasswordEncoder passwordEncoder;
 
     @Override
     public void createNewUser(User newUser) throws HibernateException {
         Session session = null;
-        newUser.setPassword(passwordEncoder.encode(newUser.getPassword()));
         try {
             session = sessionFactory.getCurrentSession();
             session.beginTransaction();
@@ -37,7 +35,30 @@ public class UserServiceImpl implements UserService {
             }
         }
     }
-    public String checkUserName(String userName) {
+
+    public User findUserByName(String userName) throws Exception {
+        Session session = null;
+        User user = null;
+        try {
+            session = sessionFactory.getCurrentSession();
+            session.beginTransaction();
+            Criteria criteria = session.createCriteria(User.class);
+            criteria.add(Restrictions.eq("userName", userName));
+            user = (User) criteria.uniqueResult();
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            log.error("exception during findUserByName" + e);
+            session.getTransaction().rollback();
+            throw e;
+        } finally {
+            if (session != null && session.isOpen()) {
+                session.close();
+            }
+        }
+        return user;
+    }
+
+    public boolean checkUserName(String userName) {
         Session session = null;
         List<String> usersNames = null;
         try {
@@ -49,9 +70,9 @@ public class UserServiceImpl implements UserService {
             log.error("Exception during checkUserName" + e.toString());
             session.getTransaction().rollback();
         }
-        if(usersNames.contains(userName)){
-            return "yes";
+        if (usersNames.contains(userName)) {
+            return true;
         }
-        return "no";
+        return false;
     }
 }

@@ -4,6 +4,8 @@ import org.apache.log4j.Logger;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
 import ua.baibak.todolist.dao.TaskDao;
 import ua.baibak.todolist.entity.Task;
 
@@ -20,7 +22,7 @@ public class HibernateTaskDao implements TaskDao {
     }
 
     @Override
-    public void save(Task taskForSave, String author) throws Exception {
+    public void save(Task taskForSave) throws Exception {
         Session session = null;
         try {
             session = mySessionFactory.getCurrentSession();
@@ -38,9 +40,9 @@ public class HibernateTaskDao implements TaskDao {
     }
 
     @Override
-    public void updateTask(Task taskForUpdate, String id, String author) throws Exception {
+    public void updateTask(Task taskForUpdate, String id) throws Exception {
         Session session = null;
-        Task temporaryTask = this.getTasksById(Integer.parseInt(id),author);
+        Task temporaryTask = this.getTasksById(Integer.parseInt(id));
         temporaryTask.setDescription(taskForUpdate.getDescription());
         temporaryTask.setDeadline(taskForUpdate.getDeadline());
         try {
@@ -59,7 +61,7 @@ public class HibernateTaskDao implements TaskDao {
         }
     }
 
-    public Task getTasksById(int id, String author) throws HibernateException {
+    public Task getTasksById(int id) throws HibernateException {
         Session session = null;
         Task res = null;
         try {
@@ -86,7 +88,7 @@ public class HibernateTaskDao implements TaskDao {
         try {
             session = mySessionFactory.getCurrentSession();
             session.beginTransaction();
-            tasks = session.createCriteria(Task.class).addOrder(org.hibernate.criterion.Order.asc("deadline")).list();
+            tasks = session.createCriteria(Task.class).add(Restrictions.eq("author", author)).addOrder(Order.asc("deadline")).list();
             session.getTransaction().commit();
         } catch (Exception e) {
             log.error("Exception during  getAllTasks ", e);
@@ -101,9 +103,9 @@ public class HibernateTaskDao implements TaskDao {
     }
 
     @Override
-    public void deleteTask(int id, String author) throws HibernateException {
+    public void deleteTask(int id) throws HibernateException {
         Session session = null;
-        Task taskForDelete = this.getTasksById(id, author);
+        Task taskForDelete = this.getTasksById(id);
         try {
             session = mySessionFactory.getCurrentSession();
             session.beginTransaction();

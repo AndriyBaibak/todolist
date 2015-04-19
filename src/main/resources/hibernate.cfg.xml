@@ -12,6 +12,7 @@
         <property name="description" column="description" type="java.lang.String"/>
         <property name="createdDate" column="createdDate" type="java.sql.Date"/>
         <property name="deadline" column="deadline" type="java.sql.Date"/>
+        <property name="author" column="author" type="java.lang.String"/>
 
     </class>
     <class name="ua.baibak.todolist.entity.User" table="users">
@@ -20,7 +21,8 @@
         </id>
         <property name="userName" column="username" type="java.lang.String"/>
         <property name="password" column="password" type="java.lang.String"/>
-        <property name="enabled" column="enabled" type="byte"/>
+        <property name="confirmPassword" column="confirmPassword" type="java.lang.String"/>
+        <property name="enabled" column="enabled" type="java.lang.Byte"/>
         <property name="roleUser" column="userRole" type="java.lang.String"/>
     </class>
 

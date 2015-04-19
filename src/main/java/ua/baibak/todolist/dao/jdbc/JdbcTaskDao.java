@@ -31,11 +31,10 @@ public class JdbcTaskDao implements TaskDao {
     }
 
     @Override
-    public void save(Task taskForSave,String author) throws SQLException {
+    public void save(Task taskForSave) throws SQLException {
         Connection dbConnection = null;
         Statement statement = null;
-        String saveTask = "INSERT INTO tasks VALUES ('" + counter.incrementAndGet() + "','" + taskForSave.getDescription() + "','" + DateUtil.changeUtilDateToSqlDate(new Date()) + "','" + DateUtil.changeUtilDateToSqlDate(taskForSave.getDeadline()) + "','" + author + "');";
-        log.error("111111111111111111111" + saveTask);
+        String saveTask = "INSERT INTO tasks VALUES ('" + counter.incrementAndGet() + "','" + taskForSave.getDescription() + "','" + DateUtil.changeUtilDateToSqlDate(new Date()) + "','" + DateUtil.changeUtilDateToSqlDate(taskForSave.getDeadline())  + "','" + taskForSave.getAuthor() + "');";
         try {
             dbConnection = ds.getConnection();
             statement = dbConnection.createStatement();
@@ -54,7 +53,7 @@ public class JdbcTaskDao implements TaskDao {
     }
 
     @Override
-    public void updateTask(Task taskForUpdate, String id, String author) throws SQLException {
+    public void updateTask(Task taskForUpdate, String id) throws SQLException {
         Connection dbConnection = null;
         Statement statement = null;
         String updateDescriptionTask = "UPDATE tasks SET description = '" + taskForUpdate.getDescription() + "' WHERE id=" + id + ";";
@@ -82,8 +81,7 @@ public class JdbcTaskDao implements TaskDao {
         Connection dbConnection = null;
         Statement statement = null;
         List tasks = new ArrayList<Task>();
-        String getAllTask = "SELECT tasks.id,tasks.description,tasks.createdDate,tasks.deadline FROM tasks WHERE author =" + author + ";";
-        log.error("----------------------" + getAllTask);
+        String getAllTask = "SELECT tasks.id,tasks.description,tasks.createdDate,tasks.deadline, tasks.author FROM tasks WHERE author ='" + author + "'ORDER BY deadline;";
         try {
             dbConnection = ds.getConnection();
             statement = dbConnection.createStatement();
@@ -93,7 +91,8 @@ public class JdbcTaskDao implements TaskDao {
                 String description = rs.getString("description");
                 Date createdDate = rs.getDate("createdDate");
                 Date deadline = rs.getDate("deadline");
-                Task taskForView = new Task(id, description, createdDate, deadline);
+                String taskAuthor = rs.getString("author");
+                Task taskForView = new Task(id, description, createdDate, deadline, taskAuthor);
                 tasks.add(taskForView);
             }
         } catch (SQLException e) {
@@ -111,7 +110,7 @@ public class JdbcTaskDao implements TaskDao {
     }
 
     @Override
-    public void deleteTask(int id, String author) throws Exception {
+    public void deleteTask(int id) throws Exception {
         Connection dbConnection = null;
         Statement statement = null;
         String deleteTask = "DELETE FROM tasks WHERE id = " + id + ";";

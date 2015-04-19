@@ -41,14 +41,14 @@
         if(type=='description') {
             $.ajax({
                 type: "POST",
-                url: "/todolist/authorized/updateTask/" + id,
+                url: "/todolist/users/${pageContext.request.userPrincipal.name}/updateTask/" + id,
                 data: {"description": newDescription.value, "deadline": newDeadline}
 
             });
         }else{
             $.ajax({
                 type: "POST",
-                url: "/todolist/updateTask/" + id,
+                url: "/todolist/users/${pageContext.request.userPrincipal.name}/updateTask/" + id,
                 data: {"description": newDescription, "deadline": newDeadline.value}
             });
         }
@@ -81,7 +81,7 @@
             <div align="center">
                 <p><big>Додати нове завдання </big></p>
             </div>
-            <form:form action="/todolist/authorized/${pageContext.request.userPrincipal.name}/addTask" method="post" commandName="taskForAdd" onsubmit="return ValidFormFields('ntask','date')">
+            <form:form action="/todolist/users/${pageContext.request.userPrincipal.name}/addTask" method="post" commandName="taskForAdd" onsubmit="return ValidFormFields('ntask','date')">
 
                 <tr>
                     <td>Описання:</td>
@@ -111,7 +111,7 @@
         </tr>
 
         <c:forEach var="task" items="${tasks}">
-            <form:form commandName="taskForUpdate" method="post" action="/todolist/authorized/${pageContext.request.userPrincipal.name}/updateTask">
+            <form:form commandName="taskForUpdate" method="post" action="/todolist/users/${pageContext.request.userPrincipal.name}/updateTask">
             <tr>
                 <div>
                     <td valign="middle" align="center">
@@ -134,7 +134,7 @@
                     </td>
             </form:form>
                     <td valign="middle" align="center">
-                        <form id="del" action="/todolist/authorized/${pageContext.request.userPrincipal.name}/deleteTask/${task.id}" method="post">
+                        <form id="del" action="/todolist/users/${pageContext.request.userPrincipal.name}/deleteTask/${task.id}" method="post">
                            <p><input type="submit" value="Видалити"></p>
                         </form>
                     </td>

@@ -1,0 +1,74 @@
+package ua.baibak.todolist.constraints.impl;
+
+
+
+import org.apache.log4j.Logger;
+import ua.baibak.todolist.constraints.FieldEquals;
+
+import javax.validation.ConstraintValidator;
+import javax.validation.ConstraintValidatorContext;
+import java.lang.reflect.Method;
+
+public class FieldEqualsValidator implements
+		ConstraintValidator<FieldEquals, Object> {
+    private static Logger log = Logger.getLogger(FieldEqualsValidator.class);
+
+    private String field;
+	private String equalsTo;
+	private String message = FieldEquals.MESSAGE;
+
+	public void initialize(FieldEquals constraintAnnotation) {
+        log.error("+++++++++++++++++++++++++++++++++++++++");
+		this.message = constraintAnnotation.message();
+		this.field = constraintAnnotation.field();
+		this.equalsTo = constraintAnnotation.equalsTo();
+	}
+
+	public boolean isValid(Object value, ConstraintValidatorContext context) {
+        log.error("+++++++++++++++++++++++++++++++++++++++" + field + equalsTo);
+		try {
+			final Object fieldObject = getProperty(value, field, null);
+			final Object equalsToObject = getProperty(value, equalsTo, null);
+            log.error("+++++++++++++++++++++++++++++++++++++++" + field + equalsTo);
+            log.error("+++++++++++++++++++++++++++++++++++++++" + fieldObject.toString() + equalsToObject.toString());
+			if (fieldObject == null && equalsToObject == null) {
+				return true;
+			}
+
+			boolean matches = (fieldObject != null)
+					&& fieldObject.equals(equalsToObject);
+
+			if (!matches) {
+				String msg = this.message;
+				if( this.message == null  
+						|| "".equals( this.message ) 
+						|| FieldEquals.MESSAGE.equals( this.message ) ){
+					msg = field + " is not equal to " + equalsTo;
+				}
+				context.disableDefaultConstraintViolation();
+				context.buildConstraintViolationWithTemplate( msg )
+						.addNode(equalsTo).addConstraintViolation();
+			}
+
+			return matches;
+		} catch (final Exception e) {
+			e.printStackTrace();
+		}
+		return true;
+	}
+
+	private Object getProperty(Object value, String fieldName,
+			Object defaultValue) {
+		Class<?> clazz = value.getClass();
+		String methodName = "get" + Character.toUpperCase(fieldName.charAt(0))
+				+ fieldName.substring(1);
+        log.error("+++++++++++++++++++++++++++++++++++++++" + methodName);
+		try {
+			Method method = clazz.getDeclaredMethod(methodName, new Class[0]);
+            log.error("++++++++++++++++++++++++++++++++++++++1111111+" + method.invoke(value).toString());
+			return method.invoke(value);
+		} catch (Exception e) {
+		}
+		return defaultValue;
+	}
+}

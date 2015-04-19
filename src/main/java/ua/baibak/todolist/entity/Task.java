@@ -3,6 +3,7 @@ package ua.baibak.todolist.entity;
 
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -21,15 +22,27 @@ public class Task {
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private Date deadline;
 
-    public Task(int id, String description, Date createdDate, Date deadline) {
+    private String author;
+
+    public Task(int id, String description, Date createdDate, Date deadline, String author) {
         this.id = id;
         this.description = description;
         this.createdDate = createdDate;
         this.deadline = deadline;
+        this.author = author;
     }
 
     public Task() {
         this.createdDate = new Date();
+    }
+
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
     }
 
     public String getDescription() {
