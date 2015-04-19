@@ -58,7 +58,7 @@ public class UserServiceImpl implements UserService {
         return user;
     }
 
-    public boolean checkUserName(String userName) {
+    public boolean validationUserName(String userName) {
         Session session = null;
         List<String> usersNames = null;
         try {
@@ -67,7 +67,7 @@ public class UserServiceImpl implements UserService {
             usersNames = session.createSQLQuery("SELECT userName FROM users").list();
             session.getTransaction().commit();
         } catch (HibernateException e) {
-            log.error("Exception during checkUserName" + e.toString());
+            log.error("Exception during validationUserName" + e.toString());
             session.getTransaction().rollback();
         }
         if (usersNames.contains(userName)) {

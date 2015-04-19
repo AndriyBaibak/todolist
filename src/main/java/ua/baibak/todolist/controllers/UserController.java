@@ -45,7 +45,7 @@ public class UserController {
 
     @RequestMapping(value = "/registration", method = RequestMethod.POST)
     public ModelAndView registration(@Valid User userAdd, BindingResult result) throws Exception {
-        if (userService.checkUserName(userAdd.getUserName())) {
+        if (userService.validationUserName(userAdd.getUserName())) {
             throw new Exception("names already used");
         }
         if (result.hasErrors()) {
