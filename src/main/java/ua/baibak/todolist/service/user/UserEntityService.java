@@ -6,20 +6,27 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
+import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import ua.baibak.todolist.entity.User;
 
 import javax.inject.Inject;
 import java.util.List;
 
-public class UserServiceImpl implements UserService {
-    private static Logger log = Logger.getLogger(UserServiceImpl.class);
+public class UserEntityService implements UserService {
+
+    private static Logger log = Logger.getLogger(UserEntityService.class);
 
     @Inject
     private SessionFactory sessionFactory;
+    @Inject
+    private Md5PasswordEncoder passwordEncoder;
 
     @Override
     public void createNewUser(User newUser) throws HibernateException {
         Session session = null;
+        newUser.setPassword(passwordEncoder.encodePassword(newUser.getPassword(),null));
+        newUser.setConfirmPassword(passwordEncoder.encodePassword(newUser.getConfirmPassword(),null));
         try {
             session = sessionFactory.getCurrentSession();
             session.beginTransaction();
@@ -58,7 +65,7 @@ public class UserServiceImpl implements UserService {
         return user;
     }
 
-    public boolean validationUserName(String userName) {
+    public boolean validationUserName(String userName)throws Exception{
         Session session = null;
         List<String> usersNames = null;
         try {
@@ -66,11 +73,11 @@ public class UserServiceImpl implements UserService {
             session.beginTransaction();
             usersNames = session.createSQLQuery("SELECT userName FROM users").list();
             session.getTransaction().commit();
-        } catch (HibernateException e) {
+        }catch (HibernateException e) {
             log.error("Exception during validationUserName" + e.toString());
             session.getTransaction().rollback();
-        }
-        if (usersNames.contains(userName)) {
+            throw e;
+        }if (usersNames.contains(userName)) {
             return true;
         }
         return false;

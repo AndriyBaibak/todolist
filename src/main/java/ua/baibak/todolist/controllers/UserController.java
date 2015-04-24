@@ -3,13 +3,10 @@ package ua.baibak.todolist.controllers;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import ua.baibak.todolist.entity.User;
-import ua.baibak.todolist.service.user.UserServiceImpl;
+import ua.baibak.todolist.service.user.UserEntityService;
 
 import javax.inject.Inject;
 import javax.validation.Valid;
@@ -18,7 +15,7 @@ import javax.validation.Valid;
 public class UserController {
     private static Logger log = Logger.getLogger(UserController.class);
     @Inject
-    private UserServiceImpl userService;
+    private UserEntityService userService;
 
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
@@ -44,28 +41,16 @@ public class UserController {
     }
 
     @RequestMapping(value = "/registration", method = RequestMethod.POST)
-    public ModelAndView registration(@Valid User userAdd, BindingResult result) throws Exception {
-        if (userService.validationUserName(userAdd.getUserName())) {
-            throw new Exception("names already used");
-        }
+    public ModelAndView registration(@ModelAttribute("userAdd")@Valid User userAdd, BindingResult result) throws Exception {
         if (result.hasErrors()) {
             ModelAndView modelAndView = new ModelAndView("registration");
             modelAndView.addObject("userAdd", userAdd);
             return modelAndView;
         } else {
             userService.createNewUser(userAdd);
+
             return new ModelAndView("login");
         }
     }
 
-    @ExceptionHandler(Exception.class)
-    public ModelAndView handleException(Exception ex) {
-        if (ex instanceof org.hibernate.TransactionException) {
-            System.exit(500);
-        }
-        log.error("Exception" + ex.toString());
-        ModelAndView model = new ModelAndView("error");
-        model.addObject("Exception", ex);
-        return model;
-    }
 }

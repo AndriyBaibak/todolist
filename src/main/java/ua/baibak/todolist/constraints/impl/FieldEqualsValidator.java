@@ -18,19 +18,15 @@ public class FieldEqualsValidator implements
 	private String message = FieldEquals.MESSAGE;
 
 	public void initialize(FieldEquals constraintAnnotation) {
-        log.error("+++++++++++++++++++++++++++++++++++++++");
 		this.message = constraintAnnotation.message();
 		this.field = constraintAnnotation.field();
 		this.equalsTo = constraintAnnotation.equalsTo();
 	}
 
 	public boolean isValid(Object value, ConstraintValidatorContext context) {
-        log.error("+++++++++++++++++++++++++++++++++++++++" + field + equalsTo);
 		try {
 			final Object fieldObject = getProperty(value, field, null);
 			final Object equalsToObject = getProperty(value, equalsTo, null);
-            log.error("+++++++++++++++++++++++++++++++++++++++" + field + equalsTo);
-            log.error("+++++++++++++++++++++++++++++++++++++++" + fieldObject.toString() + equalsToObject.toString());
 			if (fieldObject == null && equalsToObject == null) {
 				return true;
 			}
@@ -62,10 +58,8 @@ public class FieldEqualsValidator implements
 		Class<?> clazz = value.getClass();
 		String methodName = "get" + Character.toUpperCase(fieldName.charAt(0))
 				+ fieldName.substring(1);
-        log.error("+++++++++++++++++++++++++++++++++++++++" + methodName);
 		try {
 			Method method = clazz.getDeclaredMethod(methodName, new Class[0]);
-            log.error("++++++++++++++++++++++++++++++++++++++1111111+" + method.invoke(value).toString());
 			return method.invoke(value);
 		} catch (Exception e) {
 		}

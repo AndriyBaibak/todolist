@@ -16,13 +16,12 @@ public class MyUserDetailsService implements UserDetailsService {
 
     private static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(MyUserDetailsService.class);
     @Inject
-    private UserServiceImpl userService;
+    private UserEntityService userService;
 
     @Override
     public UserDetails loadUserByUsername(final String username)
             throws UsernameNotFoundException {
-
-        ua.baibak.todolist.entity.User user = null;
+            ua.baibak.todolist.entity.User user = null;
         try {
             user = userService.findUserByName(username);
         } catch (Exception e) {

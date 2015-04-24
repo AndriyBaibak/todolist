@@ -6,12 +6,14 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import ua.baibak.todolist.dao.TaskDao;
 import ua.baibak.todolist.entity.Task;
 
 import java.util.ArrayList;
 import java.util.List;
-
+@Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW, rollbackFor = Exception.class)
 public class HibernateTaskDao implements TaskDao {
 
     private static Logger log = Logger.getLogger(HibernateTaskDao.class);
@@ -38,7 +40,6 @@ public class HibernateTaskDao implements TaskDao {
             }
         }
     }
-
     @Override
     public void updateTask(Task taskForUpdate, String id) throws Exception {
         Session session = null;
@@ -90,6 +91,7 @@ public class HibernateTaskDao implements TaskDao {
             session.beginTransaction();
             tasks = session.createCriteria(Task.class).add(Restrictions.eq("author", author)).addOrder(Order.asc("deadline")).list();
             session.getTransaction().commit();
+
         } catch (Exception e) {
             log.error("Exception during  getAllTasks ", e);
             session.getTransaction().rollback();
@@ -105,15 +107,15 @@ public class HibernateTaskDao implements TaskDao {
     @Override
     public void deleteTask(int id) throws HibernateException {
         Session session = null;
-        Task taskForDelete = this.getTasksById(id);
+        Task taskForDelete = getTasksById(id);
         try {
             session = mySessionFactory.getCurrentSession();
-            session.beginTransaction();
+            session.getTransaction().begin();
             session.delete(taskForDelete);
+
             session.getTransaction().commit();
         } catch (HibernateException e) {
             log.error("Exception during delete task", e);
-            session.getTransaction().rollback();
             throw e;
         } finally {
             if (session != null && session.isOpen()) {

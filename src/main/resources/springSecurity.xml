@@ -22,9 +22,11 @@
 
     <beans:bean id="myUserDetailsService" class="ua.baibak.todolist.service.user.MyUserDetailsService"/>
 
+    <beans:bean id="encode" class="org.springframework.security.authentication.encoding.Md5PasswordEncoder"/>
+
     <authentication-manager alias="authenticationManager">
         <authentication-provider user-service-ref="myUserDetailsService">
-
+            <password-encoder hash="md5" />
         </authentication-provider>
     </authentication-manager>
 </beans:beans>

@@ -19,7 +19,7 @@
     </tr>
 </table>
 <p>
-    <a href="/todolist/authorized/allTasks">Повернутися на головну</a>
+    <a href="/todolist/users/${pageContext.request.userPrincipal.name}/allTasks">Повернутися на головну</a>
 </p>
 </body>
 </html>

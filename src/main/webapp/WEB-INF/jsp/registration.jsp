@@ -28,11 +28,11 @@
         <tr>
             <td>Password:</td>
             <td><form:password   path="password" /></td>
-            <td><span class="error"><form:errors path="password" /></span></td>
+            <td><form:errors path="password" cssClass="error" /></td>
         <tr>
             <td>Confirm Password:</td>
-            <td><form:password  path="confirmPassword"  /></td>
-            <td><span class="error"><form:errors path="confirmPassword" /></span></td>
+            <td><form:password  path="confirmPassword"/></td>
+            <td><form:errors path="confirmPassword" cssClass="error"/></td>
         <tr>
             <td colspan='2'><input type="submit"
                                    value="submit" ></td>

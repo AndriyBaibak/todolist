@@ -2,8 +2,6 @@ package ua.baibak.todolist.controllers;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -14,9 +12,7 @@ import ua.baibak.todolist.entity.Task;
 import ua.baibak.todolist.service.task.TaskService;
 
 import javax.inject.Inject;
-import javax.sql.DataSource;
 import javax.validation.Valid;
-import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -75,9 +71,8 @@ public class TaskController {
     }
 
     private ModelAndView generateModelForView(String viewPage, String author) throws Exception {
-        List tasks = new ArrayList();
         ModelAndView modelSuccess = new ModelAndView(viewPage);
-        tasks = taskService.getAllTasks(author);
+        List tasks = taskService.getAllTasks(author);
         modelSuccess.addObject("tasks", tasks);
         modelSuccess.addObject("taskForAdd", new Task());
         modelSuccess.addObject("taskForUpdate", new Task());
@@ -90,26 +85,5 @@ public class TaskController {
         model.addObject("tasks", tasks);
         model.addObject("taskForUpdate", new Task());
         return model;
-    }
-
-    @ExceptionHandler(Exception.class)
-    public ModelAndView handleException(Exception ex) {
-        log.error("Exception" + ex.toString());
-        ModelAndView modelAndView = new ModelAndView();
-        if (ex instanceof org.hibernate.TransactionException) {
-            ApplicationContext appContext = new ClassPathXmlApplicationContext("applicationContext.xml");
-            DataSource dataSource = (DataSource) appContext.getBean("dataSource");
-            log.error("++++++++try");
-            try {
-                dataSource.getConnection().close();
-            } catch (SQLException e) {
-                log.error("no-----------------------");
-            }
-
-        }
-        modelAndView.setViewName("error");
-        modelAndView.addObject("Exception", ex);
-        return modelAndView;
-
     }
 }

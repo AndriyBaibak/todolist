@@ -2,19 +2,22 @@ package ua.baibak.todolist.entity;
 
 import org.hibernate.validator.constraints.NotBlank;
 import ua.baibak.todolist.constraints.FieldEquals;
+import ua.baibak.todolist.constraints.NamesAlreadyUsed;
 
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
-@FieldEquals(field="password", equalsTo="confirmPassword" )
+@FieldEquals(field="password", equalsTo="confirmPassword", message = "password != confirm Password")
 public class User {
 
     private int id;
 
     @NotBlank
+    @NamesAlreadyUsed
     private String userName;
     @NotBlank
     private String password;
-    @NotBlank
+    @Size
     private String confirmPassword;
     @NotNull
     private byte enabled = 1;

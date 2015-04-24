@@ -17,9 +17,7 @@ public class TaskService implements ActionWithTask {
     @Override
     @Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW, rollbackFor = Exception.class)
     public void createAndSaveNewTask(Task taskForSave) throws Exception {
-
         taskDao.save(taskForSave);
-
     }
 
     @Override
