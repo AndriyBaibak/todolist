@@ -1,8 +1,8 @@
 package ua.baibak.todolist.entity;
 
 import org.hibernate.validator.constraints.NotBlank;
-import ua.baibak.todolist.constraints.FieldEquals;
-import ua.baibak.todolist.constraints.NamesAlreadyUsed;
+import ua.baibak.todolist.service.user.validation.FieldEquals;
+import ua.baibak.todolist.service.user.validation.NamesAlreadyUsed;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;

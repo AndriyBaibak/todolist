@@ -17,29 +17,30 @@
 <h1 align="center">Registration</h1>
 
 <form:form commandName="userAdd"
-       method='POST' >
+           method='POST'>
 
     <table align="center">
         <tr>
             <td>User:</td>
             <td><form:input path="userName" type='text'/></td>
-            <td><form:errors path="userName" cssClass="error" /></td></br>
+            <td><form:errors path="userName" cssClass="error"/></td>
+            </br>
         </tr>
         <tr>
             <td>Password:</td>
-            <td><form:password   path="password" /></td>
-            <td><form:errors path="password" cssClass="error" /></td>
+            <td><form:password path="password"/></td>
+            <td><form:errors path="password" cssClass="error"/></td>
         <tr>
             <td>Confirm Password:</td>
-            <td><form:password  path="confirmPassword"/></td>
+            <td><form:password path="confirmPassword"/></td>
             <td><form:errors path="confirmPassword" cssClass="error"/></td>
         <tr>
             <td colspan='2'><input type="submit"
-                                   value="submit" ></td>
+                                   value="submit"></td>
             </td>
         </tr>
     </table>
 
-    </form:form>
+</form:form>
 </body>
 </html>

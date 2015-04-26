@@ -5,7 +5,7 @@ import ua.baibak.todolist.entity.Task;
 import java.util.List;
 
 public interface TaskDao {
-    public void save(Task taskForSave) throws Exception;
+    public void saveNewTask(Task taskForSave) throws Exception;
 
     public void updateTask(Task taskForUpdate, String id) throws Exception;
 

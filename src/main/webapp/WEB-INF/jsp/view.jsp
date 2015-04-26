@@ -13,6 +13,7 @@
             margin-left: 25%;
             width: 50%;
         }
+
         .error {
             color: #ff0000;
         }
@@ -38,14 +39,13 @@
         if (document.getElementById(textToSave).value == '') {
             newData = document.getElementById(beReplaced).innerHTML;
         }
-        if(type=='description') {
+        if (type == 'description') {
             $.ajax({
                 type: "POST",
                 url: "/todolist/users/${pageContext.request.userPrincipal.name}/updateTask/" + id,
                 data: {"description": newDescription.value, "deadline": newDeadline}
-
             });
-        }else{
+        } else {
             $.ajax({
                 type: "POST",
                 url: "/todolist/users/${pageContext.request.userPrincipal.name}/updateTask/" + id,
@@ -73,31 +73,35 @@
 <body style="background-color:rgba(48, 48, 48, 0.16)">
 <body>
 
-    Welcome : ${pageContext.request.userPrincipal.name} |<c:url value="/j_spring_security_logout" var="logoutUrl" /> <a href="${logoutUrl}"> Вийти</a>
+Welcome : ${pageContext.request.userPrincipal.name} |<c:url value="/j_spring_security_logout" var="logoutUrl"/> <a
+        href="${logoutUrl}"> Вийти</a>
 
 <div id="back">
     <div id="addtask">
 
+        <div align="center">
+            <p><big>Додати нове завдання </big></p>
+        </div>
+        <form:form action="/todolist/users/${pageContext.request.userPrincipal.name}/addTask" method="post"
+                   commandName="taskForAdd" onsubmit="return ValidFormFields('ntask','date')">
+
+            <tr>
+                <td>Описання:</td>
+                <td><form:input id="ntask" path="description" onfocus="this.style.border='2px inset'"/></td>
+                <td><form:errors path="description" cssClass="error"/></td>
+                </br>
+            </tr>
+            <tr>
+                <td>Оберіть кінцеву дату виконання:</td>
+                <td><form:input id="date" path="deadline" type="date" onfocus="this.style.border='2px inset'"/></td>
+                <td><form:errors path="deadline" cssClass="error"/></td>
+                </br>
+            </tr>
+
             <div align="center">
-                <p><big>Додати нове завдання </big></p>
-            </div>
-            <form:form action="/todolist/users/${pageContext.request.userPrincipal.name}/addTask" method="post" commandName="taskForAdd" onsubmit="return ValidFormFields('ntask','date')">
-
-                <tr>
-                    <td>Описання:</td>
-                    <td><form:input  id="ntask" path="description" onfocus="this.style.border='2px inset'"/></td>
-                    <td><form:errors path="description" cssClass="error" /></td></br>
-                </tr>
-                <tr>
-                    <td>Оберіть кінцеву дату виконання:</td>
-                    <td><form:input id="date" path="deadline" type="date" onfocus="this.style.border='2px inset'"/></td>
-                    <td><form:errors path="deadline" cssClass="error" /></td></br>
-                </tr>
-
-                <div align="center">
                 <input type="submit" value="Додати">
             </div>
-            </form:form>
+        </form:form>
     </div>
 
     <table width="700" border="1"
@@ -111,36 +115,39 @@
         </tr>
 
         <c:forEach var="task" items="${tasks}">
-            <form:form commandName="taskForUpdate" method="post" action="/todolist/users/${pageContext.request.userPrincipal.name}/updateTask">
-            <tr>
+            <form:form commandName="taskForUpdate" method="post"
+                       action="/todolist/users/${pageContext.request.userPrincipal.name}/updateTask">
+                <tr>
                 <div>
-                    <td valign="middle" align="center">
-                        <div id="div + ${task.description} + ${task.id}"
-                             onclick="change('input + ${task.description} + ${task.id}','div + ${task.description} + ${task.id}')">
-                            <c:out value="${task.description}"> </c:out></div>
-                        <form:input  cssStyle="display:none" path="description" id='input + ${task.description} + ${task.id}'
-                               onblur="update('input + ${task.description} + ${task.id}','div + ${task.description} + ${task.id}','${task.id}',this, '${task.deadline}','description')" value="${task.description}"/></td>
+                <td valign="middle" align="center">
+                    <div id="div + ${task.description} + ${task.id}"
+                         onclick="change('input + ${task.description} + ${task.id}','div + ${task.description} + ${task.id}')">
+                        <c:out value="${task.description}"> </c:out></div>
+                    <form:input cssStyle="display:none" path="description" id='input + ${task.description} + ${task.id}'
+                                onblur="update('input + ${task.description} + ${task.id}','div + ${task.description} + ${task.id}','${task.id}',this, '${task.deadline}','description')"
+                                value="${task.description}"/></td>
 
                 <td valign="middle" align="center">
-                        <c:out value="${task.createdDate}"></c:out>
-                    </td>
-                    <td valign="middle" align="center">
-                        <div id="div + ${task.deadline} + ${task.id}"
-                             onclick="change('input + ${task.deadline} + ${task.id}','div + ${task.deadline} + ${task.id}')" >
-                            <c:out value="${task.deadline}"> </c:out></div>
-                        <form:input cssStyle="display:none" id="input + ${task.deadline} + ${task.id}" type="date"
-                               onblur="update('input + ${task.deadline} + ${task.id}','div + ${task.deadline} + ${task.id}','${task.id}','${task.description}',this,'deadline')"
-                               value="${task.deadline}" path="deadline"/>
-                    </td>
+                    <c:out value="${task.createdDate}"></c:out>
+                </td>
+                <td valign="middle" align="center">
+                    <div id="div + ${task.deadline} + ${task.id}"
+                         onclick="change('input + ${task.deadline} + ${task.id}','div + ${task.deadline} + ${task.id}')">
+                        <c:out value="${task.deadline}"> </c:out></div>
+                    <form:input cssStyle="display:none" id="input + ${task.deadline} + ${task.id}" type="date"
+                                onblur="update('input + ${task.deadline} + ${task.id}','div + ${task.deadline} + ${task.id}','${task.id}','${task.description}',this,'deadline')"
+                                value="${task.deadline}" path="deadline"/>
+                </td>
             </form:form>
-                    <td valign="middle" align="center">
-                        <form id="del" action="/todolist/users/${pageContext.request.userPrincipal.name}/deleteTask/${task.id}" method="post">
-                           <p><input type="submit" value="Видалити"></p>
-                        </form>
-                    </td>
-                </div>
+            <td valign="middle" align="center">
+                <form id="del" action="/todolist/users/${pageContext.request.userPrincipal.name}/deleteTask/${task.id}"
+                      method="post">
+                    <p><input type="submit" value="Видалити"></p>
+                </form>
+            </td>
+            </div>
             </tr>
-       </c:forEach>
+        </c:forEach>
 
     </table>
     <embed align="left" src="http://www.clocktag.com/cs/m51.swf" width="150" height="150" wmode="transparent"

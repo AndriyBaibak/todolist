@@ -31,7 +31,7 @@ public class JdbcTaskDao implements TaskDao {
     }
 
     @Override
-    public void save(Task taskForSave) throws SQLException {
+    public void saveNewTask(Task taskForSave) throws SQLException {
         Connection dbConnection = null;
         Statement statement = null;
         String saveTask = "INSERT INTO tasks VALUES ('" + counter.incrementAndGet() + "','" + taskForSave.getDescription() + "','" + DateUtil.changeUtilDateToSqlDate(new Date()) + "','" + DateUtil.changeUtilDateToSqlDate(taskForSave.getDeadline())  + "','" + taskForSave.getAuthor() + "');";

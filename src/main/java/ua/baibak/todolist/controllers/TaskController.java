@@ -1,6 +1,5 @@
 package ua.baibak.todolist.controllers;
 
-import org.apache.log4j.Logger;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -14,13 +13,11 @@ import ua.baibak.todolist.service.task.TaskService;
 import javax.inject.Inject;
 import javax.validation.Valid;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 @Controller
 public class TaskController {
-    private static Logger log = Logger.getLogger(TaskController.class);
 
     @Inject
     private TaskService taskService;
@@ -50,11 +47,11 @@ public class TaskController {
         if (result.hasErrors()) {
             return generateModelForView("view", taskForSaving, author);
         } else {
+            taskForSaving.toString();
             taskService.createAndSaveNewTask(taskForSaving);
             return generateModelForView("view", author);
         }
     }
-
 
     @RequestMapping(value = "/users/{name}/updateTask/{id}", method = RequestMethod.POST)
     public ModelAndView updateTask(@ModelAttribute("taskForUpdate") @Valid Task taskForUpdate, BindingResult result, @PathVariable("id") String id) throws Exception {

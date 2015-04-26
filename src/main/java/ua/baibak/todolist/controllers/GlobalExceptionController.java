@@ -11,10 +11,7 @@ public class GlobalExceptionController {
     private static Logger log = Logger.getLogger(GlobalExceptionController.class);
 
     @ExceptionHandler(Exception.class)
-    public ModelAndView handleException(Exception ex) {
-        if (ex.toString().equalsIgnoreCase("org.hibernate.TransactionException: Transaction not successfully started")) {
-            log.error("++++++++++++++++++++++++++++++++++++++++++++");
-        }
+    public ModelAndView handlingException(Exception ex) {
         log.error("Exception" + ex.toString());
         ModelAndView model = new ModelAndView("error");
         model.addObject("Exception", ex);

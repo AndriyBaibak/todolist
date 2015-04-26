@@ -1,19 +1,16 @@
-package ua.baibak.todolist.constraints.impl;
-
+package ua.baibak.todolist.service.user.validation.impl;
 
 import org.apache.log4j.Logger;
-import ua.baibak.todolist.constraints.NamesAlreadyUsed;
 import ua.baibak.todolist.service.user.UserEntityService;
-
+import ua.baibak.todolist.service.user.validation.NamesAlreadyUsed;
 import javax.inject.Inject;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
-public class NamesAlreadyUsedValidator implements
+public class NameAlreadyUsedValidator implements
         ConstraintValidator<NamesAlreadyUsed, Object> {
 
-
-    private static Logger log = Logger.getLogger(NamesAlreadyUsedValidator.class);
+    private static Logger log = Logger.getLogger(NameAlreadyUsedValidator.class);
     @Inject
     private UserEntityService userEntityService;
     @Override
@@ -25,7 +22,7 @@ public class NamesAlreadyUsedValidator implements
         boolean check = true;
 
         try {
-            check = (!userEntityService.validationUserName(o.toString()));
+            check = (!userEntityService.checkNameToBusy(o.toString()));
         } catch (Exception e) {
 
             log.error("Exception during inValid method" + e.toString());

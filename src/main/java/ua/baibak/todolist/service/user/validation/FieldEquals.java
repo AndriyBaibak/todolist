@@ -1,8 +1,10 @@
-package ua.baibak.todolist.constraints;
+package ua.baibak.todolist.service.user.validation;
 
 
 
-import ua.baibak.todolist.constraints.impl.FieldEqualsValidator;
+
+
+import ua.baibak.todolist.service.user.validation.impl.FieldEqualsValidator;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;

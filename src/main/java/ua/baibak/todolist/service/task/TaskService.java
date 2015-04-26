@@ -6,6 +6,7 @@ import ua.baibak.todolist.dao.TaskDao;
 import ua.baibak.todolist.entity.Task;
 
 import java.util.List;
+@Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW, rollbackFor = Exception.class)
 public class TaskService implements ActionWithTask {
 
     private TaskDao taskDao;
@@ -15,9 +16,8 @@ public class TaskService implements ActionWithTask {
     }
 
     @Override
-    @Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW, rollbackFor = Exception.class)
     public void createAndSaveNewTask(Task taskForSave) throws Exception {
-        taskDao.save(taskForSave);
+        taskDao.saveNewTask(taskForSave);
     }
 
     @Override

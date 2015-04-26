@@ -1,16 +1,16 @@
-package ua.baibak.todolist.constraints.impl;
+package ua.baibak.todolist.service.user.validation.impl;
 
 
 
 import org.apache.log4j.Logger;
-import ua.baibak.todolist.constraints.FieldEquals;
+import ua.baibak.todolist.service.user.validation.FieldEquals;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 import java.lang.reflect.Method;
 
 public class FieldEqualsValidator implements
-		ConstraintValidator<FieldEquals, Object> {
+        ConstraintValidator<FieldEquals, Object> {
     private static Logger log = Logger.getLogger(FieldEqualsValidator.class);
 
     private String field;
