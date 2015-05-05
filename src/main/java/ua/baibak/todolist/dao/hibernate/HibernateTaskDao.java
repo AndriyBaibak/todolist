@@ -9,6 +9,7 @@ import ua.baibak.todolist.dao.TaskDao;
 import ua.baibak.todolist.entity.Task;
 
 import java.util.List;
+
 public class HibernateTaskDao implements TaskDao {
 
     private SessionFactory mySessionFactory;

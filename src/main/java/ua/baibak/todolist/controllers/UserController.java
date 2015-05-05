@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import ua.baibak.todolist.entity.User;
 import ua.baibak.todolist.service.user.UserEntityService;
+import ua.baibak.todolist.service.user.authentication.AuthenticationUtils;
 
 import javax.inject.Inject;
 import javax.validation.Valid;
@@ -18,7 +19,8 @@ public class UserController {
 
     @Inject
     private UserEntityService userService;
-
+    @Inject
+    private AuthenticationUtils authenticationUtils;
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public ModelAndView login(@RequestParam(value = "error", required = false) String error,
@@ -50,8 +52,10 @@ public class UserController {
             return modelAndView;
         } else {
             userService.createNewUser(userAdd);
-            return new ModelAndView("login");
+            authenticationUtils.loginUser(userAdd.getUserName(), userAdd.getPassword());
+            return new ModelAndView("redirect:/users/" + userAdd.getUserName() + "/allTasks");
         }
     }
+
 
 }

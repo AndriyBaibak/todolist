@@ -1,13 +1,13 @@
-package ua.baibak.todolist.service.user;
+package ua.baibak.todolist.service.user.authentication;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import ua.baibak.todolist.service.user.UserEntityService;
 
-import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,13 +15,13 @@ import java.util.List;
 public class MyUserDetailsService implements UserDetailsService {
 
     private static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(MyUserDetailsService.class);
-    @Inject
+    @Autowired
     private UserEntityService userService;
 
     @Override
     public UserDetails loadUserByUsername(final String username)
             throws UsernameNotFoundException {
-            ua.baibak.todolist.entity.User user = null;
+        ua.baibak.todolist.entity.User user = null;
         try {
             user = userService.findUserByName(username);
         } catch (Exception e) {
@@ -29,7 +29,7 @@ public class MyUserDetailsService implements UserDetailsService {
         }
         List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
         authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
-        User userDetail = new User(user.getUserName(), user.getPassword(), authorities);
-        return userDetail;
+        return new UserSecurityDetail(user, user.getUserName(), user.getPassword(), authorities);
+
     }
 }

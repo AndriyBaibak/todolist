@@ -1,9 +1,6 @@
 package ua.baibak.todolist.service.user.validation;
 
 
-
-
-
 import ua.baibak.todolist.service.user.validation.impl.FieldEqualsValidator;
 
 import javax.validation.Constraint;
@@ -20,22 +17,22 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Constraint(validatedBy = FieldEqualsValidator.class)
 @Documented
 public @interface FieldEquals {
-	public static final String MESSAGE = "fields.notMatches";
+    public static final String MESSAGE = "fields.notMatches";
 
-	String message() default MESSAGE;
+    String message() default MESSAGE;
 
-	Class<?>[] groups() default {};
+    Class<?>[] groups() default {};
 
-	Class<? extends Payload>[] payload() default {};
+    Class<? extends Payload>[] payload() default {};
 
-	@Target(TYPE)
-	@Retention(RUNTIME)
-	@Documented
-	@interface List {
-		FieldEquals[] value();
-	}
+    String field();
 
-	String field();
+    String equalsTo();
 
-	String equalsTo();
+    @Target(TYPE)
+    @Retention(RUNTIME)
+    @Documented
+    @interface List {
+        FieldEquals[] value();
+    }
 }

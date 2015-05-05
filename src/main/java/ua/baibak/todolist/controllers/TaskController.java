@@ -47,24 +47,23 @@ public class TaskController {
         if (result.hasErrors()) {
             return generateModelForView("view", taskForSaving, author);
         } else {
-            taskForSaving.toString();
             taskService.createAndSaveNewTask(taskForSaving);
-            return generateModelForView("view", author);
+            return new ModelAndView("redirect:/users/" + author + "/allTasks");
         }
     }
 
     @RequestMapping(value = "/users/{name}/updateTask/{id}", method = RequestMethod.POST)
-    public ModelAndView updateTask(@ModelAttribute("taskForUpdate") @Valid Task taskForUpdate, BindingResult result, @PathVariable("id") String id) throws Exception {
+    public ModelAndView updateTask(@ModelAttribute("taskForUpdate") @Valid Task taskForUpdate, @PathVariable("id") String id) throws Exception {
         String author = SecurityContextHolder.getContext().getAuthentication().getName();
         taskService.updateTasks(taskForUpdate, id);
-        return generateModelForView("view", author);
+        return new ModelAndView("redirect:/users/" + author + "/allTasks");
     }
 
     @RequestMapping(value = "/users/{name}/deleteTask/{id}", method = RequestMethod.POST)
     public ModelAndView deleteTask(@PathVariable("id") String id) throws Exception {
         String author = SecurityContextHolder.getContext().getAuthentication().getName();
         taskService.deleteTask(id);
-        return generateModelForView("view", author);
+        return new ModelAndView("redirect:/users/" + author + "/allTasks");
     }
 
     private ModelAndView generateModelForView(String viewPage, String author) throws Exception {

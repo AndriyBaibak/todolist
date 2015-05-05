@@ -10,7 +10,7 @@
     <http auto-config="true" use-expressions="true">
 
         <intercept-url pattern="/users/**" access="hasRole('ROLE_USER')"/>
-
+        <intercept-url pattern="/users/all" access="isAnonymous"/>
 
         <form-login
                 login-page="/login"
@@ -20,13 +20,19 @@
         <logout logout-success-url="/login?logout"/>
     </http>
 
-    <beans:bean id="myUserDetailsService" class="ua.baibak.todolist.service.user.MyUserDetailsService"/>
+    <beans:bean id="myUserDetailsService" class="ua.baibak.todolist.service.user.authentication.MyUserDetailsService"/>
 
     <beans:bean id="encode" class="org.springframework.security.authentication.encoding.Md5PasswordEncoder"/>
 
+    <beans:bean id="authenticationUtils" class="ua.baibak.todolist.service.user.authentication.AuthenticationUtils"/>
+
+
+
     <authentication-manager alias="authenticationManager">
         <authentication-provider user-service-ref="myUserDetailsService">
-            <password-encoder hash="md5" />
+            <password-encoder hash="md5" >
+            <salt-source system-wide="123"/>
+            </password-encoder>
         </authentication-provider>
     </authentication-manager>
 </beans:beans>

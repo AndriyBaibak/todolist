@@ -16,7 +16,7 @@
 
 <h1 align="center">Registration</h1>
 
-<form:form commandName="userAdd"
+<form:form commandName="userAdd" action=""
            method='POST'>
 
     <table align="center">
