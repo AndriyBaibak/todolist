@@ -1,8 +1,8 @@
-package ua.baibak.todolist.service.user.validation.impl;
+package ua.baibak.todolist.controllers.validation.impl;
 
 
 import org.apache.log4j.Logger;
-import ua.baibak.todolist.service.user.validation.FieldEquals;
+import ua.baibak.todolist.controllers.validation.FieldEquals;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;

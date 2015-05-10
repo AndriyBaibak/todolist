@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import ua.baibak.todolist.entity.User;
-import ua.baibak.todolist.service.user.UserEntityService;
-import ua.baibak.todolist.service.user.authentication.AuthenticationUtils;
+import ua.baibak.todolist.service.user.TransactionUserService;
+import ua.baibak.todolist.authentication.AuthenticationUtils;
 
 import javax.inject.Inject;
 import javax.validation.Valid;
@@ -18,7 +18,7 @@ import javax.validation.Valid;
 public class UserController {
 
     @Inject
-    private UserEntityService userService;
+    private TransactionUserService userService;
     @Inject
     private AuthenticationUtils authenticationUtils;
 
@@ -53,7 +53,7 @@ public class UserController {
         } else {
             userService.createNewUser(userAdd);
             authenticationUtils.loginUser(userAdd.getUserName(), userAdd.getPassword());
-            return new ModelAndView("redirect:/users/" + userAdd.getUserName() + "/allTasks");
+            return new ModelAndView("redirect:/users/" + userAdd.getUserName() + "/tasks");
         }
     }
 

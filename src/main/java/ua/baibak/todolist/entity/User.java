@@ -1,7 +1,8 @@
 package ua.baibak.todolist.entity;
 
 import org.hibernate.validator.constraints.NotBlank;
-import ua.baibak.todolist.service.user.validation.FieldEquals;
+import ua.baibak.todolist.controllers.validation.FieldEquals;
+import ua.baibak.todolist.controllers.validation.NamesAlreadyUsed;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -12,6 +13,7 @@ public class User {
     private int id;
 
     @NotBlank
+    @NamesAlreadyUsed
     private String userName;
     @NotBlank
     private String password;

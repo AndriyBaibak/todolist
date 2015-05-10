@@ -1,5 +1,4 @@
-package ua.baibak.todolist.service.user;
-
+package ua.baibak.todolist.dao;
 
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
@@ -8,21 +7,19 @@ import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
-import org.springframework.transaction.annotation.Transactional;
 import ua.baibak.todolist.entity.User;
 
 import javax.inject.Inject;
 import java.util.List;
 
-@Transactional
-public class UserEntityService implements UserService {
+public class UserEntityDao {
 
     @Inject
     private SessionFactory sessionFactory;
     @Autowired
     private Md5PasswordEncoder passwordEncoder;
 
-    @Override
+
     public void createNewUser(User newUser) throws HibernateException {
         User temporaryUser = new User(newUser);
         temporaryUser.setPassword(passwordEncoder.encodePassword(temporaryUser.getPassword(), "123"));
@@ -35,13 +32,12 @@ public class UserEntityService implements UserService {
         Criteria criteria = session.createCriteria(User.class);
         criteria.add(Restrictions.eq("userName", userName));
         return (User) criteria.uniqueResult();
-
     }
 
-    public boolean checkNameToBusy(String userName) throws Exception {
+    public boolean checkUniqueUserName(String userName) throws Exception {
         Session session = sessionFactory.getCurrentSession();
-        List<String> usersNames = session.createSQLQuery("SELECT userName FROM users").list();
-        if (usersNames.contains(userName)) {
+        List<User> usersNames = session.createCriteria(User.class).add(Restrictions.eq("userName", userName)).list();
+        if (usersNames.size() > 0) {
             return true;
         }
         return false;

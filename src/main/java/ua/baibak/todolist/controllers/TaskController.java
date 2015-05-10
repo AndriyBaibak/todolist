@@ -1,7 +1,8 @@
 package ua.baibak.todolist.controllers;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
-import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
@@ -18,6 +19,8 @@ import java.util.List;
 
 @Controller
 public class TaskController {
+    private static Logger log = Logger.getLogger(GlobalExceptionController.class);
+
 
     @Inject
     private TaskService taskService;
@@ -29,10 +32,10 @@ public class TaskController {
         binder.registerCustomEditor(Date.class, new CustomDateEditor(sdf, true));
     }
 
-    @RequestMapping(value = "/users/{name}/allTasks", method = RequestMethod.GET)
-    public ModelAndView allTasks() throws Exception {
-        String author = SecurityContextHolder.getContext().getAuthentication().getName();
-        return generateModelForView("view", author);
+    @PreAuthorize("#name == authentication.name")
+    @RequestMapping(value = "/users/{name}/tasks", method = RequestMethod.GET)
+    public ModelAndView allTasks(@PathVariable("name") String name) throws Exception {
+        return generateModelForView("view", name);
     }
 
     @RequestMapping(value = "/users/all", method = RequestMethod.GET)
@@ -40,30 +43,30 @@ public class TaskController {
         return new ModelAndView("all");
     }
 
-    @RequestMapping(value = "/users/{name}/addTask", method = RequestMethod.POST)
-    public ModelAndView addTask(@ModelAttribute("taskForAdd") @Valid Task taskForSaving, BindingResult result) throws Exception {
-        String author = SecurityContextHolder.getContext().getAuthentication().getName();
-        taskForSaving.setAuthor(author);
+    @PreAuthorize("#name == authentication.name")
+    @RequestMapping(value = "/users/{name}/task", method = RequestMethod.POST)
+    public ModelAndView addTask(@ModelAttribute("taskForAdd") @Valid Task taskForSaving,@PathVariable("name") String name, BindingResult result) throws Exception {
+        taskForSaving.setAuthor(name);
         if (result.hasErrors()) {
-            return generateModelForView("view", taskForSaving, author);
+            return generateModelForView("view", taskForSaving, name);
         } else {
             taskService.createAndSaveNewTask(taskForSaving);
-            return new ModelAndView("redirect:/users/" + author + "/allTasks");
+            return new ModelAndView("redirect:/users/" + name + "/tasks");
         }
     }
 
-    @RequestMapping(value = "/users/{name}/updateTask/{id}", method = RequestMethod.POST)
-    public ModelAndView updateTask(@ModelAttribute("taskForUpdate") @Valid Task taskForUpdate, @PathVariable("id") String id) throws Exception {
-        String author = SecurityContextHolder.getContext().getAuthentication().getName();
+    @PreAuthorize("#name == authentication.name")
+    @RequestMapping(value = "/users/{name}/task/{id}", method = RequestMethod.POST)
+    public ModelAndView updateTask(@ModelAttribute("taskForUpdate") @Valid Task taskForUpdate,@PathVariable("name") String name, @PathVariable("id") String id) throws Exception {
         taskService.updateTasks(taskForUpdate, id);
-        return new ModelAndView("redirect:/users/" + author + "/allTasks");
+        return new ModelAndView("redirect:/users/" + name + "/tasks");
     }
 
+    @PreAuthorize("#name == authentication.name")
     @RequestMapping(value = "/users/{name}/deleteTask/{id}", method = RequestMethod.POST)
-    public ModelAndView deleteTask(@PathVariable("id") String id) throws Exception {
-        String author = SecurityContextHolder.getContext().getAuthentication().getName();
+    public ModelAndView deleteTask(@PathVariable("id") String id, @PathVariable("name") String name) throws Exception {
         taskService.deleteTask(id);
-        return new ModelAndView("redirect:/users/" + author + "/allTasks");
+        return new ModelAndView("redirect:/users/" + name + "/tasks");
     }
 
     private ModelAndView generateModelForView(String viewPage, String author) throws Exception {

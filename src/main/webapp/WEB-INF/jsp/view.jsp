@@ -42,13 +42,13 @@
         if (type == 'description') {
             $.ajax({
                 type: "POST",
-                url: "/todolist/users/${pageContext.request.userPrincipal.name}/updateTask/" + id,
+                url: "/todolist/users/${pageContext.request.userPrincipal.name}/task/" + id,
                 data: {"description": newDescription.value, "deadline": newDeadline}
             });
         } else {
             $.ajax({
                 type: "POST",
-                url: "/todolist/users/${pageContext.request.userPrincipal.name}/updateTask/" + id,
+                url: "/todolist/users/${pageContext.request.userPrincipal.name}/task/" + id,
                 data: {"description": newDescription, "deadline": newDeadline.value}
             });
         }
@@ -82,7 +82,7 @@ Welcome : ${pageContext.request.userPrincipal.name} |<c:url value="/j_spring_sec
         <div align="center">
             <p><big>Додати нове завдання </big></p>
         </div>
-        <form:form action="/todolist/users/${pageContext.request.userPrincipal.name}/addTask" method="post"
+        <form:form action="/todolist/users/${pageContext.request.userPrincipal.name}/task" method="post"
                    commandName="taskForAdd" onsubmit="return ValidFormFields('ntask','date')">
 
             <tr>
@@ -115,8 +115,7 @@ Welcome : ${pageContext.request.userPrincipal.name} |<c:url value="/j_spring_sec
         </tr>
 
         <c:forEach var="task" items="${tasks}">
-            <form:form commandName="taskForUpdate" method="post"
-                       action="/todolist/users/${pageContext.request.userPrincipal.name}/updateTask">
+            <form:form commandName="taskForUpdate" method="post">
                 <tr>
                 <div>
                 <td valign="middle" align="center">

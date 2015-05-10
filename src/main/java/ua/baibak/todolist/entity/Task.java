@@ -12,8 +12,8 @@ public class Task {
 
     public int id;
 
-    @NotEmpty(message = "Please enter your description.")
-    @Size(min = 6, max = 200, message = "Description must be beetwen 6 and 200 characters")
+    @NotEmpty(message = "Please enter your description")
+    @Size(min = 6, max = 200, message = "Description must be between 6 and 200 characters")
     private String description;
 
     private Date createdDate;

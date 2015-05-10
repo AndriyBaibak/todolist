@@ -1,4 +1,4 @@
-package ua.baibak.todolist.service.user.authentication;
+package ua.baibak.todolist.authentication;
 
 import org.springframework.security.core.GrantedAuthority;
 import ua.baibak.todolist.entity.User;

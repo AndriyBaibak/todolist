@@ -1,4 +1,4 @@
-package ua.baibak.todolist.service.user.authentication;
+package ua.baibak.todolist.authentication;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
