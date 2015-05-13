@@ -5,6 +5,6 @@
     <title></title>
 </head>
 <body>
-<c:redirect url="/users/${pageContext.request.userPrincipal.name}/tasks"/>
+<c:redirect url="/${pageContext.request.userPrincipal.name}/tasks"/>
 </body>
 </html>

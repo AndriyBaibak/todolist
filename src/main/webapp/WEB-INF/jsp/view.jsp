@@ -41,14 +41,14 @@
         }
         if (type == 'description') {
             $.ajax({
-                type: "POST",
-                url: "/todolist/users/${pageContext.request.userPrincipal.name}/task/" + id,
+                type: "post",
+                url: "/todolist/${pageContext.request.userPrincipal.name}/task/" + id,
                 data: {"description": newDescription.value, "deadline": newDeadline}
             });
         } else {
             $.ajax({
-                type: "POST",
-                url: "/todolist/users/${pageContext.request.userPrincipal.name}/task/" + id,
+                type: "post",
+                url: "/todolist/${pageContext.request.userPrincipal.name}/task/" + id,
                 data: {"description": newDescription, "deadline": newDeadline.value}
             });
         }
@@ -82,7 +82,7 @@ Welcome : ${pageContext.request.userPrincipal.name} |<c:url value="/j_spring_sec
         <div align="center">
             <p><big>Додати нове завдання </big></p>
         </div>
-        <form:form action="/todolist/users/${pageContext.request.userPrincipal.name}/task" method="post"
+        <form:form action="/todolist/${pageContext.request.userPrincipal.name}/task" method="post"
                    commandName="taskForAdd" onsubmit="return ValidFormFields('ntask','date')">
 
             <tr>
@@ -139,8 +139,10 @@ Welcome : ${pageContext.request.userPrincipal.name} |<c:url value="/j_spring_sec
                 </td>
             </form:form>
             <td valign="middle" align="center">
-                <form id="del" action="/todolist/users/${pageContext.request.userPrincipal.name}/deleteTask/${task.id}"
+                <form id="del" action="/todolist/${pageContext.request.userPrincipal.name}/deleteTask/${task.id}"
                       method="post">
+                    <input type="hidden" name="_method" value="delete"/>
+
                     <p><input type="submit" value="Видалити"></p>
                 </form>
             </td>

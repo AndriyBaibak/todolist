@@ -1,6 +1,5 @@
 package ua.baibak.todolist.controllers;
 
-import org.apache.log4j.Logger;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -19,8 +18,6 @@ import java.util.List;
 
 @Controller
 public class TaskController {
-    private static Logger log = Logger.getLogger(GlobalExceptionController.class);
-
 
     @Inject
     private TaskService taskService;
@@ -33,40 +30,40 @@ public class TaskController {
     }
 
     @PreAuthorize("#name == authentication.name")
-    @RequestMapping(value = "/users/{name}/tasks", method = RequestMethod.GET)
+    @RequestMapping(value = "/{name}/tasks", method = RequestMethod.GET)
     public ModelAndView allTasks(@PathVariable("name") String name) throws Exception {
         return generateModelForView("view", name);
     }
 
-    @RequestMapping(value = "/users/all", method = RequestMethod.GET)
+    @RequestMapping(value = "/all", method = RequestMethod.GET)
     public ModelAndView all() throws Exception {
         return new ModelAndView("all");
     }
 
     @PreAuthorize("#name == authentication.name")
-    @RequestMapping(value = "/users/{name}/task", method = RequestMethod.POST)
+    @RequestMapping(value = "/{name}/task", method = RequestMethod.POST)
     public ModelAndView addTask(@ModelAttribute("taskForAdd") @Valid Task taskForSaving,@PathVariable("name") String name, BindingResult result) throws Exception {
         taskForSaving.setAuthor(name);
         if (result.hasErrors()) {
             return generateModelForView("view", taskForSaving, name);
         } else {
             taskService.createAndSaveNewTask(taskForSaving);
-            return new ModelAndView("redirect:/users/" + name + "/tasks");
+            return new ModelAndView("redirect:/" + name + "/tasks");
         }
     }
 
     @PreAuthorize("#name == authentication.name")
-    @RequestMapping(value = "/users/{name}/task/{id}", method = RequestMethod.POST)
+    @RequestMapping(value = "/{name}/task/{id}", method = RequestMethod.POST)
     public ModelAndView updateTask(@ModelAttribute("taskForUpdate") @Valid Task taskForUpdate,@PathVariable("name") String name, @PathVariable("id") String id) throws Exception {
         taskService.updateTasks(taskForUpdate, id);
-        return new ModelAndView("redirect:/users/" + name + "/tasks");
+        return new ModelAndView("redirect:/" + name + "/tasks");
     }
 
     @PreAuthorize("#name == authentication.name")
-    @RequestMapping(value = "/users/{name}/deleteTask/{id}", method = RequestMethod.POST)
+    @RequestMapping(value = "/{name}/deleteTask/{id}", method = RequestMethod.DELETE)
     public ModelAndView deleteTask(@PathVariable("id") String id, @PathVariable("name") String name) throws Exception {
         taskService.deleteTask(id);
-        return new ModelAndView("redirect:/users/" + name + "/tasks");
+        return new ModelAndView("redirect:/" + name + "/tasks");
     }
 
     private ModelAndView generateModelForView(String viewPage, String author) throws Exception {
